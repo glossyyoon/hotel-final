@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse_lazy
+from padapp.models import Pad
+from userapp.models import Guest
 
 # Create your models here.
 
@@ -14,7 +16,7 @@ class Room(models.Model):
     room_limit = models.IntegerField()
     room_fee = models.IntegerField()
     on_use = models.BooleanField()
-    #screen_id = 다른 앱에서 가져와야됨
+    screen_id = models.ForeignKey(Pad, on_delete=models.CASCADE)
 
     category = models.CharField(max_length=3, choices=room_type)#참고한 프로젝트에 있어서 일단 추가함.
     beds = models.IntegerField()#참고한 프로젝트에 있어서 일단 추가함.
@@ -25,7 +27,7 @@ class Room(models.Model):
 
 class Booking(models.Model):
     booking_roomid = models.ForeignKey(Room, on_delete=models.CASCADE)
-    booking_userid = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) #다른 앱에서 받아와야됨
+    booking_userid = models.ForeignKey(Guest, on_delete=models.CASCADE) #다른 앱에서 받아와야됨
     room_type = models.CharField(max_length=10)
     check_in = models.DateTimeField()
     check_out = models.DateTimeField()
