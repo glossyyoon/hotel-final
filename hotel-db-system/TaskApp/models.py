@@ -1,4 +1,6 @@
 from django.db import models
+from RoomApp.models import Booking
+from UserApp.models import Guest, Staff, Robot
 
 class ProductRequest(models.Model):
     staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE, null=True)

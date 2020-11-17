@@ -9,6 +9,8 @@ from UserApp.models import Guest
 
 from .models import Request, ProductRequest
 from .place import Coordinate, get_place_coord, get_distance, convert_to_coordinate
+from RoomApp.models import Booking
+from UserApp.models import Guest, Staff, Robot
 
 # 요청 거절
 REJECTED = 1
@@ -111,11 +113,11 @@ def request_get_coordinate(request):
             print("게스트 정보를 불러오는데에 실패하였습니다.")
             return None
         try:
-            reserve = Reserve.objects.get(pk=guest.reserve_num)
-        except Reserve.DoesNotExist:
+            booking = Booking.objects.get(pk=guest.reserve_num)
+        except Booking.DoesNotExist:
             print("룸 예약 정보를 불러오는데에 실패하였습니다.")
             return None
-        return get_place_coord("R" + reserve.room_id)
+        return get_place_coord("R" + booking.id)
     elif request.type in [
         Request.RequestType.ROOM_SERVICE,
         Request.RequestType.CARRY_ROOM_SERVICE,]:
