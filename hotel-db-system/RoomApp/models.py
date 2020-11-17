@@ -27,7 +27,7 @@ class Room(models.Model):
 
 class Booking(models.Model):
     booking_roomid = models.ForeignKey(Room, on_delete=models.CASCADE)
-    booking_userid = models.ForeignKey(Guest, on_delete=models.CASCADE) #다른 앱에서 받아와야됨
+    booking_userid = models.ForeignKey(Guest, on_delete=models.CASCADE)
     room_type = models.CharField(max_length=10)
     check_in = models.DateTimeField()
     check_out = models.DateTimeField()

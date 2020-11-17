@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import RoomListView, BookingListView, RoomDetailView, CancelBookingView
 
-app_name = "RoomApp"
+app_name = "roomapp"
 
 urlpatterns = [
     path('', views.main, name = "main"),
