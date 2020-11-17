@@ -1,8 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse_lazy
-from UserApp.models import Guest
-from PadApp.models import Pad
+from padapp.models import Pad
+from userapp.models import Guest
 
 # Create your models here.
 

@@ -2,8 +2,10 @@ from django.db import models
 
 # Create your models here.
 # roomservice, dnd, turn_down. complain
+from RoomApp.models import Room
+
 class Pad(models.Model):
-    #room = models.OneToOneField(Room, on_delete=models.CASCADE, related_name='pad_of_room')
+    room = models.OneToOneField(Room, on_delete=models.CASCADE, related_name='pad_of_room')
     
 class RoomService(models.Model):
     # pasta&sandwiches, FROM the grill, dessert
