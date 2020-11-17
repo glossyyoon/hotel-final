@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+  </head>
+  <body>
+    <form method="POST" action="/userApp/signup_submit/">
+      {% csrf_token %}
+      <p>id</p>
+      <input type="text" name="id" />
+      <br />
+      <p>password</p>
+      <input type="password" name="password" />
+      <br />
+      <p>first name</p>
+      <input type="text" name="first_name" />
+      <br />
+      <p>last name</p>
+      <input type="text" name="last_name" />
+      <br />
+      <input type="submit" value="회원가입" />
+    </form>
+  </body>
+</html>
