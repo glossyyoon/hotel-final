@@ -47,3 +47,12 @@ class Staff(models.Model):
 
     class Meta:
         db_table = 'staff'
+
+
+class Sales(models.Model):
+    date = models.DateTimeField()
+    fee = models.IntegerField()
+    payment_num = models.IntegerField()
+
+    class Meta:
+        db_table = 'sales'
