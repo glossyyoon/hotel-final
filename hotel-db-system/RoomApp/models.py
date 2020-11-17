@@ -1,8 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse_lazy
-from padapp.models import Pad
-from userapp.models import Guest
+from UserApp.models import Guest
+# from PadApp.models import Pad
 
 # Create your models here.
 
@@ -16,7 +16,7 @@ class Room(models.Model):
     room_limit = models.IntegerField()
     room_fee = models.IntegerField()
     on_use = models.BooleanField()
-    screen_id = models.ForeignKey(Pad, on_delete=models.CASCADE)
+    # screen_id = models.ForeignKey("PadApp.Pad", on_delete=models.CASCADE)
 
     category = models.CharField(max_length=3, choices=room_type)#참고한 프로젝트에 있어서 일단 추가함.
     beds = models.IntegerField()#참고한 프로젝트에 있어서 일단 추가함.

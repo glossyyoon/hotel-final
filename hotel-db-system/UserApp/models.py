@@ -56,3 +56,8 @@ class Sales(models.Model):
 
     class Meta:
         db_table = 'sales'
+
+class Robot(models.Model):
+    work_check = models.BooleanField(default=False)
+    is_emergency = models.BooleanField(default=False)
+    position = models.CharField(max_length=50)

@@ -1,12 +1,9 @@
 from django.db import models
-
-# Create your models here.
-# roomservice, dnd, turn_down. complain
 from RoomApp.models import Room
 
 class Pad(models.Model):
-    room = models.OneToOneField(Room, on_delete=models.CASCADE, related_name='pad_of_room')
-    
+    pad_room = models.ForeignKey("RoomApp.Room", on_delete=models.CASCADE)
+
 class RoomService(models.Model):
     # pasta&sandwiches, FROM the grill, dessert
     TYPE_CHOICES=(
@@ -18,10 +15,10 @@ class RoomService(models.Model):
     pad = models.ForeignKey(Pad, on_delete=models.CASCADE)
     is_roomservice = models.BooleanField(default=False)
     roomservice_type = models.CharField(
-        max_length='',
+        max_length=5,
         choices = TYPE_CHOICES,
     )
-    menu_name = models.CharField()
+    menu_name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=2, decimal_places=2)
 
 
