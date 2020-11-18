@@ -1,0 +1,109 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>H6호텔에 오신걸 환영합니다</title>
+    <link rel="stylesheet" href="{% static 'MainApp/css/style.css' %}">
+</head>
+<body>
+    <div id="wrap">
+        <!-- 헤더영역 -->
+        <header>
+            <div class="top_menu">
+                <ul class="top_nav container">
+                    <li><a href="login.html">로그인</a></li>
+                    <li><a href="signup.html">회원가입</a></li>
+                    <li><a href="#">한국어</a></li>
+                </ul>
+            </div>
+            <div class="header_inner container">
+                <h1><a href="index.html"></a>H6 HOTEL</h1>
+                <nav>
+                    <ul class="gnb">
+                        <li><a href="index.html" style="text-decoration:none">홈</a></li>
+                        <li><a href="intro.html" style="text-decoration:none">H6호텔 소개</a></li>
+                        <li><a href="room_info.html" style="text-decoration:none">객실 안내</a></li>
+                    </ul>
+                </nav>
+                <button class="reBtn"  onclick="location.href='login.html'">예약하기</button>
+            </div>
+        </header>
+
+        <section>
+            <div class="body_image">
+                <img class="size-image" src="images/backg.png" alt=""></div>
+            </div>
+            <div class="container">
+                <div class="reservation_inner">
+                    <ul>
+                        <li class="checkIn">
+                            <span>체크인</span>
+                            <input type="date" id="datepicker_today">
+                        </li>
+                        <li class="stayDay">
+                            <span></span>
+                            <input type="text" class="stay" disabled>
+                        </li>
+                        <li class="checkOut">
+                            <span>체크아웃</span>
+                            <input type="date" id="datepicker_checkOutDay">
+                        </li>
+                        <li class="rom">
+                            <span>객실</span>
+                            <select name="" id="">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </li>
+                        <li class="adult">
+                            <span>성인</span>
+                            <select name="" id="">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </li>
+                        <li class="child">
+                            <span>어린이</span>
+                            <select name="" id="">
+                                <option value="0">0</option>
+                                <option value="0">1</option>
+                                <option value="0">2</option>
+                            </select>
+                        </li>
+                        <li class="baby">
+                            <span>유아</span>
+                            <select name="" id="">
+                                <option value="0">0</option>
+                                <option value="0">1</option>
+                                <option value="0">2</option>
+                            </select>
+                        </li>
+                        <li class="search">
+                            <button onclick="location.href='login.jsp'">검색</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="map">
+            <iframe src="" width="630" height="314" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+
+        <!--map 영역-->
+        <section class="info">
+            <div class="container">
+                <div class="info_inner cfixed">
+                    <div class="intro">
+                        <div class="map">
+                            <iframe src="" width="630" height="314" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
