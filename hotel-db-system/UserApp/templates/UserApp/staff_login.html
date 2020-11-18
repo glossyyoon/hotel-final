@@ -1,10 +1,23 @@
+{% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <title></title>
+    <title>login</title>
   </head>
-  <body>
-    staff_login
-  </body>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'UserApp/css/staff_login.css' %}">
+    <body>
+        <div class="login-page">
+            <div class="form">
+              </form>
+              <form class="login-form">
+                  <h2 class="name">STAFF ONLY</h2>
+                <input type="text" placeholder="직원번호를 입력하세요."/>
+                <button type ="button" onclick ="location.href='main.html'">login</button>
+              </form>
+            </div>
+          </div>
+    </body>
+    
 </html>

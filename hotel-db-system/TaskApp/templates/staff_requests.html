@@ -1,0 +1,98 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>employee page</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,500" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'TaskApp/css/staff_request.css' %}">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  </head>
+
+    <body>
+      <header>
+        <h1>TASK</h1>
+        <nav class="menu">
+          <ul>
+           <li><a href="#">근태 관리</a></li>
+            <li><a href="task.html">업무 분배</a></li>
+            <li><a href="reservation.html">실시간 예약 상황</a>
+          </ul>
+        </nav>
+      </header>
+
+      
+
+      <div class="kanban-container">
+        <ul class="kanban-list">
+          <li class="kanban-column kanban-column-requests">
+          <span class="kanban-column-header header-requests">
+            <h2>requests</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list">
+            <li class="drag-item" draggable="true">
+              <div>
+                <button class="cancel">CANCEL</button>
+              </div>
+            </li>
+            <li class="drag-item" draggable="true">
+              <div>
+                <button class="cancel">CANCEL</button>
+              </div>
+            </li>
+            <li class="drag-item" draggable="true">
+              <div>
+                <button class="cancel">CANCEL</button>
+              </div>
+            </li>
+            <li class="drag-item" draggable="true">
+              <div>
+                <button class="cancel">CANCEL</button>
+              </div>
+            </li>
+            <li class="drag-item" draggable="true">
+              <div>
+                <button class="cancel">CANCEL</button>
+              </div>
+            </li>
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-progress">
+          <span class="kanban-column-header header-progress">
+            <h2>In Progress</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list">
+            <li class="drag-item" draggable="true">
+              <div>
+                <button class ="cancel">CANCEL</button>
+              </div>
+            </li>
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-done">
+            <span class="kanban-column-header header-done">
+              <h2>Done</h2>
+            </span>
+            <div class="kanban-options"></div>
+            <ul class="drag-inner-list">
+              <li class="drag-item" draggable="true">
+                <div>
+                  <button class="cancel">CANCEL</button>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+    <script src="TaskApp/css/staff_request.js"></script>
+  </body>
+
+</html>
