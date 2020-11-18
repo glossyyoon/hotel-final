@@ -3,23 +3,29 @@ from RoomApp.models import Room
 
 class Pad(models.Model):
     pad_room = models.ForeignKey("RoomApp.Room", on_delete=models.CASCADE)
-
-class RoomService(models.Model):
-    # pasta&sandwiches, FROM the grill, dessert
+    # roomservice = models.ForeignKey(RoomService, on_delete=SET_NULL, null=True)
+    # dnd = models.ForeignKey(Dnd, on_delete=SET_NULL, null=True)
+    # turndown = models.ForeignKey(TurnDown, on_delete=SET_NULL, null=True)
+    # compalin = models.ForeignKey(Complain, on_delete=SET_NULL, null=True)
+class RoomServiceType(models.Model):
     TYPE_CHOICES=(
         ('PNS','PASTAS & SANDWICHES'),
         ('GRILL', 'FROM THE GRILL'),
         ('DES', 'DESSERT'),
     )
+    roomservice_type = models.CharField(
+            max_length=5,
+            choices = TYPE_CHOICES,
+        )
+    menu_name = models.CharField(max_length=100)
+    price = models.IntegerField(default=0)
+    def __str__(self):
+        return '%s - %s' % (self.roomservice_type, self.menu_name)
 
+class RoomService(models.Model):
     pad = models.ForeignKey(Pad, on_delete=models.CASCADE)
     is_roomservice = models.BooleanField(default=False)
-    roomservice_type = models.CharField(
-        max_length=5,
-        choices = TYPE_CHOICES,
-    )
-    menu_name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=2, decimal_places=2)
+    select_roomservice = models.ForeignKey(RoomServiceType, on_delete=models.SET_NULL, null=True)
 
 
 class Dnd(models.Model):
