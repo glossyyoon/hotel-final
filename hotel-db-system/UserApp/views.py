@@ -27,6 +27,10 @@ def signup_submit(request):
         site_pw = request.POST.get('password')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
+        nation = request.POST.get('nation')
+        birth = request.POST.get('birth')
+        userGender = request.POST.get('userGender')
+        last_name = request.POST.get('last_name')
 
         guest = Guest()
         guest.site_id = site_id

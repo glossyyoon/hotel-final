@@ -17,9 +17,9 @@ class Guest(models.Model):
     reseve_num = models.IntegerField(null=True)
     car_num = models.IntegerField(null=True)
     is_pad = models.BooleanField(default=True, null=True)
-    car_cvc_num = models.IntegerField(null=True)
+    card_cvc_num = models.IntegerField(null=True)
     card_experiment = models.IntegerField(null=True)
-    car_password = models.IntegerField(null=True)
+    card_password = models.IntegerField(null=True)
     room_person_cnt = models.IntegerField(null=True)
     room_type = models.CharField(max_length=20, null=True)
     check_in = models.DateTimeField(null=True)
@@ -27,23 +27,38 @@ class Guest(models.Model):
     room_service_fee = models.IntegerField(null=True)
     guest_point = models.IntegerField(null=True)
 
+    def __str__(self):
+        return f'ID: {self.site_id} NAME: {self.first_name} {self.last_name}'
+
     class Meta:
         db_table = 'guest'
 
 
 class Staff(models.Model):
     objects = models.Manager()
-    department = models.CharField(max_length=100)
+    staff_id = models.IntegerField(default=0)
+    department_type = (('CLE', 'Cleaning'),
+                       ('TSD', 'Technical Support Department'),
+                       ('CRD', 'Customer Response Department'),)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     nation = models.CharField(max_length=40)
-    gender = models.CharField(max_length=1)
+    gender_type = (('MALE', 'Male'),
+                   ('FEMALE', 'Female'),)
+    gender = models.CharField(
+        max_length=6, choices=gender_type, default="Male")
     birthday = models.DateField()
     email = models.CharField(max_length=40)
     phone_number = models.CharField(max_length=50)
     hire_date = models.DateField()
     salary = models.IntegerField()
     position = models.CharField(max_length=100)
+
+    department = models.CharField(
+        max_length=3, choices=department_type, default="None")
+
+    def __str__(self):
+        return f'ID: {self.staff_id} NAME: {self.first_name} {self.last_name} DEPARTMENT: {self.department}'
 
     class Meta:
         db_table = 'staff'
@@ -54,10 +69,17 @@ class Sales(models.Model):
     fee = models.IntegerField()
     payment_num = models.IntegerField()
 
+    def __str__(self):
+        return f'DATE: {self.date} FEE: {self.fee} payment_num: {self.payment_num}'
+
     class Meta:
         db_table = 'sales'
+
 
 class Robot(models.Model):
     work_check = models.BooleanField(default=False)
     is_emergency = models.BooleanField(default=False)
     position = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'work_check: {self.work_check} is_emergency: {self.is_emergency} position: {self.position}'
