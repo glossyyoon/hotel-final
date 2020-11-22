@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html><!--결제 페이지-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>결제 | H6</title>
+    <link rel="stylesheet" href="{% static 'RoomApp/static/RoomApp/style.css' %}">
+    <link rel="stylesheet" href="{% static 'RoomApp/static/RoomApp/bill.css' %}">
+  </head>
+  <body>
+    <div id="wrap">
+        <!-- 헤더영역 -->
+        <header>
+            <div class="top_menu">
+                <ul class="top_nav container">
+                    <li><a href="{% static 'UserApp/tempaltes/mypage.html' %}">마이페이지</a></li>
+                    <li><a href="{% static 'UserApp/tempaltes/logout.html' %}">로그아웃</a></li>
+                    <li><a href="#">한국어</a></li>
+                </ul>
+            </div>
+            <div class="header_inner container">
+                <h1>H6 HOTEL</h1>
+                <nav>
+                    <ul class="gnb">
+                        <li><a href="reservation_main.html" style="text-decoration:none">홈</a></li>
+                        <li><a href="intro2.html" style="text-decoration:none">H6호텔 소개</a></li>
+                        <li><a href="room_info2.html" style="text-decoration:none">객실 안내</a></li>
+                    </ul>
+                </nav>
+                <button class="reBtn" onclick="location.href='reservation_list.html'">예약하기</button>
+            </div>
+        </header>
+        <div id="downbox">
+          <div class="bill">
+            <span>결제</span>
+          </div>
+          <div class="stay">
+            <ul class="checkIn_Out">
+              <li class ="checkIn">2020년 11월 21일</li>
+              <li>~</li>
+              <li class="checkOut">2020년 11월 23일</li>
+              <li class="stayDay">(2박)</li>
+            </ul>
+            <br>
+            <div class="room_type">
+              <p>객실 종류 : 스탠다드</p>
+              <img src="images/room1.jpg" class="room_img">
+            </div>
+            <hr>
+            <div class="reserve_check">
+              <p>필수적 개인정보수집이용에 대한 동의(객실예약)</p>
+              <input type="checkbox" name="privacy" value="동의">
+              <a class= "reserve_privacy">개인정보 수집 및 이용에 대해 동의합니다.</a>
+              <a href="#" class="look"><u>약관 보기</u></a>
+              <br><br>
+              <p>취소규정</p>
+              <input type="checkbox" name="cancel" value="동의">
+              <a class= "reserve_cancel">취소규정을 확인하고 동의합니다.</a>
+              <a href="#" calss="look"><u>약관 보기</u></a>
+            </div>
+          </div>
+          <div class="menudetail"> <!--결제 정보 입력 -->
+            <div class="card_company">
+              <h5>신용카드선택</h5>
+              <select>
+                <option value="0">&nbsp;신용카드 종류</option>
+                <option value="1">&nbsp;현대카드</option>
+                <option value="2">&nbsp;하나카드</option>
+                <option value="3">&nbsp;제주카드</option>
+                <option value="4">&nbsp;카카오뱅크</option>
+                <option value="5">&nbsp;KB 국민</option>
+                <option value="6">&nbsp;신한카드</option>
+                <option value="7">&nbsp;롯데카드</option>
+                <option value="8">&nbsp;NH채움</option>
+                <option value="9">&nbsp;우체국카드</option>
+                <option value="10">&nbsp;우리카드</option>
+                <option value="11">&nbsp;저축은행</option>
+                <option value="12">&nbsp;MG새마을</option>
+                <option value="13">&nbsp;삼성카드</option>
+                <option value="14">&nbsp;신협카드</option>
+                <option value="15">&nbsp;수협카드</option>
+              </select>
+            </div>
+            <div class="card_code">
+              <h5>신용카드번호<h5>
+              <input type="text" class="moveNumber" onKeyup="inputMoveNumber(this);" maxlength="4"/>&nbsp;-&nbsp;
+              <input type="text" class="moveNumber" onKeyup="inputMoveNumber(this);" maxlength="4"/>&nbsp;-&nbsp;
+              <input type="text" class="moveNumber" onKeyup="inputMoveNumber(this);" maxlength="4"/>&nbsp;-&nbsp;
+              <input type="text" class="moveNumber" maxlength="4"/><br><br>
+            </div>
+            <div class="card_period">
+              <h5>유효기간<h5>
+              <input type="text" class="validThru" onKeyup="inputValidThru(this);" placeholder="MM/YY" maxlength="5"/><br><br>
+            </div>
+            <div class="card_cvc">
+              <h5>CVC 코드<h5>
+              <input type="text" name="card-cvc" placeholder="3자리" maxlength="3"/><br><br>
+            </div>
+            <div class="room_fee">
+              <p>요금 상세 내역</p>
+              <li>객실 요금 : 160,000원</li>
+              <li>세금 : 16,000원</li>
+            </div>
+          </div>
+          <div class="reserve_last">
+            <div class="total_room_fee">
+              총 예약금액 : 176,000원
+            </div>
+            <br><br>
+            <div class="btn">
+              <button type="reserve_btn" onclick="location.href='reservation_complete.html'">
+              <span>결제하기</span>
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </body>
+</html>

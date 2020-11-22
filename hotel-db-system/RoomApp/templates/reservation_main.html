@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html> <!--로그인 후 고객 페이지-->
+    <head>
+        <meta charset="utf-8">
+        <title>H6호텔에 오신걸 환영합니다</title>
+        <link rel="stylesheet" href="{% static 'RoomApp/static/RoomApp/style.css' %}">
+        <link rel="stylesheet" href="{% static 'RoomApp/static/RoomApp/main.css' %}">
+    </head>
+    <body>
+        <div id="wrap">
+            <!-- 헤더영역 -->
+            <header>
+                <div class="top_menu">
+                    <ul class="top_nav container">
+                        <li><a href="{% static 'UserApp/tempaltes/mypage.html' %}">마이페이지</a></li>
+                        <li><a href="{% static 'UserApp/tempaltes/logout.html' %}">로그아웃</a></li>
+                        <li><a href="#">한국어</a></li>
+                    </ul>
+                </div>
+                <div class="header_inner container">
+                    <h1>H6 HOTEL</h1>
+                    <nav>
+                        <ul class="gnb">
+                            <li><a href="reservation_main.html" style="text-decoration:none">홈</a></li>
+                            <li><a href="intro2.html" style="text-decoration:none">H6호텔 소개</a></li>
+                            <li><a href="room_info2.html" style="text-decoration:none">객실 안내</a></li>
+                        </ul>
+                    </nav>
+                    <button class="reBtn" onclick="location.href='reservation_list.html'">예약하기</button>
+                </div>
+            </header>
+            <div id ="showcase">
+              <div class="reservation_box">
+                <div class="reservation_inner">
+                  <ul>
+                      <li class="checkIn">
+                          <span>체크인</span>
+                          <input type="date" id="datepicker_today">
+                      </li>
+                      <li class="stayDay">
+                          <span></span>
+                          <input type="text" class="stay" disabled>
+                      </li>
+                      <li class="checkOut">
+                          <span>체크아웃</span>
+                          <input type="date" id="datepicker_checkOutDay">
+                      </li>
+                      <li class="room">
+                          <span>객실</span>
+                          <select name="" id="">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                          </select>
+                      </li>
+                      <li class="adult">
+                          <span>성인</span>
+                          <select name="" id="">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                          </select>
+                      </li>
+                      <li class="child">
+                          <span>어린이</span>
+                          <select name="" id="">
+                              <option value="0">0</option>
+                              <option value="0">1</option>
+                              <option value="0">2</option>
+                          </select>
+                      </li>
+                      <li class="baby">
+                          <span>유아</span>
+                          <select name="" id="">
+                              <option value="0">0</option>
+                              <option value="0">1</option>
+                              <option value="0">2</option>
+                          </select>
+                      </li>
+                      <li class="search">
+                          <button onclick="location.href='reservation_list.html'">검색</button>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+        </div>
+    </body>
+</html>
