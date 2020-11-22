@@ -117,6 +117,16 @@ ul {
 	}
 }
 
+.cancel_btn_container{
+	height: 40px;
+	line-height: 40px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	text-align: center;
+	vertical-align: center;
+}
+
 .cancel {
 	height:30px;
     width:70px;
@@ -130,9 +140,6 @@ ul {
     font-size: 12px;
     margin: 4px;
 	cursor: pointer;
-	position: relative;
-	left: 105px;
-	top: 60px;
 }
 
 /*side bar*/
