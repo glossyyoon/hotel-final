@@ -23,7 +23,7 @@ SECRET_KEY = '%+82bca+^avnpky5ivaq#1q5z2+)sz$_%b3nppxsnd(vn#2uhp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -127,6 +127,6 @@ STATICFILES_FINDERS = ['django.contrib.staticfiles.finders.FileSystemFinder','dj
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://{URL}:6379',
+        'LOCATION': 'redis://{URL}:8000',
     },
 }

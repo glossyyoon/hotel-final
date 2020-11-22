@@ -98,6 +98,7 @@ ul {
 .drag-item {
 	margin: 10px;
 	height: 100px;
+	text-align: left;
 	background: rgba(0, 0, 0, 0.4);
 }
 
@@ -123,4 +124,56 @@ ul {
 	.kanban-column {
 		margin-bottom: 30px;
 	}
+<<<<<<< HEAD:hotel-db-system/TaskApp/static/TaskApp/css/serve_request.css
 }
+=======
+}
+
+.menu ul, .menu li {
+	margin: 0;
+    padding: 0;
+}
+.menu ul {
+	background: gray;
+	list-style: none;
+	width: 100%;
+}
+.menu li {
+	float: right;
+	position: relative;
+    width:auto;
+    top: -100px;
+    
+}
+.menu a {
+	background: #33363D;
+	color: #FFFFFF;
+	display: block;
+	font: bold 16px sans-serif;
+	padding: 10px 25px;
+	
+}
+
+.cancel_btn_container {
+	height: 30px;
+	line-height: 50px;
+	margin-left: 5px;
+	display: flex;
+	color: #fff;
+	justify-content: flex-end;
+	align-items: center;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+.cancel {
+	height: 100%;
+    background-color: #c44345;
+    border: none;
+    color:#fff;
+	text-align: center;
+    font-size: 12px;
+	cursor: pointer;
+	transition: 0.3s ease all;
+}
+>>>>>>> issue/32:hotel-db-system/TaskApp/static/TaskApp/css/staff_requests.css
