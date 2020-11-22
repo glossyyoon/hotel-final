@@ -90,6 +90,7 @@ ul {
 .drag-item {
 	margin: 10px;
 	height: 100px;
+	text-align: left;
 	background: rgba(0, 0, 0, 0.4);
 }
 
@@ -142,20 +143,25 @@ ul {
 	
 }
 
+.cancel_btn_container {
+	height: 30px;
+	line-height: 50px;
+	margin-left: 5px;
+	display: flex;
+	color: #fff;
+	justify-content: flex-end;
+	align-items: center;
+	text-align: center;
+	vertical-align: bottom;
+}
+
 .cancel {
-	height:30px;
-    width:70px;
+	height: 100%;
     background-color: #c44345;
     border: none;
     color:#fff;
 	text-align: center;
-	vertical-align: middle;
-    text-decoration: none;
-    display: inline-block;
     font-size: 12px;
-    margin: 4px;
 	cursor: pointer;
-	position: relative;
-	left: 105px;
-	top: 60px;
+	transition: 0.3s ease all;
 }

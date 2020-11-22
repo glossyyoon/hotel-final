@@ -37,9 +37,14 @@ class Guest(models.Model):
 class Staff(models.Model):
     objects = models.Manager()
     staff_id = models.IntegerField(default=0)
-    department_type = (('CLE', 'Cleaning'),
-                       ('TSD', 'Technical Support Department'),
-                       ('CRD', 'Customer Response Department'),)
+    department_type = (('Cleaning Dept', 'Cleaning Dept'),
+                       ('Food Beverage Dept', 'Food Beverage Dept'),
+                       ('Front Office Dept', 'Front Office Dept'),
+                       ('Customer Response Dept', 'Customer Response Dept'),
+                       ('Technical Support Dept', 'Technical Support Dept'),
+                       ('Parking Dept', 'Parking Department'),
+                       ('Purchasing Dept', 'Purchasing Department'),
+                       ('Center', 'Center Department'),)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     nation = models.CharField(max_length=40)
@@ -55,7 +60,7 @@ class Staff(models.Model):
     position = models.CharField(max_length=100)
 
     department = models.CharField(
-        max_length=3, choices=department_type, default="None")
+        max_length=25, choices=department_type, default="None")
 
     def __str__(self):
         return f'ID: {self.staff_id} NAME: {self.first_name} {self.last_name} DEPARTMENT: {self.department}'
