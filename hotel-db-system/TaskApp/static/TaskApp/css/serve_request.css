@@ -75,12 +75,20 @@ ul {
 	background: #FF9800;
 }
 
-.header-done {
-	background: #009688;
+.header-robot1 {
+	background: #3d5caf;
 }
 
-.header-progress {
-	background: #8BC34A;
+.header-robot2 {
+	background: #43509b;
+}
+
+.header-robot3 {
+	background: #2f427e;
+}
+
+.header-robot4 {
+	background: #363580;
 }
 
 .drag-inner-list {
@@ -115,47 +123,4 @@ ul {
 	.kanban-column {
 		margin-bottom: 30px;
 	}
-}
-
-.menu ul, .menu li {
-	margin: 0;
-    padding: 0;
-}
-.menu ul {
-	background: gray;
-	list-style: none;
-	width: 100%;
-}
-.menu li {
-	float: right;
-	position: relative;
-    width:auto;
-    top: -100px;
-    
-}
-.menu a {
-	background: #33363D;
-	color: #FFFFFF;
-	display: block;
-	font: bold 16px sans-serif;
-	padding: 10px 25px;
-	
-}
-
-.cancel {
-	height:30px;
-    width:70px;
-    background-color: #c44345;
-    border: none;
-    color:#fff;
-	text-align: center;
-	vertical-align: middle;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    margin: 4px;
-	cursor: pointer;
-	position: relative;
-	left: 105px;
-	top: 60px;
 }
