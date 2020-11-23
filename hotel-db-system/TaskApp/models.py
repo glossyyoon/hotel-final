@@ -1,12 +1,15 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class ProductRequest(models.Model):
-    staff_id = models.ForeignKey('UserApp.Staff', on_delete=models.CASCADE, null=True)
+    staff_id = models.ForeignKey(
+        'UserApp.Staff', on_delete=models.CASCADE, null=True)
     product_item = models.CharField(max_length=100)
     product_count = models.IntegerField(default=1)
     product_from = models.DateTimeField(auto_now=True)
     product_to = models.DateTimeField(auto_now=False)
+
 
 class Request(models.Model):
 
@@ -32,10 +35,15 @@ class Request(models.Model):
         max_length=50,
         choices=RequestType.choices)
     date_time = models.DateTimeField(auto_now=True)
-    send_staff_id = models.ForeignKey('UserApp.Staff', on_delete=models.CASCADE, null=True, related_name="send_staff_id")
-    send_guest_id = models.ForeignKey('UserApp.Guest', on_delete=models.CASCADE, null=True, related_name="send_guest_id")
-    charged_staff_id = models.ForeignKey('UserApp.Staff', on_delete=models.CASCADE, null=True, related_name="charged_staff_id")
-    charged_robot_id = models.ForeignKey('UserApp.Robot', on_delete=models.CASCADE, null=True, related_name="charged_robot_id")
+    send_staff_id = models.ForeignKey(
+        'UserApp.Staff', on_delete=models.CASCADE, null=True, related_name="send_staff_id")
+    send_guest_id = models.ForeignKey(
+        'UserApp.Guest', on_delete=models.CASCADE, null=True, related_name="send_guest_id")
+    charged_staff_id = models.ForeignKey(
+        'UserApp.Staff', on_delete=models.CASCADE, null=True, related_name="charged_staff_id")
+    charged_robot_id = models.ForeignKey(
+        'UserApp.Robot', on_delete=models.CASCADE, null=True, related_name="charged_robot_id")
     comment = models.CharField(max_length=200, null=True)
     status = models.CharField(max_length=50, choices=RequestStatus.choices)
-    product_request_id = models.ForeignKey(ProductRequest, on_delete=models.CASCADE, null=True)
+    product_request_id = models.ForeignKey(
+        ProductRequest, on_delete=models.CASCADE, null=True)

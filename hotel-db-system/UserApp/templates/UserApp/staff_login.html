@@ -5,19 +5,26 @@
     <title>login</title>
   </head>
 
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{% static 'UserApp/css/staff_login.css' %}">
-    <body>
-        <div class="login-page">
-            <div class="form">
-              </form>
-              <form class="login-form">
-                  <h2 class="name">STAFF ONLY</h2>
-                <input type="text" placeholder="직원번호를 입력하세요."/>
-                <button type ="button" onclick ="location.href='main.html'">login</button>
-              </form>
-            </div>
-          </div>
-    </body>
-    
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="{% static 'UserApp/css/staff_login.css' %}" />
+  <body>
+    <div class="login-page">
+      <div class="form">
+        <form
+          action="/userApp/staff_login_post/"
+          method="post"
+          class="login-form"
+        >
+          {% csrf_token %}
+          <h2 class="name">STAFF ONLY</h2>
+          <input
+            type="text"
+            placeholder="직원번호를 입력하세요."
+            name="staff_id"
+          />
+          <button type="submit">login</button>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

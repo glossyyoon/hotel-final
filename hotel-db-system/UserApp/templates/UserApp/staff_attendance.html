@@ -1,0 +1,19 @@
+{% load static %}
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    {{staff_id}}님 반갑습니다.
+    <h1>잔여 연가 :</h1>
+    <table>
+      {% for attendance in attendance_list %}
+      <ul>
+        <li>{{attendance.work_type}}</li>
+        <li>{{attendance.description}}</li>
+      </ul>
+      {% endfor %}
+    </table>
+    <input type="date" id="start" name="leave_date" />
+  </body>
+</html>

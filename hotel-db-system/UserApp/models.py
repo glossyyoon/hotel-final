@@ -39,7 +39,7 @@ class Staff(models.Model):
     staff_id = models.IntegerField(default=0)
     department_type = (('CLE', 'Cleaning'),
                        ('TSD', 'Technical Support Department'),
-                       ('CRD', 'Customer Response Department'),)
+                       ('CRD', 'Customer Response Department'), ('MAN', 'Manager Department'))
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     nation = models.CharField(max_length=40)
@@ -53,7 +53,7 @@ class Staff(models.Model):
     hire_date = models.DateField()
     salary = models.IntegerField()
     position = models.CharField(max_length=100)
-
+    had_annual_leave = models.IntegerField(default=0)
     department = models.CharField(
         max_length=3, choices=department_type, default="None")
 
@@ -65,6 +65,7 @@ class Staff(models.Model):
 
 
 class Sales(models.Model):
+    objects = models.Manager()
     date = models.DateTimeField()
     fee = models.IntegerField()
     payment_num = models.IntegerField()
@@ -77,9 +78,32 @@ class Sales(models.Model):
 
 
 class Robot(models.Model):
+    objects = models.Manager()
     work_check = models.BooleanField(default=False)
     is_emergency = models.BooleanField(default=False)
     position = models.CharField(max_length=50)
 
     def __str__(self):
         return f'work_check: {self.work_check} is_emergency: {self.is_emergency} position: {self.position}'
+
+
+class Attendance(models.Model):
+    objects = models.Manager()
+    staff_id = models.ForeignKey(
+        'Staff', on_delete=models.CASCADE, db_column='staff_id')
+    date = models.DateTimeField()
+    start_time = models.DateTimeField()
+    finish_time = models.DateTimeField()
+    work_type = models.CharField(max_length=50)
+    description = models.TextField()
+    accecpt = models.BooleanField()
+
+
+class StaffLeave(models.Model):
+    staff_id = models.ForeignKey(
+        'Staff', on_delete=models.CASCADE, db_column='staff_id')
+    start_time = models.DateTimeField()
+    finish_time = models.DateTimeField()
+    leave_type = (('Monthly_Leave', 'Monthly_Leave'),
+                  ('Annual_Leave', 'Annual_Leave'))
+    accecpt = models.BooleanField()
