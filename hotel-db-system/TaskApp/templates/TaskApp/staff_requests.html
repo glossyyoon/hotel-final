@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>employee page</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,500" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'TaskApp/css/staff_request.css' %}">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  </head>
+
+    <body>
+    {% csrf_token %}
+      <header>
+        <h1>TASK</h1>
+        <link href='https://fonts.googleapis.com/css?family=Lato:400,500,900' rel='stylesheet' type='text/css'>
+        <style>
+          a { text-decoration: none; color: white; }
+          a:visited { text-decoration: none; }
+          a:hover { text-decoration: none; }
+          a:focus { text-decoration: none; }
+          a:hover, a:active { text-decoration: none; }
+      </style>
+
+
+        <div id="wrapper">     
+
+        <div id="sidebar-menu">
+            <div id="toggleMenu">
+                <div class="list"></div>
+                <div class="thumbs"></div>    
+            </div> 
+            <ul>
+                <a href="staff_request.html"><li class="DASHBOARD"><span>TASK</span></li></a>  <!--吏곸썝 �뾽臾� 蹂대뱶(硫붿씤�솕硫�)-->
+                <a href="staff_attendance.html"><li class="USERS"><span>ATTENDANCE</span></li></a>  <!--洹쇳깭愿�由�-->
+                <a href="product_request.html"><li class="COLLECTIONS"></a><span>PRODUCT REQUEST</span></li></a>  <!--臾쇳뭹援щℓ�슂泥�-->
+                <a href="serve_request.html"><li class="ARCHIVED"><span>SERVE REQUEST</span></li></a>  <!--濡쒕큸�뿉寃� serve request �븷�떦-->
+                <a href="center_requests_assign.html"><li class="TASKS"><span>REQUEST ASSIGNMENT</span></li></a>  <!--�뾽臾대텇諛�-->
+                <a href="live_reservation_status.html"><li class="STATS"><span>RESERVATION STATUS</span></li></a>  <!--�떎�떆媛� �삁�빟 �쁽�솴-->    
+                
+            </ul>
+        </div>
+      </header>
+
+      
+
+      <div class="kanban-container">
+        <ul class="kanban-list">
+          <li class="kanban-column kanban-column-requests">
+          <span class="kanban-column-header header-requests">
+            <h2>requests</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Wait_For_Accept">
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-progress">
+          <span class="kanban-column-header header-progress">
+            <h2>In Progress</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Proceeding">
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-done">
+            <span class="kanban-column-header header-done">
+              <h2>Done</h2>
+            </span>
+            <div class="kanban-options"></div>
+            <ul class="drag-inner-list" name="Completed">
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+    <script src={% static 'TaskApp/js/staff_requests.js' %}></script>
+  </body>
+
+</html>

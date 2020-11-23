@@ -75,12 +75,20 @@ ul {
 	background: #FF9800;
 }
 
-.header-done {
-	background: #009688;
+.header-robot1 {
+	background: #3d5caf;
 }
 
-.header-progress {
-	background: #8BC34A;
+.header-robot2 {
+	background: #43509b;
+}
+
+.header-robot3 {
+	background: #2f427e;
+}
+
+.header-robot4 {
+	background: #363580;
 }
 
 .drag-inner-list {
@@ -90,6 +98,7 @@ ul {
 .drag-item {
 	margin: 10px;
 	height: 100px;
+	text-align: left;
 	background: rgba(0, 0, 0, 0.4);
 }
 
@@ -115,6 +124,9 @@ ul {
 	.kanban-column {
 		margin-bottom: 30px;
 	}
+<<<<<<< HEAD:hotel-db-system/TaskApp/static/TaskApp/css/serve_request.css
+}
+=======
 }
 
 .menu ul, .menu li {
@@ -142,20 +154,26 @@ ul {
 	
 }
 
+.cancel_btn_container {
+	height: 30px;
+	line-height: 50px;
+	margin-left: 5px;
+	display: flex;
+	color: #fff;
+	justify-content: flex-end;
+	align-items: center;
+	text-align: center;
+	vertical-align: bottom;
+}
+
 .cancel {
-	height:30px;
-    width:70px;
+	height: 100%;
     background-color: #c44345;
     border: none;
     color:#fff;
 	text-align: center;
-	vertical-align: middle;
-    text-decoration: none;
-    display: inline-block;
     font-size: 12px;
-    margin: 4px;
 	cursor: pointer;
-	position: relative;
-	left: 105px;
-	top: 60px;
+	transition: 0.3s ease all;
 }
+>>>>>>> issue/32:hotel-db-system/TaskApp/static/TaskApp/css/staff_requests.css

@@ -12,13 +12,33 @@
     <body>
       <header>
         <h1>TASK</h1>
-        <nav class="menu">
-          <ul>
-           <li><a href="#">근태 관리</a></li>
-            <li><a href="task.html">업무 분배</a></li>
-            <li><a href="reservation.html">실시간 예약 상황</a>
-          </ul>
-        </nav>
+        <link href='https://fonts.googleapis.com/css?family=Lato:400,500,900' rel='stylesheet' type='text/css'>
+        <style>
+          a { text-decoration: none; color: white; }
+          a:visited { text-decoration: none; }
+          a:hover { text-decoration: none; }
+          a:focus { text-decoration: none; }
+          a:hover, a:active { text-decoration: none; }
+      </style>
+
+
+        <div id="wrapper">     
+
+        <div id="sidebar-menu">
+            <div id="toggleMenu">
+                <div class="list"></div>
+                <div class="thumbs"></div>    
+            </div> 
+            <ul>
+                <a href="staff_request.html"><li class="DASHBOARD"><span>TASK</span></li></a>  <!--직원 업무 보드(메인화면)-->
+                <a href="staff_attendance.html"><li class="USERS"><span>ATTENDANCE</span></li></a>  <!--근태관리-->
+                <a href="product_request.html"><li class="COLLECTIONS"></a><span>PRODUCT REQUEST</span></li></a>  <!--물품구매요청-->
+                <a href="serve_request.html"><li class="ARCHIVED"><span>SERVE REQUEST</span></li></a>  <!--로봇에게 serve request 할당-->
+                <a href="center_requests_assign.html"><li class="TASKS"><span>REQUEST ASSIGNMENT</span></li></a>  <!--업무분배-->
+                <a href="live_reservation_status.html"><li class="STATS"><span>RESERVATION STATUS</span></li></a>  <!--실시간 예약 현황-->    
+                
+            </ul>
+        </div>
       </header>
 
       
@@ -92,7 +112,7 @@
 
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
-    <script src="TaskApp/css/staff_request.js"></script>
+    <script src="TaskApp/js/staff_request.js"></script>
   </body>
 
 </html>

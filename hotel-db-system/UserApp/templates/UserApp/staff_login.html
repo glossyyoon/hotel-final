@@ -11,17 +11,12 @@
     <div class="login-page">
       <div class="form">
         <form
+          class="login-form"
           action="/userApp/staff_login_post/"
           method="post"
-          class="login-form"
         >
-          {% csrf_token %}
           <h2 class="name">STAFF ONLY</h2>
-          <input
-            type="text"
-            placeholder="직원번호를 입력하세요."
-            name="staff_id"
-          />
+          <input type="text" placeholder="Please enter employee number" />
           <button type="submit">login</button>
         </form>
       </div>

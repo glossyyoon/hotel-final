@@ -36,14 +36,14 @@ class Request(models.Model):
         choices=RequestType.choices)
     date_time = models.DateTimeField(auto_now=True)
     send_staff_id = models.ForeignKey(
-        'UserApp.Staff', on_delete=models.CASCADE, null=True, related_name="send_staff_id")
+        'UserApp.Staff', on_delete=models.CASCADE, blank=True, null=True, related_name="send_staff_id")
     send_guest_id = models.ForeignKey(
-        'UserApp.Guest', on_delete=models.CASCADE, null=True, related_name="send_guest_id")
+        'UserApp.Guest', on_delete=models.CASCADE, blank=True, null=True, related_name="send_guest_id")
     charged_staff_id = models.ForeignKey(
-        'UserApp.Staff', on_delete=models.CASCADE, null=True, related_name="charged_staff_id")
+        'UserApp.Staff', on_delete=models.CASCADE, blank=True, null=True, related_name="charged_staff_id")
     charged_robot_id = models.ForeignKey(
-        'UserApp.Robot', on_delete=models.CASCADE, null=True, related_name="charged_robot_id")
-    comment = models.CharField(max_length=200, null=True)
+        'UserApp.Robot', on_delete=models.CASCADE, blank=True, null=True, related_name="charged_robot_id")
+    comment = models.CharField(max_length=200, blank=True, null=True)
     status = models.CharField(max_length=50, choices=RequestStatus.choices)
     product_request_id = models.ForeignKey(
-        ProductRequest, on_delete=models.CASCADE, null=True)
+        ProductRequest, on_delete=models.CASCADE, blank=True, null=True)

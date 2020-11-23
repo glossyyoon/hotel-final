@@ -37,31 +37,40 @@ class Guest(models.Model):
 class Staff(models.Model):
     objects = models.Manager()
     staff_id = models.IntegerField(default=0)
-    department_type = (('CLE', 'Cleaning'),
-                       ('TSD', 'Technical Support Department'),
-                       ('CRD', 'Customer Response Department'), ('MAN', 'Manager Department'))
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    nation = models.CharField(max_length=40)
-    gender_type = (('MALE', 'Male'),
-                   ('FEMALE', 'Female'),)
-    gender = models.CharField(
-        max_length=6, choices=gender_type, default="Male")
-    birthday = models.DateField()
-    email = models.CharField(max_length=40)
-    phone_number = models.CharField(max_length=50)
-    hire_date = models.DateField()
-    salary = models.IntegerField()
-    position = models.CharField(max_length=100)
-    had_annual_leave = models.IntegerField(default=0)
-    department = models.CharField(
-        max_length=3, choices=department_type, default="None")
 
-    def __str__(self):
-        return f'ID: {self.staff_id} NAME: {self.first_name} {self.last_name} DEPARTMENT: {self.department}'
 
-    class Meta:
-        db_table = 'staff'
+department_type = (('Cleaning Dept', 'Cleaning Dept'),
+                   ('Food Beverage Dept', 'Food Beverage Dept'),
+                   ('Front Office Dept', 'Front Office Dept'),
+                   ('Customer Response Dept', 'Customer Response Dept'),
+                   ('Technical Support Dept', 'Technical Support Dept'),
+                   ('Parking Dept', 'Parking Department'),
+                   ('Purchasing Dept', 'Purchasing Department'),
+                   ('Center', 'Center Department'),)
+first_name = models.CharField(max_length=100)
+last_name = models.CharField(max_length=100)
+nation = models.CharField(max_length=40)
+gender_type = (('MALE', 'Male'),
+               ('FEMALE', 'Female'),)
+gender = models.CharField(
+    max_length=6, choices=gender_type, default="Male")
+birthday = models.DateField()
+email = models.CharField(max_length=40)
+phone_number = models.CharField(max_length=50)
+hire_date = models.DateField()
+salary = models.IntegerField()
+position = models.CharField(max_length=100)
+had_annual_leave = models.IntegerField(default=0)
+department = models.CharField(
+    max_length=25, choices=department_type, default="None")
+
+
+def __str__(self):
+    return f'ID: {self.staff_id} NAME: {self.first_name} {self.last_name} DEPARTMENT: {self.department}'
+
+
+class Meta:
+    db_table = 'staff'
 
 
 class Sales(models.Model):

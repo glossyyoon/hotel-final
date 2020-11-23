@@ -1,12 +1,15 @@
 from enum import Enum
+import json
+from datetime import datetime
 
 from django.core.cache import cache
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.db.models import Q
-from datetime import datetime
-from UserApp.models import Guest
+from django.http import JsonResponse, HttpResponse
+from django.views import generic
 
+from UserApp.models import Guest
 from .models import Request, ProductRequest
 from .place import Coordinate, get_place_coord, get_distance, convert_to_coordinate
 from RoomApp.models import Booking
@@ -19,12 +22,34 @@ NOT_YET = 0
 
 class Department(Enum):
     CLEANING = "Cleaning Dept"
-    BEVERAGE = "Beverage Dept"
-    FRONT_OFFICE = "Front office Dept"
+    FOOD_BEVERAGE = "Food Beverage Dept"
+    FRONT_OFFICE = "Front Office Dept"
+    CUSTOMER_RESPONSE = "Customer Response Dept"
+    TECHNICAL_SUPPORT = "Technical Support Dept"
     ROBOT = "Robot"
     PARKING = "Parking Dept"
     PURCHASING = "Purchasing Dept"
     CENTER = "Center Dept"
+
+class StaffRequestsView(generic.ListView):
+    model = Request
+    template_name = 'TaskApp/staff_requests.html'
+
+def get_staff_requests(req):
+    json_data = json.loads(req.body)
+    staff = Staff.objects.get(staff_id=json_data["staff_id"])
+    request_list = Request.objects.filter(charged_staff_id=staff.pk).values()
+    # for request in request_list:
+    #     print(request)
+    #     if request['type'] in [
+    #     Request.RequestType.ROOM_CLEANING,
+    #     Request.RequestType.ROOM_SERVICE,
+    #     Request.RequestType.ROOM_ERROR,
+    #     Request.RequestType.ROOM_ETC]:
+    #         guest = Guest.objects.get(pk=request['send_guest_id_id'])
+    #         booking = Booking.objects.get(pk=guest.reseve_num)
+    #         request.append({'room_id': booking.id})
+    return JsonResponse({'requests': list(request_list)}, status=201)
 
 def request_send(req, type, send_user_id):
     request = None
@@ -47,9 +72,7 @@ def request_send(req, type, send_user_id):
         try:
             product_request_id = req.POST['product_request_id']
         except (KeyError, ProductRequest.DoesNotExist):
-            render(request, '', {
-                'error_message': "product_request_id 값이 존재하지 않습니다."
-            })
+            return JsonResponse(data={"error_message": "존재하지 않는 물품 구매 요청 ID입니다."}, status=400)
     elif type == Request.RequestType.ETC:
         send_staff_id = send_user_id
     request = Request.objects.create(
@@ -60,7 +83,8 @@ def request_send(req, type, send_user_id):
         product_request_id=product_request_id,
         status=Request.RequestStatus.NOT_ASSIGNED
     )
-    return render(request, '', {"request_id": request.id}, status=201)
+    request_convey(request)
+    return JsonResponse({"request_id": request.id}, status=201)
 
 def request_convey(request):
     request.charged_staff_id = get_optimal_request_charger_list(request)[0]
@@ -74,32 +98,32 @@ def request_assign(req):
         request.status = Request.RequestStatus.WAIT_FOR_ACCEPT
         request.save()
     except Request.DoesNotExist:
-        return render(req, '', {"error_message": "존재하지 않는 요청 정보입니다."}, status=400)
+        return JsonResponse(data={"error_message": "존재하지 않는 요청 정보입니다."}, status=400)
     except Staff.DoesNotExist:
-        return render(req, '', {"error_message": "존재하지 않는 직원 정보입니다."}, status=400)
+        return JsonResponse(data={"error_message": "존재하지 않는 직원 정보입니다."}, status=400)
     else:
-        return render(req, '', status=200)
+        return HttpResponse(status=200)
 
 def request_get_department_in_charge(request):
     if request.type == Request.RequestType.ROOM_CLEANING:
-        return Department.CLEANING
+        return Department.CLEANING.value
     elif request.type == Request.RequestType.ROOM_SERVICE:
-        return Department.BEVERAGE
+        return Department.FOOD_BEVERAGE.value
     elif request.type in [
         Request.RequestType.ROOM_ERROR,
         Request.RequestType.ROOM_ETC,]:
-        return Department.FRONT_OFFICE
+        return Department.FRONT_OFFICE.value
     elif request.type in [
         Request.RequestType.CARRY_IN,
         Request.RequestType.CARRY_OUT,
         Request.RequestType.CARRY_ROOM_SERVICE]:
-        return Department.ROBOT
+        return Department.ROBOT.value
     elif request.type == Request.RequestType.VALET_PARKING:
-        return Department.PARKING
+        return Department.PARKING.value
     elif request.type == Request.RequestType.PRODUCT_PURCHASING:
-        return Department.PURCHASING
+        return Department.PURCHASING.value
     elif request.type == Request.RequestType.ETC:
-        return Department.CENTER
+        return Department.CENTER.value
 
 def request_get_coordinate(request):
     if request.type in [
@@ -142,73 +166,75 @@ def get_optimal_request_charger_list(request):
     if department == Department.ROBOT:
         charger_list = Robot.objects.filter(work_check=False)
         return sorted(charger_list,
-        lambda robot: (
-            robot.task_count,
+        key=lambda robot: (
+            len(Request.objects.filter(charged_robot_id=robot.id)),
             get_distance(request_coord, convert_to_coordinate(robot.position))))
     else:
         charger_list = Staff.objects.filter(department=department)
-        charger_list = list(filter(lambda charger: cache.get((charger.staff_id, request.id), NOT_YET) == REJECTED, charger_list))
+        print(department)
+        # charger_list = list(filter(lambda charger: cache.get((charger.staff_id, request.id), NOT_YET) == REJECTED, charger_list))
         return sorted(charger_list,
-        lambda staff: (
-            staff.task_count,
+        key=lambda staff: (
+            len(Request.objects.filter(charged_staff_id=staff.staff_id)),
             get_distance(request_coord, convert_to_coordinate(staff.position))))
 
 def request_accept(req):
     try:
-        request = Request.objects.get(pk=req.POST["request_id"])
-        staff = Staff.objects.get(pk=req.POST["staff_id"])
-        staff.task_count = staff.task_count + 1
-        request.charged_staff_id = staff.id
+        json_data = json.loads(req.body)
+        request = Request.objects.get(pk=json_data["request_id"])
         request.status = Request.RequestStatus.PROCEEDING
     except (KeyError, Request.DoesNotExist):
-        return render(req, '', status=400)
-    except Staff.DoesNotExist:
-        return render(req, '', {"error_message": "존재하지 않는 직원 정보입니다."}, status=400)
+        return JsonResponse(data={"error_message": "존재하지 않는 요청이거나, http 요청 property가 존재하지 않습니다."}, status=400)
     else:
         request.save()
-        return render(req, '', status=200)
+        return HttpResponse(status=200)
 
 def request_reject(req):
     try:
         request = Request.objects.get(pk=req.POST["request_id"], charged_staff_id=req.POST["charged_staff_id"])
     except (KeyError, Request.DoesNotExist):
-        return render(req, '', status=400)
+        return JsonResponse(data={"error_message": "존재하지 않는 요청이거나, http 요청 property가 존재하지 않습니다."}, status=400)
     else:
         cache.set((req.POST["charged_staff_id"], req.POST["request_id"]), REJECTED, 60 * 60)
         request.charged_staff_id = None
         request.status = Request.RequestStatus.NOT_ASSIGNED
         request.save()
         request_convey(request)
-        return render(req, '', status=200)
+        return HttpResponse(status=200)
 
 def request_complete(req):
     try:
-        request = Request.objects.get(pk=req.POST["request_id"])
-        staff = Staff.objects.get(pk=req.POST["staff_id"])
-        staff.task_count = staff.task_count - 1
+        json_data = json.loads(req.body)
+        request = Request.objects.get(pk=json_data["request_id"])
         request.status = Request.RequestStatus.COMPLETED
         request.save()
-        staff.save()
-    except (KeyError, Request.DoesNotExist, Staff.DoesNotExist):
-        return render(req, '', status=400)
+        if request.type == Request.RequestType.ROOM_SERVICE:
+            request = Request.objects.create(
+            type=Request.RequestType.CARRY_ROOM_SERVICE,
+            send_guest_id=request.send_guest_id,
+            comment=request.comment,
+            status=Request.RequestStatus.NOT_ASSIGNED
+            )
+            request.save()
+            request_convey(request)
+    except (KeyError, Request.DoesNotExist):
+        return JsonResponse(data={"error_message": "존재하지 않는 요청이거나, http 요청 property가 존재하지 않습니다."}, status=400)
     else:
-        return render(req, '', status=200)
+        return HttpResponse(status=200)
 
 def request_cancel(req):
     try:
-        request = Request.objects.get(pk=req.POST["request_id"])
-        staff = Staff.objects.get(pk=req.POST["staff_id"])
-        staff.task_count = staff.task_count - 1
-        cache.set((request.charged_staff_id, req.POST["request_id"]), REJECTED, 60 * 60)
+        json_data = json.loads(req.body)
+        request = Request.objects.get(pk=json_data["request_id"])
+        # cache.set((request.charged_staff_id, request.id), REJECTED, 60 * 60)
         request.charged_staff_id = None
         request.status = Request.RequestStatus.NOT_ASSIGNED
         request.save()
         request_convey(request)
-        staff.save()
-    except (KeyError, Request.DoesNotExist, Staff.DoesNotExist):
-        return render(req, '', status=400)
+    except (KeyError, Request.DoesNotExist):
+        return JsonResponse(data={"error_message": "존재하지 않는 요청이거나, http 요청 property가 존재하지 않습니다."}, status=400)
     else:
-        return render(req, '', status=200)
+        return HttpResponse(req, '', status=200)
 
 def request_get_list(req):
     q = Q()
@@ -227,4 +253,4 @@ def request_get_list(req):
     if req.POST in 'from' and req.POST in 'to':
         q.add(Q(date_time__range=[req.POST['from'], req.POST['to']]))
     requests_list = Request.objects.filter(q)
-    return render(req, '', {"requests_list": requests_list}, status=200)
+    return HttpResponse(req, '', {"requests_list": requests_list}, status=200)
