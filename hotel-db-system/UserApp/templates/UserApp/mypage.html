@@ -64,26 +64,41 @@
         </h3>
         <div>
           <ul class="mypage_contents">
-            <li class="check"><a href="mypage.html">예약내역</a></li>
-            <li>회원정보</li>
-            <li>마일리지 확인하기</li>
-            <li>회원탈퇴</li>
+            <li class="check"><a href="#home">예약내역</a></li>
+            <li><a href="#guest_info">회원정보</a></li>
+            <li><a href="#point_info">마일리지 확인하기</a></li>
+            <li><a href="#account_delete">회원탈퇴</a></li>
           </ul>
         </div>
         <br />
-        <div class="period">
-          투숙기간 :
-          <input type="date" name="checkIn" value="" />&nbsp;~&nbsp;
-          <input type="date" name="checkOut" value="" />
-          <button
-            type="button1"
-            class="button"
-            onclick="location.href='/RoomApp/tempaltes/reservation_check/'"
-          >
-            조회하기
-          </button>
-        </div>
-        <div class="reserve_check"></div>
+        <section id="home">
+          <div class="period">
+            투숙기간 :
+            <input type="date" name="checkIn" value="" />&nbsp;~&nbsp;
+            <input type="date" name="checkOut" value="" />
+            <button
+              type="button1"
+              class="button"
+              onclick="location.href='/RoomApp/tempaltes/reservation_check/'"
+            >
+              조회하기
+            </button>
+          </div>
+          <div class="reserve_check"></div>
+        </section>
+        <section id="guest_info">
+          <h1>회원정보</h1>
+          <h2>아이디 : {{guest.site_id}}</h2>
+          <h2>비밀번호 : {{guest.site_pw}}</h2>
+          <h2>이름: {{guest.first_name}} {{guest.last_name}}</h2>
+        </section>
+        <section id="point_info">
+          <h1>마일리지정보</h1>
+          <h1>{{guest.guest_point}} point</h1>
+        </section>
+        <section id="account_delete">
+          <h1>회원탈퇴</h1>
+        </section>
       </div>
     </div>
   </body>

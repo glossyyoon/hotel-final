@@ -109,6 +109,6 @@ class StaffLeave(models.Model):
     objects = models.Manager()
     staff_id = models.ForeignKey(
         'Staff', on_delete=models.CASCADE, db_column='staff_id')
-    start_time = models.DateTimeField()
-    finish_time = models.DateTimeField()
+    start_time = models.DateField()
+    finish_time = models.DateField()
     accept = models.BooleanField(default=False)

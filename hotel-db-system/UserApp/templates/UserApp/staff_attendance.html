@@ -9,15 +9,17 @@
     <table>
       {% for attendance in attendance_list %}
       <ul>
-        <li>{{attendance.work_type}}</li>
-        <li>{{attendance.description}}</li>
+        <li>work type: {{attendance.work_type}}</li>
+        <li>decription: {{attendance.description}}</li>
+        <li>start_time: {{attendance.start_time}}</li>
+        <li>finish_time: {{attendance.finish_time}}</li>
       </ul>
       {% endfor %}
     </table>
     <form class="login-form" action="/userApp/leave_request/" method="post">
       {% csrf_token %} 휴가 신청하기
-      <input type="date" name="start_time" />
-      <input type="date" name="finish_time" />
+      <p>시작 <input type="date" name="start_time" /></p>
+      <p>종료 <input type="date" name="finish_time" /></p>
       <button type="submit">신청하기</button>
     </form>
     {% if staff.department == 'Executive' %}
