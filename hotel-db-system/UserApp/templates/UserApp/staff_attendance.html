@@ -4,8 +4,8 @@
     <title></title>
   </head>
   <body>
-    {{staff_id}}님 반갑습니다.
-    <h1>잔여 연가 :</h1>
+    {{staff.last_name}}님 반갑습니다. 부서명: {{staff.department}}
+    <h1>잔여 연가 : {{staff.had_annual_leave}}</h1>
     <table>
       {% for attendance in attendance_list %}
       <ul>
@@ -14,6 +14,22 @@
       </ul>
       {% endfor %}
     </table>
-    <input type="date" id="start" name="leave_date" />
+    <form class="login-form" action="/userApp/leave_request/" method="post">
+      {% csrf_token %} 휴가 신청하기
+      <input type="date" name="start_time" />
+      <input type="date" name="finish_time" />
+      <button type="submit">신청하기</button>
+    </form>
+    {% if staff.department == 'Executive' %}
+    <table>
+      {% for leave in leave_list %}
+      <ul>
+        <li>{{leave.staff_id_id}}</li>
+        <li>{{leave.start_time}}</li>
+        <li>{{leave.finish_time}}</li>
+      </ul>
+      {% endfor %}
+    </table>
+    {% endif %}
   </body>
 </html>

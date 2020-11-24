@@ -15,8 +15,13 @@
           action="/userApp/staff_login_post/"
           method="post"
         >
+          {% csrf_token %}
           <h2 class="name">STAFF ONLY</h2>
-          <input type="text" placeholder="Please enter employee number" />
+          <input
+            type="text"
+            name="staff_id"
+            placeholder="Please enter employee number"
+          />
           <button type="submit">login</button>
         </form>
       </div>

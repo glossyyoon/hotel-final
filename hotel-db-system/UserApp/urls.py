@@ -12,5 +12,6 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('mypage/', views.guest_mypage, name='guest_mypage'),
     path('staff_attendance/', views.staff_attendance, name='staff_attendance'),
-    path('staff_login_post/', views.staff_login_post, name='staff_login_post')
+    path('staff_login_post/', views.staff_login_post, name='staff_login_post'),
+    path('leave_request/', views.leave_request, name='leave_request')
 ]

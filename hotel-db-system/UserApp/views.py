@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import auth
-from .models import Guest, Staff, Attendance
+from .models import Guest, Staff, Attendance, StaffLeave
 import json
 from django.views import View
 from django.http import JsonResponse
@@ -27,7 +27,6 @@ def staff_login_post(request):
 
     elif request.method == "POST":
         staff_id = request.POST.get('staff_id', None)
-
         staff = Staff.objects.filter(staff_id=staff_id).values()
         print(staff)
         if len(staff) == 0:
@@ -103,16 +102,33 @@ def logout(request):
 
 def guest_mypage(request):
     user_id = request.session.get('user')
+    guest = Guest.objects.filter(site_id=user_id).values()[0]
     print(user_id)
-    return render(request, 'UserApp/mypage.html', {'user_id': user_id})
+    return render(request, 'UserApp/mypage.html', {'user_id': user_id, 'guest': guest})
 
 
 def staff_attendance(request):
     staff_id = request.session.get('staff')
-    staff = Staff.objects.filter(
-        id=staff_id).values()
+    staff = staff = Staff.objects.get(id=staff_id)
     attendance_list = Attendance.objects.filter(
         staff_id=staff_id).values()
-    print(staff_attendance)
-    print(staff)
-    return render(request, 'UserApp/staff_attendance.html', {'staff_id': staff[0]['staff_id'], 'attendance_list': attendance_list})
+    leave_list = StaffLeave.objects.all().values()
+    staff_dict = {}
+
+    for leave in leave_list:
+        #temp = Staff.objects.get(id=leave.staff_id)
+        #staff_dict[leave.staff_id] = temp
+        print(leave)
+    print(leave_list)
+    return render(request, 'UserApp/staff_attendance.html', {'staff': staff, 'attendance_list': attendance_list, 'leave_list': leave_list})
+
+
+def leave_request(request):
+    staff_id = request.session.get('staff')
+    staff = Staff.objects.get(id=staff_id)
+    start_time = request.POST.get('start_time', None)
+    finish_time = request.POST.get('finish_time', None)
+    staff_leave = StaffLeave(staff_id=staff, start_time=start_time,
+                             finish_time=finish_time,  accept=False)
+    staff_leave.save()
+    return redirect('/userApp/staff_attendance')
