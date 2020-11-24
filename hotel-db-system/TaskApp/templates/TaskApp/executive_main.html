@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,500" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'TaskApp/css/executive_main.css' %}">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    </head>
+    <body>
+        <nav>
+            <div class="menu-btn">
+            <div class="line line--1"></div>
+            <div class="line line--2"></div>
+            <div class="line line--3"></div>
+            </div>
+            
+            <div class="nav-links">
+            <a href="executive_main.html" class="link">Home</a>
+            <a href="department_organization_chart.html" class="link">Organization Chart</a>
+            <a href="sales_analysis.html" class="link">Sales Analysis</a>
+            <a href="executive_task.html" class="link">My Task</a>
+            </div>
+            </nav>
+
+        <script src="{% static 'TaskApp/css/executive_main.js' %}"></script>
+    </body>
+
+</html>
