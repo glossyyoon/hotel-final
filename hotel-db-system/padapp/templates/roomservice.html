@@ -1,1 +1,9 @@
 <h1>룸서비스 메뉴들 보여지는 페이지</h1>
+
+{% for item in menu %}
+{{menu.menu_name}}
+{{menu.description}}
+{{menu.image}}
+{{menu.price}}
+{{menu.count}}
+{% endfor %}
