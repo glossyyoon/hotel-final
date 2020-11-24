@@ -7,6 +7,7 @@ class Pad(models.Model):
     # dnd = models.ForeignKey(Dnd, on_delete=SET_NULL, null=True)
     # turndown = models.ForeignKey(TurnDown, on_delete=SET_NULL, null=True)
     # compalin = models.ForeignKey(Complain, on_delete=SET_NULL, null=True)
+
 class RoomServiceType(models.Model):
     TYPE_CHOICES=(
         ('PNS','PASTAS & SANDWICHES'),
@@ -18,9 +19,13 @@ class RoomServiceType(models.Model):
             choices = TYPE_CHOICES,
         )
     menu_name = models.CharField(max_length=100)
+    description = models.CharField(max_length=500, null=True)
+    image = models.ImageField(blank=True, upload_to="roomservice")
     price = models.IntegerField(default=0)
+    count = models.IntegerField(default=0)
     def __str__(self):
         return '%s - %s' % (self.roomservice_type, self.menu_name)
+    
 
 class RoomService(models.Model):
     pad = models.ForeignKey(Pad, on_delete=models.CASCADE)
