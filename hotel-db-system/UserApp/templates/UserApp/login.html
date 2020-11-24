@@ -23,7 +23,7 @@
   </head>
   <body>
     <div class="signup-form">
-      <form action="#login_post" method="post" class="form-horizontal">
+      <form action="/userApp/login_post/" method="post" class="form-horizontal">
         {% csrf_token %}
         <div class="row">
           <div class="col-8 offset-4">
@@ -70,7 +70,7 @@
         </div>
       </form>
       <div class="text-center">
-        아직 회원이 아니신가요? <a href="signup.html">회원가입</a>
+        아직 회원이 아니신가요? <a href="/userApp/signup/">회원가입</a>
       </div>
       <p></p>
       <div class="text-center"><a href="main.html">메인페이지</a></div>

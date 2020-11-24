@@ -7,6 +7,7 @@ from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 
 # Create your views here.
 
@@ -62,7 +63,9 @@ def signup_submit(request):
         guest.email = email
 
         guest.save()
-        return render(request, 'UserApp/login.html')
+
+        request.session['user'] = site_id
+        return redirect('/userApp/mypage/')
     return render(request, 'UserApp/signup.html')
 
 
@@ -97,7 +100,8 @@ def signup(request):
 
 
 def logout(request):
-    return render(request, 'UserApp/logout.html')
+    auth_logout(request)
+    return render(request, 'UserApp/login.html')
 
 
 def guest_mypage(request):

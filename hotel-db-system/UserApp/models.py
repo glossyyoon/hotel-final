@@ -46,19 +46,19 @@ class Staff(models.Model):
                        ('Purchasing Dept', 'Purchasing Department'),
                        ('Center', 'Center Department'),
                        ('Executive', 'Executive'))
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    nation = models.CharField(max_length=40)
+    first_name = models.CharField(max_length=100, null=True)
+    last_name = models.CharField(max_length=100, null=True)
+    nation = models.CharField(max_length=40, null=True)
     gender_type = (('MALE', 'Male'),
                    ('FEMALE', 'Female'),)
     gender = models.CharField(
         max_length=6, choices=gender_type, default="Male")
-    birthday = models.DateField()
-    email = models.CharField(max_length=40)
-    phone_number = models.CharField(max_length=50)
-    hire_date = models.DateField()
-    salary = models.IntegerField()
-    position = models.CharField(max_length=100)
+    birthday = models.DateField(null=True)
+    email = models.CharField(max_length=40, null=True)
+    phone_number = models.CharField(max_length=50, null=True)
+    hire_date = models.DateField(null=True)
+    salary = models.IntegerField(null=True)
+    position = models.CharField(max_length=100, null=True)
     had_annual_leave = models.IntegerField(default=0)
     department = models.CharField(
         max_length=25, choices=department_type, default="None")
