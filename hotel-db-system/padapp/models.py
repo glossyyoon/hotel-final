@@ -14,7 +14,7 @@ class RoomServiceType(models.Model):
         ('GRILL', 'FROM THE GRILL'),
         ('DES', 'DESSERT'),
     )
-    roomservice_type = models.CharField(
+    menu_type = models.CharField(
             max_length=5,
             choices = TYPE_CHOICES,
         )
