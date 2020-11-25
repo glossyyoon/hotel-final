@@ -1,12 +1,13 @@
 <h1>룸서비스 메뉴들 보여지는 페이지</h1>
 
-{% for item in menu %}
+<!-- {% for menu in menu %}
+{{menu.roomservice_type}}
 {{menu.menu_name}}
 {{menu.description}}
 {{menu.image}}
 {{menu.price}}
 {{menu.count}}
-{% endfor %}
+{% endfor %} -->
 
 {% load static %}
 <html>
@@ -28,18 +29,20 @@
               가격
             </th>
           </tr>
+          {% for menu in pns %}
           <tr>
-            <td><button type="button" name="select" onclick="location.href='#'">토마토소스 또는 크림소스의 해산물 스파게티</button></td>
-            <td>3.6</td>
+            <td><button type="button" name="select" onclick="location.href='#'">{{menu.menu_name}}</button></td>
+            <td>{{menu.price}}</td>
           </tr>
-          <tr>
+          {% endfor %}
+          <!-- <tr>
             <td><button type="button" name="select" onclick="location.href='#'">칠리 치킨 샌드위치</button></td>
             <td>3.2</td>
           </tr>
           <tr>
             <td><button type="button" name="select" onclick="location.href='#'">그릴에 구운 브리 치즈와 가지 샌드위치</button></td>
             <td>3.2</td>
-          </tr>
+          </tr> -->
         </table>
 
         <table class="grill">
@@ -51,6 +54,13 @@
               가격
             </th>
           </tr>
+          {% for menu in grill %}
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">{{menu.menu_name}}</button></td>
+            <td>{{menu.price}}</td>
+          </tr>
+          {% endfor %}
+<!-- 
           <tr>
             <td><button type="button" name="select" onclick="location.href='rs_menu_detail.html'">연어구이</button></td>
             <td>5.1</td>
@@ -63,10 +73,10 @@
             <td><button type="button" name="select" onclick="location.href='#'">등심 스테이크</button></td>
             <td>7.7</td>
           </tr>
-          <tr>
+          <tr> 
             <td><button type="button" name="select" onclick="location.href='#'">모둠 그릴 채소</button></td>
             <td>3.0</td>
-          </tr>
+          </tr>-->
         </table>
         <table class="dessert">
           <tr>
@@ -77,7 +87,14 @@
               가격
             </th>
           </tr>
+          {% for menu in des %}
           <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">{{menu.menu_name}}</button></td>
+            <td>{{menu.price}}</td>
+          </tr>
+          {% endfor %}
+
+          <!-- <tr>
             <td><button type="button" name="select" onclick="location.href='#'">크림 치즈 케이크</button></td>
             <td>3.6</td>
           </tr>
@@ -88,7 +105,7 @@
           <tr>
             <td><button type="button" name="select" onclick="location.href='#'">바닐라 아이스크림을 곁들인 피칸 파이</button></td>
             <td>3.2</td>
-          </tr>
+          </tr> -->
         </table>
       </div>
     </body>
