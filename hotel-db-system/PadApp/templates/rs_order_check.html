@@ -1,0 +1,44 @@
+<!DOCTYPE html> <!--장바구니 페이지, 장바구니를 통해 주문 완료-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>룸서비스 | H6</title>
+    <script language="javascript">
+      function showPopup(){
+        window.open("rs_order_complete.html","주문완료","width=400,height=300,left=100,top=50");
+      }
+    </script>
+  </head>
+  <body>
+    <div class="order_check">
+      <button calss="back_btn" onclick="location.href='roomservice.html'">뒤로</button>
+      <h3>장바구니</h3>
+      <div class="item">
+        <table class="menu_cnt">
+          <tr>
+            <th>
+              메뉴
+            </th>
+            <th>
+              수량
+            </th>
+          </tr>
+          <tr>
+            <td>연어 구이</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>크림 치즈 케이크</td>
+            <td>1</td>
+          </tr>
+        </table>
+        <div class="total_rs_fee">
+          <p>총 주문 금액 : 6.8</p>
+        </div>
+      </div>
+      <div class="">
+        <input type="button" value="주문하기" onclick="showPopup()"/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -7,3 +7,89 @@
 {{menu.price}}
 {{menu.count}}
 {% endfor %}
+
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>룸서비스 | H6</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+      <button calss="back_btn" onclick="location.href='pad.html'">뒤로</button>
+      <button type="button" name="basket" onclick="location.href='rs_order_check.html'">장바구니</button>
+      <div class="menu">
+        <table class="pasta">
+          <tr>
+            <th>
+              PASTAS & SANDWICHES
+            </th>
+            <th>
+              가격
+            </th>
+          </tr>
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">토마토소스 또는 크림소스의 해산물 스파게티</button></td>
+            <td>3.6</td>
+          </tr>
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">칠리 치킨 샌드위치</button></td>
+            <td>3.2</td>
+          </tr>
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">그릴에 구운 브리 치즈와 가지 샌드위치</button></td>
+            <td>3.2</td>
+          </tr>
+        </table>
+
+        <table class="grill">
+          <tr>
+            <th>
+              FROM THE GRILL
+            </th>
+            <th>
+              가격
+            </th>
+          </tr>
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='rs_menu_detail.html'">연어구이</button></td>
+            <td>5.1</td>
+          </tr>
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">안심 스테이크</button></td>
+            <td>6.0</td>
+          </tr>
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">등심 스테이크</button></td>
+            <td>7.7</td>
+          </tr>
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">모둠 그릴 채소</button></td>
+            <td>3.0</td>
+          </tr>
+        </table>
+        <table class="dessert">
+          <tr>
+            <th>
+              DESSERT
+            </th>
+            <th>
+              가격
+            </th>
+          </tr>
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">크림 치즈 케이크</button></td>
+            <td>3.6</td>
+          </tr>
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">신선한 과일</button></td>
+            <td>3.2</td>
+          </tr>
+          <tr>
+            <td><button type="button" name="select" onclick="location.href='#'">바닐라 아이스크림을 곁들인 피칸 파이</button></td>
+            <td>3.2</td>
+          </tr>
+        </table>
+      </div>
+    </body>
+</html>
