@@ -89,14 +89,16 @@ ul {
 
 .drag-item {
 	margin: 10px;
-	height: 100px;
 	background: rgba(0, 0, 0, 0.4);
+	text-align: left;
+}
+.request-info-container {
+	padding: 20px;
 }
 
 .drag-item:active {
 	color: white;
 }
-
 
 /* micro-interactions */
 .drop-zone-active {
