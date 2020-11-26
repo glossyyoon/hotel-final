@@ -7,32 +7,30 @@
     <title>Document</title>
 </head>
 <body>
-    <form id="booking-form" action="" method="POST">
+    <form id="booking-form" action= "{% url 'roomapp:RoomListView' %}" method="GET">
 
         {% csrf_token %}
 
         <!-- Input Div -->
         <div class="input-div">
             <label for="id_check_in">Check In : </label>
-            <input type="datetime-local" id="id_check_in" name="check_in">
+            <input type="date" id="id_check_in" name="check_in">
         </div>
 
         <!-- Input Div -->
         <div class="input-div">
             <label for="id_check_out">Check Out : </label>
-            <input type="datetime-local" id="id_check_out" name="check_out">
+            <input type="date" id="id_check_out" name="check_out">
         </div>
 
-        <!-- Input Div -->
-        <!-- <div class="input-div">
-            <button type="submit" onClick="location.href= 'reserve.html' ">예약하기</button>
-        </div> -->
+        <div class="input-div">
+            <button type="submit" ">조회하기</button>
+        </div>
         <!-- <div class="input-div">
             <button type="submit">Book the Room</button>
         </div> -->
 
     </form>
-    <a href="{% url 'RoomApp:RoomDetailView' %}">예약내역</a>
-    <a href="{% url 'RoomApp:RoomListView' %}">예약하기</a>
+
 </body>
 </html>
