@@ -23,8 +23,8 @@ class Room(models.Model):
     category = models.CharField(max_length=10, choices=room_type)#참고한 프로젝트에 있어서 일단 추가함.
     beds = models.IntegerField()#참고한 프로젝트에 있어서 일단 추가함.
 
-    # def __str__(self):
-    #     return f'{self.room_id}. {dict(self.room_type)[self.category]} Beds = {self.beds} People = {self.room_limit}'
+    def __str__(self):
+        return f'{self.room_id}. {dict(self.room_type)[self.category]} Beds = {self.beds} People = {self.room_limit}'
 
 
 
