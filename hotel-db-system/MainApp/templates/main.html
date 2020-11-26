@@ -13,7 +13,11 @@
         <div class="top_menu">
           <ul class="top_nav container">
             <li>
+              {% if check == 0 %}
               <a href="{{userapp}}/userApp/login">로그인</a>
+              {% elif check == 1 %}
+              <a href="{{userapp}}/userApp/logout">로그아웃</a>
+              {% endif %}
             </li>
             <li>
               <a href="{{userapp}}/userApp/signup">회원가입</a>

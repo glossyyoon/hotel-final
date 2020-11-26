@@ -88,7 +88,7 @@ def login_post(request):
                 request.session['user'] = guest[0]['site_id']
                 # 세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                 # 세션 user라는 key에 방금 로그인한 id를 저장한것.
-                return redirect('/userApp/mypage/')
+                return redirect('/mainApp/main/')
             else:
                 response_data['error'] = "비밀번호를 틀렸습니다."
 
@@ -100,8 +100,9 @@ def signup(request):
 
 
 def logout(request):
-    auth_logout(request)
-    return render(request, 'UserApp/login.html')
+    request.session['user'] = {}
+    request.session.modified = True
+    return redirect('/mainApp/main/')
 
 
 def guest_mypage(request):
