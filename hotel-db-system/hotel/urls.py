@@ -22,4 +22,5 @@ urlpatterns = [
     path('TaskApp/', include('TaskApp.urls')),
     path('pad/', include('PadApp.urls')),
     path('mainApp/', include('MainApp.urls'))
+    path('roomApp/', include('RoomApp.urls')),
 ]

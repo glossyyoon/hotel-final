@@ -34,7 +34,8 @@ class Request(models.Model):
     type = models.CharField(
         max_length=50,
         choices=RequestType.choices)
-    date_time = models.DateTimeField(auto_now=True)
+    date_time = models.DateTimeField(auto_now=False)
+    completed_date_time = models.DateTimeField(auto_now=False, null=True, blank=True)
     send_staff_id = models.ForeignKey(
         'UserApp.Staff', on_delete=models.CASCADE, blank=True, null=True, related_name="send_staff_id")
     send_guest_id = models.ForeignKey(
@@ -47,3 +48,4 @@ class Request(models.Model):
     status = models.CharField(max_length=50, choices=RequestStatus.choices)
     product_request_id = models.ForeignKey(
         ProductRequest, on_delete=models.CASCADE, blank=True, null=True)
+    roomservice_num = models.IntegerField(blank=True, null=True)

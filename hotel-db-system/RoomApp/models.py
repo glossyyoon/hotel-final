@@ -31,9 +31,8 @@ class Room(models.Model):
 class Booking(models.Model):
     booking_roomid = models.ForeignKey(Room, null=True, on_delete=models.CASCADE)
     booking_userid = models.ForeignKey(Guest, on_delete=models.CASCADE)
-    room_type = models.CharField(max_length=10)
-    check_in = models.DateTimeField(auto_now=True)
-    check_out = models.DateTimeField(auto_now=True)
+    check_in = models.DateTimeField(auto_now=False)
+    check_out = models.DateTimeField(auto_now=False)
     check_in_date = models.DateTimeField(auto_now=True)
     check_out_date = models.DateTimeField(auto_now=True)
 

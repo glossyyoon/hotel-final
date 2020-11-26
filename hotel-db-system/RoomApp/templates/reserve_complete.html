@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>예약이 완료되었습니다.</h3>
+    예약 방: {{card_cvc_num}}
+    cvc: {{cvc}}
+    {{message}}
+    <form id="booking-form" method="POST">
+        {% csrf_token %}
+        {% for reserve_room in room_list %}
+            {{reserve_room}}
+            <div class="input-div">
+                <button type="submit" >예약하기</button>
+            </div>
+        {% endfor %}
+    </form>
+</body>
+</html>

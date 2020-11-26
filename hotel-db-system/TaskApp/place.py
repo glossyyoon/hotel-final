@@ -3,7 +3,7 @@ import math
 def get_distance(a, b):
     return math.sqrt(
         math.pow(a.x - b.x, 2) +
-        math.pow(a.y - b.x, 2) +
+        math.pow(a.y - b.y, 2) +
         math.pow(a.z - b.z, 2)) ** 2
 
 def convert_to_coordinate(raw_position):
@@ -37,7 +37,6 @@ place_coord["Front"] = Coordinate(250, 50, 0)
 place_coord["Kitchen"] = Coordinate(400, 200, 0)
 place_coord["Purchasing"] = Coordinate(0, 400, 0)
 place_coord["Center"] = Coordinate(700, 800, 0)
-place_coord["Center"] = Coordinate(1000, 300, 0)
 
 def get_place_coord(place):
     return place_coord[place]

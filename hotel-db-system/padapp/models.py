@@ -14,7 +14,7 @@ class RoomServiceType(models.Model):
         ('GRILL', 'FROM THE GRILL'),
         ('DES', 'DESSERT'),
     )
-    roomservice_type = models.CharField(
+    menu_type = models.CharField(
             max_length=5,
             choices = TYPE_CHOICES,
         )
@@ -28,10 +28,11 @@ class RoomServiceType(models.Model):
     
 
 class RoomService(models.Model):
+    roomservice_num = models.IntegerField()
     pad = models.ForeignKey(Pad, on_delete=models.CASCADE)
     is_roomservice = models.BooleanField(default=False)
     select_roomservice = models.ForeignKey(RoomServiceType, on_delete=models.SET_NULL, null=True)
-
+    count = models.IntegerField(default=0)
 
 class Dnd(models.Model):
     pad = models.ForeignKey(Pad, on_delete=models.CASCADE)
