@@ -9,5 +9,10 @@ def room_service(request):
     menu_pns = RoomServiceType.objects.filter(menu_type="PNS")
     menu_grill = RoomServiceType.objects.filter(menu_type="GRILL")
     menu_des = RoomServiceType.objects.filter(menu_type="DES")
-    
-    return render(request, 'roomservice.html', {'pns':menu_pns, 'grill':menu_grill, 'des':menu_des})
+     # for test
+    menu = RoomServiceType.objects.filter(id=2)
+    return render(request, 'roomservice.html', {'pns':menu_pns, 'grill':menu_grill, 'des':menu_des, 'menu':menu})
+
+def rs_item_detail(request, item_id):
+    menu = RoomServiceType.objects.get(roomservicetype_id=item_id)
+    return render(request, 'rs_menu_detail.html', {'menu':menu})
