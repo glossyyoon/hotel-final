@@ -22,7 +22,7 @@ class RoomServiceType(models.Model): #Menu
     description = models.CharField(max_length=500, null=True)
     image = models.ImageField(blank=True, upload_to="roomservice")
     price = models.IntegerField(default=0)
-    # count = models.IntegerField(default=0)
+    count = models.IntegerField(default=1)
     def __str__(self):
         return '%s - %s' % (self.menu_type, self.menu_name)    
 
