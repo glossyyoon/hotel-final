@@ -12,10 +12,10 @@
         {{reserve_room}}
         
         
-
         <input type="submit" value="결제하기">
     </form>
-    <form method="GET" action= "{% url 'roomapp:reserve_compltete' %}">
+    
+    <form method="POST" action= "{% url 'roomapp:reserve_compltete' %}">
         <label for="id_check_out">Card cvc Num : </label>
         <input type="text" name="card_cvc_num">
 

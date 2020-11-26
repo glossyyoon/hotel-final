@@ -38,21 +38,28 @@ class RoomListView(View):
 
 class Reserve(View):
     def post(self, request, *args, **kwargs):
-        # if request.method=="POST":
-        #     booking = Booking.objects.create(
-        #         booking_roomid = reserve_room,
-        #         user=self.request.user,
-        #         room=room,
-        #     )
-        #     booking.save()
+        if request.method=="POST":
+            booking = Booking.objects.create(
+                booking_roomid = request.POST.get('reserve_room', 301),
+                check_in_date = request.POST.get('check_in', 0),
+                check_out_date = request.POST.get('check_out',0),
+                user=self.request.user,
+            )
             
-
-        return render(request, 'reserve_complete.html')
+            bill = Bill.objects.create(
+                bill_room = booking.room_id,
+                card_cvc_num = request.POST['cvc'],
+                card_experiment = request.POST['card_experiment'],
+                card_password = request.POST['card_password'],
+            )
+            booking.save()
+            bill.save()
+        return render(request, 'reserve.html')
 
     def get(self, request):
         reserve_room = request.GET.get('reserve_room')
         cvc = request.GET.get('card_cvc_num')
-        return render(request, 'reserve_complete.html', {'reserve_room':reserve_room, 'cvc':cvc})
+        return render(request, 'reserve.html', {'reserve_room':reserve_room, 'cvc':cvc})
 
             
 class BookingListView(ListView):
