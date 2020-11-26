@@ -24,15 +24,17 @@ class RoomServiceType(models.Model):
     price = models.IntegerField(default=0)
     count = models.IntegerField(default=0)
     def __str__(self):
-        return '%s - %s' % (self.roomservice_type, self.menu_name)
-    
+        return '%s - %s' % (self.roomservice_type, self.menu_name)    
 
 class RoomService(models.Model):
     roomservice_num = models.IntegerField()
     pad = models.ForeignKey(Pad, on_delete=models.CASCADE)
     is_roomservice = models.BooleanField(default=False)
     select_roomservice = models.ForeignKey(RoomServiceType, on_delete=models.SET_NULL, null=True)
-    count = models.IntegerField(default=0)
+    count = models.IntegerField(default=1)
+
+    def sub_total(self):
+        return self.select_roomservice.price * self.count
 
 class Dnd(models.Model):
     pad = models.ForeignKey(Pad, on_delete=models.CASCADE)

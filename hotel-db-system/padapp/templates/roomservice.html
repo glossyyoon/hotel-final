@@ -1,12 +1,20 @@
 <h1>룸서비스 메뉴들 보여지는 페이지</h1>
 
-{% for menu in menu %}
-<a href="{% url 'padapp:item-detail' menu.id %}">{{menu.roomservice_type}}</a>
+<!-- {% for pp in pns %}
+<a href="{% url 'padapp:item-detail' pp.id %}">{{pp.roomservice_type}}</a> -->
 <!-- {{menu.menu_name}}
 {{menu.description}}
 {{menu.image}}
 {{menu.price}}
 {{menu.count}} -->
+<!-- {% endfor %} -->
+
+
+{% for pns in menu %}
+<p>{{pns.id}}</p>
+<p>{{pns.menu_name}}</p>
+<a href="{% url 'padapp:item-detail' pns.id %}">{{pns.price}}</a>
+
 {% endfor %}
 
 {% load static %}
