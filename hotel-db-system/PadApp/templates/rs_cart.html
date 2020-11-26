@@ -42,3 +42,13 @@
     </div>
   </body>
 </html>
+
+<h1>Test</h1>
+{% for cart in cart_item %}
+<p>카트 주인 : {{cart.user}}</p>
+<p>주문한 메뉴 : {{cart.select_roomservice.menu_name}}</p>
+<p>수량 : {{cart.count}}</p>
+<p>가격 : {{cart.select_roomservice.price}}</p>
+
+<a href="{% url 'padapp:add_cart' cart.select_roomservice.id %}">주문하기</a>
+{% endfor %}

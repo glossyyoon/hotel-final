@@ -1,5 +1,5 @@
 from django.db import models
-from RoomApp.models import Room
+from RoomApp.models import Room, Guest
 
 class Pad(models.Model):
     pad_room = models.ForeignKey("RoomApp.Room", on_delete=models.CASCADE)
@@ -8,7 +8,7 @@ class Pad(models.Model):
     # turndown = models.ForeignKey(TurnDown, on_delete=SET_NULL, null=True)
     # compalin = models.ForeignKey(Complain, on_delete=SET_NULL, null=True)
 
-class RoomServiceType(models.Model):
+class RoomServiceType(models.Model): #Menu
     TYPE_CHOICES=(
         ('PNS','PASTAS & SANDWICHES'),
         ('GRILL', 'FROM THE GRILL'),
@@ -22,16 +22,26 @@ class RoomServiceType(models.Model):
     description = models.CharField(max_length=500, null=True)
     image = models.ImageField(blank=True, upload_to="roomservice")
     price = models.IntegerField(default=0)
-    count = models.IntegerField(default=0)
+    # count = models.IntegerField(default=0)
     def __str__(self):
-        return '%s - %s' % (self.roomservice_type, self.menu_name)    
+        return '%s - %s' % (self.menu_type, self.menu_name)    
+
+class OrderItem(models.Model):
+    item = models.ForeignKey(RoomServiceType, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.menu_name
 
 class RoomService(models.Model):
-    roomservice_num = models.IntegerField()
+    user = models.ForeignKey(Guest, on_delete=models.CASCADE)
+    items = models.ManyToManyField(OrderItem)
     pad = models.ForeignKey(Pad, on_delete=models.CASCADE)
     is_roomservice = models.BooleanField(default=False)
-    select_roomservice = models.ForeignKey(RoomServiceType, on_delete=models.SET_NULL, null=True)
+    # select_roomservice = models.ForeignKey(RoomServiceType, on_delete=models.SET_NULL, null=True)
     count = models.IntegerField(default=1)
+
+    # def __str__(self):
+    #     return self.id
 
     def sub_total(self):
         return self.select_roomservice.price * self.count
