@@ -1,30 +1,36 @@
+@import url(https://fonts.googleapis.com/css?family=Fredoka+One);
+
 body {
-    background-color:'#9494b8'
+  background: #caccf7 url('https://i.imgur.com/Syv2IVk.png');
 }
 .tm-res{
-    background: #9494b8;
-    padding: 7%;
+  padding: 7%;
 }
-
 
 .tm-resbutton p{
-    display: table;
-    max-width: 40%;
-    margin: 0 auto;
-    font-size: 2.5vw;
-    padding: 2%;
-    color: #fff;
-    font-weight: 700;
-    border: 1px solid #fff;
-
+  display: table;
+  max-width: 40%;
+  margin: 0 auto;
+  font-size: 2.5vw;
+  padding: 2%;
+  color: black;
+  font-weight: 700;
+  border-radius: 5px;
+  background: #fff;
 }
 .tm-resbutton a{
-    text-decoration: none;
-    font-size: 10px;
-    color: #9494b8;
+  text-decoration: none;
+  font-size: 10px;
+  color: #95a6d6;
 }
 
 .tm-resbutton p:hover{
-    color:#9494b8;
-    background: #fff;
+  color:#95a6d6;
+}
+.back_btn{
+  background-color: #95a6d6;
+	color: #fff;
+}
+.button:hover {
+	letter-spacing: 5px;
 }

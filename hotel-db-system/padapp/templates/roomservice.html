@@ -18,6 +18,136 @@
 {% endfor %}
 
 {% load static %}
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Room Service | H6</title>
+    <link rel="stylesheet" href="{% static 'PadApp/css/roomservice.css' %}">
+    <script language="javascript">
+      function showPopup(){
+        window.open("rs_basket_complete.html","장바구니","width=400,height=300,left=100,top=50");
+      }
+    </script>
+  </head>
+  <body>
+    <div id="back">
+      <button id="goback" onclick="history.back()">Back</button><!--pad.html로-->
+    </div>
+    <div id="w">
+      <header id="title">
+        <h1>MENU</h1>
+      </header>
+      <div id="page">
+        <table id="cart">
+          <h2>PASTA & SANDWICH</h2>
+          <thead>
+            <tr>
+              <th class="first">Photo</th>
+              <th class="second">Num</th>
+              <th class="third">Product</th>
+              <th class="fourth">Price</th>
+              <th class="fifth">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="productitm">
+              <td><img src="pasta.png" class="thumb"></td>
+              <td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
+              <td>Tomato Spaghetti</td>
+              <td>3.6</td>
+              <td><span class="basket"><img src="https://i.imgur.com/h1ldGRr.png" alt="O" onclick="showPopup()"/></span></td><!--rs_basket_complete.html로 이동(팝업)-->
+            </tr>
+            <tr class="productitm">
+              <td><img src="sandwich.png" class="thumb"></td>
+              <td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
+              <td>SANDWICH</td>
+              <td>3.2</td>
+              <td><span class="basket"><img src="https://i.imgur.com/h1ldGRr.png" alt="O" onclick="showPopup()"></span></td><!--rs_basket_complete.html로 이동(팝업)-->
+            </tr>
+          </tbody>
+        </table>
+        <table id="cart">
+          <h2>FROM THE GRILL</h2>
+          <thead>
+            <tr>
+              <th class="first">Photo</th>
+              <th class="second">Num</th>
+              <th class="third">Product</th>
+              <th class="fourth">Price</th>
+              <th class="fifth">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="productitm">
+              <td><img src="연어구이.jpg" class="thumb"></td>
+              <td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
+              <td>Grilled Salmon</td>
+              <td>5.1</td>
+              <td><span class="basket"><img src="https://i.imgur.com/h1ldGRr.png" alt="O" onclick="showPopup()"></span></td><!--rs_basket_complete.html로 이동-->
+            </tr>
+            <tr class="productitm">
+              <td><img src="steak.jpg" class="thumb"></td>
+              <td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
+              <td>Tenderloin Steak</td>
+              <td>6.0</td>
+              <td><span class="basket"><img src="https://i.imgur.com/h1ldGRr.png" alt="O" onclick="showPopup()"></span></td><!--rs_basket_complete.html로 이동-->
+            </tr>
+            <tr class="productitm">
+              <td><img src="ansim_steak.jpg" class="thumb"></td>
+              <td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
+              <td>Sirloin Steak</td>
+              <td>7.7</td>
+              <td><span class="basket"><img src="https://i.imgur.com/h1ldGRr.png" alt="O" onclick="showPopup()"></span></td><!--rs_basket_complete.html로 이동-->
+            </tr>
+            <tr class="productitm">
+              <td><img src="grill.jpg" class="thumb"></td>
+              <td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
+              <td>Assorted Grilled Vegetables</td>
+              <td>3.0</td>
+              <td><span class="basket"><img src="https://i.imgur.com/h1ldGRr.png" alt="O" onclick="showPopup()"></span></td><!--rs_basket_complete.html로 이동-->
+            </tr>
+          </tbody>
+        </table>
+        <table id="cart">
+          <h2>DESSERT</h2>
+          <thead>
+            <tr>
+              <th class="first">Photo</th>
+              <th class="second">Num</th>
+              <th class="third">Product</th>
+              <th class="fourth">Price</th>
+              <th class="fifth">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="productitm">
+              <td><img src="cake.jpg" class="thumb"></td>
+              <td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
+              <td>Cream Cheese Cake</td>
+              <td>3.6</td>
+              <td><span class="basket"><img src="https://i.imgur.com/h1ldGRr.png" alt="O" onclick="showPopup()"></span></td><!--rs_basket_complete.html로 이동-->
+            </tr>
+            <tr class="productitm">
+              <td><img src="fruit.jpg" class="thumb"></td>
+              <td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
+              <td>Fresh Fruit</td>
+              <td>3.2</td>
+              <td><span class="basket"><img src="https://i.imgur.com/h1ldGRr.png" alt="O" onclick="showPopup()"></span></td><!--rs_basket_complete.html로 이동-->
+            </tr>
+            <tr class="productitm">
+              <td><img src="pie.jpg" class="thumb"></td>
+              <td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
+              <td>Pecan Pie with Vanilla Ice Cream</td>
+              <td>3.2</td>
+              <td><span class="basket"><img src="https://i.imgur.com/h1ldGRr.png" alt="O" onclick="showPopup()"></span></td><!--rs_basket_complete.html로 이동-->
+            </tr>
+            <tr class="checkoutrow">
+              <td colspan="5" class="checkout"><button id="submitbtn">Shopping Basket</button></td><!--rs_cart.html로 이동-->
+            </tr>
+          </tbody>
+=======
 <html>
     <head>
         <meta charset="utf-8">
@@ -114,7 +244,9 @@
             <td><button type="button" name="select" onclick="location.href='#'">바닐라 아이스크림을 곁들인 피칸 파이</button></td>
             <td>3.2</td>
           </tr> -->
+>>>>>>> main
         </table>
       </div>
-    </body>
+    </div>
+  </body>
 </html>
