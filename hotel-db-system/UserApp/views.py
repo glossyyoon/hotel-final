@@ -65,7 +65,7 @@ def signup_submit(request):
         guest.save()
 
         request.session['user'] = site_id
-        return redirect('/userApp/mypage/')
+        return redirect('/mainApp/main/')
     return render(request, 'UserApp/signup.html')
 
 
@@ -88,7 +88,7 @@ def login_post(request):
                 request.session['user'] = guest[0]['site_id']
                 # 세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                 # 세션 user라는 key에 방금 로그인한 id를 저장한것.
-                return redirect('/userApp/mypage/')
+                return redirect('/mainApp/main/')
             else:
                 response_data['error'] = "비밀번호를 틀렸습니다."
 
@@ -100,8 +100,9 @@ def signup(request):
 
 
 def logout(request):
-    auth_logout(request)
-    return render(request, 'UserApp/login.html')
+    request.session['user'] = {}
+    request.session.modified = True
+    return redirect('/mainApp/main/')
 
 
 def guest_mypage(request):
@@ -119,12 +120,7 @@ def staff_attendance(request):
     leave_list = StaffLeave.objects.all().values()
     staff_dict = {}
 
-    for leave in leave_list:
-        #temp = Staff.objects.get(id=leave.staff_id)
-        #staff_dict[leave.staff_id] = temp
-        print(leave)
-    print(leave_list)
-    return render(request, 'UserApp/staff_attendance.html', {'staff': staff, 'attendance_list': attendance_list, 'leave_list': leave_list})
+    return render(request, 'UserApp/staff_attendance.html', {'staff': staff, 'attendance_list': attendance_list})
 
 
 def leave_request(request):
@@ -135,4 +131,17 @@ def leave_request(request):
     staff_leave = StaffLeave(staff_id=staff, start_time=start_time,
                              finish_time=finish_time,  accept=False)
     staff_leave.save()
+    return redirect('/userApp/staff_attendance')
+
+
+def attendance_request(request):
+    staff_id = request.session.get('staff')
+    staff = Staff.objects.get(id=staff_id)
+    start_time = request.POST.get('attendance_start_time', None)
+    finish_time = request.POST.get('attendance_finish_time', None)
+    work_type = request.POST.get('work_type', None)
+    description = request.POST.get('description', None)
+    staff_attendance = Attendance(staff_id=staff, start_time=start_time,
+                                  finish_time=finish_time, description=description, work_type=work_type, accept=False)
+    staff_attendance.save()
     return redirect('/userApp/staff_attendance')

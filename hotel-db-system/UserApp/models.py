@@ -97,12 +97,12 @@ class Attendance(models.Model):
     objects = models.Manager()
     staff_id = models.ForeignKey(
         'Staff', on_delete=models.CASCADE, db_column='staff_id')
-    date = models.DateTimeField()
-    start_time = models.DateTimeField()
-    finish_time = models.DateTimeField()
-    work_type = models.CharField(max_length=50)
-    description = models.TextField()
-    accecpt = models.BooleanField()
+    date = models.DateTimeField(null=True)
+    start_time = models.DateTimeField(null=True)
+    finish_time = models.DateTimeField(null=True)
+    work_type = models.CharField(max_length=50, null=True)
+    description = models.TextField(null=True)
+    accept = models.BooleanField(null=True)
 
 
 class StaffLeave(models.Model):

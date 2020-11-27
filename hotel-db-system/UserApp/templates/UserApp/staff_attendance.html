@@ -16,22 +16,24 @@
       </ul>
       {% endfor %}
     </table>
+    <form
+      class="login-form"
+      action="/userApp/attendance_request/"
+      method="post"
+    >
+      {% csrf_token %} 근태 신청하기
+      <p>시작 <input type="date" name="attendance_start_time" /></p>
+      <p>종료 <input type="date" name="attendance_finish_time" /></p>
+      <p>근무유형: <input type="text" name="work_type" /></p>
+      <p>비고: <input type="text" name="discription" /></p>
+      <button type="submit">신청하기</button>
+    </form>
+
     <form class="login-form" action="/userApp/leave_request/" method="post">
       {% csrf_token %} 휴가 신청하기
       <p>시작 <input type="date" name="start_time" /></p>
       <p>종료 <input type="date" name="finish_time" /></p>
       <button type="submit">신청하기</button>
     </form>
-    {% if staff.department == 'Executive' %}
-    <table>
-      {% for leave in leave_list %}
-      <ul>
-        <li>{{leave.staff_id_id}}</li>
-        <li>{{leave.start_time}}</li>
-        <li>{{leave.finish_time}}</li>
-      </ul>
-      {% endfor %}
-    </table>
-    {% endif %}
   </body>
 </html>

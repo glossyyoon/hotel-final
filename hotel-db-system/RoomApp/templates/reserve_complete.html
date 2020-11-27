@@ -6,9 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    {{check_in}} - {{check_out}} 잔여 객실
-    
-    <form id="booking-form" action= "{% url 'roomapp:Reserve' %}" method="GET">
+    <h3>예약이 완료되었습니다.</h3>
+    예약 방: {{card_cvc_num}}
+    cvc: {{cvc}}
+    {{message}}
+    <form id="booking-form" method="POST">
         {% csrf_token %}
         {% for reserve_room in room_list %}
             {{reserve_room}}

@@ -15,104 +15,57 @@ def main(request):
 def available(request):
     return render(request, 'reserve.html', {})
 
+def reserve_complete(request):
+    return render(request, 'reserve_complete.html', {})
 
-def RoomListView(request):
-    room = Room.objects.all()[0]
-    room_categories = dict(room.room_type)
-    room_values = room_categories.values()
-    room_list = []
+class RoomListView(View):
+    
+    def get(self, request):
+        rooms = Room.objects.all()[:]
+        bookings = Booking.objects.all()[:]
+        check_in = int(request.GET.get('check_in').replace('-',''))
+        check_out = int(request.GET.get('check_out').replace('-',''))
 
-    for room_category in room_categories:
-        room = room_categories.get(room_category)
-        room_url = reverse('RoomApp:RoomListView', kwargs={
-                           'category': room_category})
+        room_list = [i.room_id for i in rooms]
+        for booking in bookings:
+            chk_in = str(booking.check_in_date)[0:10].replace('-', '')
+            chk_out = str(booking.check_out_date)[0:10].replace('-', '')
+            if int(chk_in)>=check_in and check_out<=int(chk_out):
+                roomnum = str(booking.booking_roomid)
+                room_list.remove(int(roomnum[:3]))
+        
+        return render(request, 'reserve_list.html', {'check_in':check_in, 'check_out':check_out, 'room_list':room_list, 'bookings':bookings})
 
-        room_list.append((room, room_url))
-    context = {
-        "room_list": room_list,
-    }
-    return render(request, 'reserve_list.html', context)
-
-
-class RoomDetailView(View):
-    # def get(self, request, *args, **kwargs):
-    #     category = self.kwargs.get('category', None)
-    #     form = AvailabilityForm()
-    #     room_list = Room.objects.filter(category=category)
-
-    #     if len(room_list) > 0:
-    #         room = room_list[0]
-    #         room_category = dict(room.room_type).get(room.category, None)
-    #         context = {
-    #             'room_category': room_category,
-    #             'form': form,
-    #         }
-    #         return render(request, 'reserve.html', context)
-    #     else:
-    #         return HttpResponse('Category does not exist')
-    def get(self, request, *args, **kwargs):
-        category = self.kwargs.get('category', None)
-        form = AvailabilityForm()
-        room_list = Room.objects.filter(category=category)
-        cate = Room.category
-        # if len(room_list) > 0:
-        # room = room_list[0]
-        # room_category = dict(room.room_type).get(room.category, None)
-        # context = {
-        #     'room_category': room_category,
-        #     'form': form,
-        # }
-        return render(request, 'reserve.html', {'cate':cate})
-        # else:
-            # return HttpResponse('Category does not exist')
-
+class Reserve(View):
     def post(self, request, *args, **kwargs):
-        category = self.kwargs.get('category', None)
-        room_list = Room.objects.filter(category=category)
-        form = AvailabilityForm(request.POST)
+        # if request.method=="POST":
+        #     booking = Booking.objects.create(
+        #         booking_roomid = reserve_room,
+        #         user=self.request.user,
+        #         room=room,
+        #     )
+        #     booking.save()
+            
 
-        if form.is_valid():
-            data = form.cleaned_data
+        return render(request, 'reserve_complete.html')
 
-        available_rooms = []
-        for room in room_list:
-            if check_availability(room, data['check_in'], data['check_out']):
-                available_rooms.append(room)
+    def get(self, request):
+        reserve_room = request.GET.get('reserve_room')
+        cvc = request.GET.get('card_cvc_num')
+        return render(request, 'reserve_complete.html', {'reserve_room':reserve_room, 'cvc':cvc})
 
-        if len(available_rooms) > 0:
-            room = available_rooms[0]
-            booking = Booking.objects.create(
-                user=self.request.user,
-                room=room,
-                check_in=data['check_in'],
-                check_out=data['check_out']
-            )
-            booking.save()
-            # message = Mail(
-            #     from_email='dhabaledarshan@gmail.com',
-            #     to_emails='dhabalekalpana@gmail.com',
-            #     subject='Sending from hotelina',
-            #     html_content='<strong>Sending from hotelina</strong>')
-            try:
-                # sg = SendGridAPIClient(env.str('SG_KEY'))
-                # response = sg.send(message)
-                # print(response.status_code)
-                # print(response.body)
-                # print(response.headers)
-                print('SENT!!!')
-            except Exception as e:
-                print(e)
-            return HttpResponse(booking)
-        else:
-            return HttpResponse('All of this category of rooms are booked!! Try another one')
-
+            
 class BookingListView(ListView):
     model = Booking
+    template_name = "booking_list_view.html"
 
     def get_queryset(self, *args, **kwargs):
-        booking_list = Booking.objects.all()
-        return render(request, 'RoomApp:preview')
-
+        if self.request.user.is_staff:
+            booking_list = Booking.objects.all()
+            return booking_list
+        else:
+            booking_list = Booking.objects.filter(user=self.request.user)
+            return booking_list
 
 class CancelBookingView(DeleteView):
     model = Booking
