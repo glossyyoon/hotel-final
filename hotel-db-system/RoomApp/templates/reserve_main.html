@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form id="booking-form" action= "{% url 'roomapp:RoomListView' %}" method="GET">
+    <form id="booking-form" action= "{% url 'roomapp:RoomListView' %}" method="POST">
 
         {% csrf_token %}
 
@@ -31,6 +31,5 @@
         </div> -->
 
     </form>
-
 </body>
 </html>

@@ -7,11 +7,13 @@ app_name = "roomapp"
 urlpatterns = [
     path('', views.main, name = "main"),
     # path('room/<category>', RoomDetailView.as_view(), name='RoomDetailView'),
-    path('reserve_list', RoomListView.as_view(), name = "RoomListView"),
+    path('roomList', RoomListView, name = "RoomListView"),
+    path('reserve/<str:category>', views.Reserve, name="Reserve"),
+    path('reserve_complete/', views.reserve_complete, name="reserve_complete"),
     path('booking/cancel/<pk>', CancelBookingView.as_view(), name='CancelBookingView'),
-    path('reserve/', Reserve.as_view(), name = 'Reserve'),
-    path('reserve_complete/', reserve_complete, name = 'reserve_compltete')
+
 ]
+# path('reserve/<int:reserve_room>', Reserve, name="Reserve"),
 # urlpatterns = [
 #     path('', RoomListView, name='RoomListView'),
 #     path('booking_list/', BookingListView.as_view(), name='BookingListView'),

@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.views.generic import ListView, FormView, View, DeleteView
 from django.urls import reverse, reverse_lazy
 from .models import Room, Booking, Bill
@@ -12,54 +12,63 @@ import os
 def main(request):
     return render(request, 'reserve_main.html', {})
 
-def available(request):
-    return render(request, 'reserve.html', {})
-
 def reserve_complete(request):
     return render(request, 'reserve_complete.html', {})
 
-class RoomListView(View):
     
-    def get(self, request):
-        rooms = Room.objects.all()[:]
-        bookings = Booking.objects.all()[:]
-        check_in = int(request.GET.get('check_in').replace('-',''))
-        check_out = int(request.GET.get('check_out').replace('-',''))
+def RoomListView(request):
+    rooms = Room.objects.all()[:]
+    bookings = Booking.objects.all()[:]
+    check_in = int(request.POST['check_in'].replace('-',''))
+    check_out = int(request.POST['check_out'].replace('-',''))
+    room_categories = dict(Room.room_type)
+    room_list = []
+    for room_category in room_categories:
+        room = room_categories.get(room_category)
+        room_url = reverse('roomapp:Reserve', kwargs={
+                           'category': room_category,
+                           })
 
-        room_list = [i.room_id for i in rooms]
-        for booking in bookings:
-            chk_in = str(booking.check_in_date)[0:10].replace('-', '')
-            chk_out = str(booking.check_out_date)[0:10].replace('-', '')
-            if int(chk_in)>=check_in and check_out<=int(chk_out):
-                roomnum = str(booking.booking_roomid)
-                room_list.remove(int(roomnum[:3]))
+        room_list.append((room, room_url))
+    context = {
+        "room_list": room_list,
+        'check_in':check_in,
+        'check_out':check_out
+    }
+    # room_list = [i.room_id for i in rooms]
+    # for booking in bookings:
+    #     chk_in = str(booking.check_in_date)[0:10].replace('-', '')
+    #     chk_out = str(booking.check_out_date)[0:10].replace('-', '')
+    #     if int(chk_in)>=check_in and check_out<=int(chk_out):
+    #         roomnum = str(booking.booking_roomid)
+    #         room_list.remove(int(roomnum[:3]))
+    # reserve_room_num = request.POST.get('reserve_room_num', '')
+    
+    return render(request, 'reserve_list.html', {'check_in':check_in, 'check_out':check_out, 'room_list':room_list, 'bookings':bookings, 'context':context })
+
+
+def Reserve(request, category):
+    if request.method=="POST":
+        booking = Booking.objects.create(
+            booking_roomid = 201,
+            check_in_date = request.POST.get('check_in',''),
+            check_out_date = request.POST.get('check_out'),
+            # user=self.request.user,
+        )
         
-        return render(request, 'reserve_list.html', {'check_in':check_in, 'check_out':check_out, 'room_list':room_list, 'bookings':bookings})
+        bill = Bill.objects.create(
+            bill_room = booking.room_id,
+            card_cvc_num = request.POST['cvc'],
+            card_experiment = request.POST['card_experiment'],
+            card_password = request.POST['card_password'],
+        )
 
-class Reserve(View):
-    def post(self, request, *args, **kwargs):
-        if request.method=="POST":
-            booking = Booking.objects.create(
-                booking_roomid = request.POST.get('reserve_room', 301),
-                check_in_date = request.POST.get('check_in', 0),
-                check_out_date = request.POST.get('check_out',0),
-                user=self.request.user,
-            )
-            
-            bill = Bill.objects.create(
-                bill_room = booking.room_id,
-                card_cvc_num = request.POST['cvc'],
-                card_experiment = request.POST['card_experiment'],
-                card_password = request.POST['card_password'],
-            )
-            booking.save()
-            bill.save()
-        return render(request, 'reserve.html')
-
-    def get(self, request):
-        reserve_room = request.GET.get('reserve_room')
+        reserve_room_num = request.POST.get('reserve_room' ''),
         cvc = request.GET.get('card_cvc_num')
-        return render(request, 'reserve.html', {'reserve_room':reserve_room, 'cvc':cvc})
+        booking.save()
+        bill.save()
+    return render(request, 'reserve.html')
+
 
             
 class BookingListView(ListView):
