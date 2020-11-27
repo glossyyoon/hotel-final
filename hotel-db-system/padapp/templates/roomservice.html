@@ -1,13 +1,21 @@
 <h1>룸서비스 메뉴들 보여지는 페이지</h1>
 
-<!-- {% for menu in menu %}
-{{menu.roomservice_type}}
-{{menu.menu_name}}
+<!-- {% for pp in pns %}
+<a href="{% url 'padapp:item-detail' pp.id %}">{{pp.roomservice_type}}</a> -->
+<!-- {{menu.menu_name}}
 {{menu.description}}
 {{menu.image}}
 {{menu.price}}
-{{menu.count}}
-{% endfor %} -->
+{{menu.count}} -->
+<!-- {% endfor %} -->
+
+
+{% for pns in menu %}
+<p>{{pns.id}}</p>
+<p>{{pns.menu_name}}</p>
+<a href="{% url 'padapp:item-detail' pns.id %}">{{pns.price}}</a>
+
+{% endfor %}
 
 {% load static %}
 <html>
@@ -32,7 +40,7 @@
           {% for menu in pns %}
           <tr>
             <td><button type="button" name="select" onclick="location.href='#'">{{menu.menu_name}}</button></td>
-            <td>{{menu.price}}</td>
+            <td><a href="">{{menu.price}}</a></td>
           </tr>
           {% endfor %}
           <!-- <tr>
