@@ -7,15 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="POST">
+
+    <form method="POST" action="{% url 'roomapp:reserve_complete' %}">
         {% csrf_token %}
         {{reserve_room}}
-        
-        
-        <input type="submit" value="결제하기">
-    </form>
-    
-    <form method="POST" action= "{% url 'roomapp:reserve_compltete' %}">
         <label for="id_check_out">Card cvc Num : </label>
         <input type="text" name="card_cvc_num">
 
@@ -24,6 +19,7 @@
 
         <label for="id_check_out">Card Password : </label>
         <input type="text" name="card_password">
+        <input type="submit" value="결제하기">
     </form>
 </body>
 </html>
