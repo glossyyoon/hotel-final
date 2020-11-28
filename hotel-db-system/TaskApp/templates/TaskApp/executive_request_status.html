@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,500" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'TaskApp/css/executive_request_status.css' %}">
+    </head>
+    <body>
+        <header>
+            <h1>REQUESTS STATUS</h1>
+        </header>
+
+        <a href="#menu" id="toggle"><span></span></a>
+
+        <div id="menu">
+          <ul>
+            <li><a href="#room">Room</a></li>
+            <li><a href="#reservation">Reservation</a></li>
+            <li><a href="#machine">Machine</a></li>
+            <li><a href="#parking">Parking</a></li>
+            <li><a href="#cleaning">Cleaning</a></li>
+            <li><a href="#center">Center</a></li>
+            <li><a href="#purchasing">Purchasing</a></li>
+            <li><a href="#robot">Robot</a></li>
+          </ul>
+        </div>
+
+        <nav>
+          <div class="menu-btn">
+          <div class="line line--1"></div>
+          <div class="line line--2"></div>
+          <div class="line line--3"></div>
+          </div>
+          
+          <div class="nav-links">
+            <a href="executive_main.html" class="link">Home</a>
+            <a href="department_organization_chart.html" class="link">Organization Chart</a>
+            <a href="sales_analysis.html" class="link">Sales Analysis</a>
+            <a href="executive_task.html" class="link">My Task</a>
+            <a href="executive_request_status.html" class="link">Request status</a>
+            <a href="#" class="link">Start Work</a>
+            <a href="#" class="link">Off Work</a>
+          </div>
+          </nav>
+
+        <div class="kanban-container">
+          <ul class="kanban-list">
+            <div class="wrap">
+                <div class="search">
+                   <input type="text" class="searchTerm" placeholder="Search for the employee ID">
+                   <button type="submit" class="searchButton">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+             </div>
+            <li class="kanban-column kanban-column-requests">
+            <span class="kanban-column-header header-requests">
+              <h2>requests</h2>
+            </span>
+            
+            <div class="kanban-options"></div>
+            <ul class="drag-inner-list">
+              <li class="drag-item"></li>
+              <li class="drag-item"></li>
+              <li class="drag-item"></li>
+            </ul>
+            </li>
+  
+            <li class="kanban-column kanban-column-notworking">
+                <span class="kanban-column-header header-notworking">
+                  <h2>Not Working</h2>
+                </span>
+                <div class="kanban-options"></div>
+                <ul class="drag-inner-list">
+                  <li class="drag-item"></li>
+                  <li class="drag-item"></li>
+                </ul>
+              </li>
+
+            <li class="kanban-column kanban-column-working">
+            <span class="kanban-column-header header-working">
+              <h2>Working</h2>
+            </span>
+            <div class="kanban-options"></div>
+            <ul class="drag-inner-list">
+              <li class="drag-item"></li>
+              <li class="drag-item"></li>
+            </ul>
+            </li>
+  
+            <li class="kanban-column kanban-column-done">
+              <span class="kanban-column-header header-done">
+                <h2>Done</h2>
+              </span>
+              <div class="kanban-options"></div>
+              <ul class="drag-inner-list">
+                <li class="drag-item"></li>
+                <li class="drag-item"></li>
+              </ul>
+            </li>
+            
+  
+          </ul>
+        </div>
+  
+  
+       <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+       <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+        
+       <script src="{% static 'TaskApp/js/executive_request_status.js' %}"></script>
+    </body>
+</html>
