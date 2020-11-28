@@ -120,10 +120,10 @@ nav .nav-links .link:hover {
     color: rgba(0, 0, 0, .5);
 }
 
-.organization {
+.sales {
 	margin: auto;
 	position: absolute;
-	top: 50%;
+	top: 40%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
@@ -140,3 +140,29 @@ h1 {
 	padding: 3%;
 	
   }
+
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+
+  #bar-chart {
+    width: 500px;
+    height: 300px;
+    position: relative;
+    width: 500px;
+    margin: 10px auto;
+    padding: 10px 20px 30px;
+    background: #FFF;
+    font-family: "Open Sans", Arial;
+  }
+  
+  #bar-chart::before{
+    content: "";
+    position: absolute;
+    display: block;
+    width: 240px;
+    height: 30px;
+    left: 150px;
+    top: 240px;
+    font-family: "Open Sans", Arial;
+  }
+  

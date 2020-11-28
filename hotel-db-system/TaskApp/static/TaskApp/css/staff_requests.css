@@ -44,6 +44,7 @@ header {
 .kanban-container {
 	margin: 20px auto;
 	max-width: 1000px;
+	z-index: 0;
 }
 
 ul {
@@ -144,103 +145,109 @@ ul {
 	cursor: pointer;
 }
 
-/*side bar*/
+/*menu bar*/
 
-#wrapper{
-	float: left;
-	width: 666px;
-	margin: 0 auto;
-	position: relative;
-  }
-  #sidebar-menu{
-	  background:#33363D;
-	  overflow:hidden;
-	  border-radius:5px;
-	  position:absolute;
-	  top: 60px;
-	  left: 0;
-	  height:62 0px;
-	  width:55px;
-	  color:#ffffff;
-	  font-size:12px;
-	  font-weight:900;
-	  -webkit-transition: all 200ms ease-out;
-			 -moz-transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
-			  -ms-transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
-			   -o-transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
-				  transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
-  }
-  #sidebar-menu.animate{
-	  width:210px;
-	  -webkit-transition: all 200ms ease-out;
-			 -moz-transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
-			  -ms-transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
-			   -o-transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
-				  transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);	
-  }
+nav {
+    overflow: hidden;
+    position: absolute;
+    transform: translateX(-300px);
+    height: 100%;
+    width: 400px;
+    transition: all 800ms cubic-bezier(.8, 0, .33, 1);
+    border-radius: 0% 0% 100% 50%;
+    top: 0%;
+    z-index: 1;
+}
 
-  
-  #sidebar-menu li{
-	  background:url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/sidemenu-sprite.png") 0 0 no-repeat;
-	  padding: 15px 0 15px 54px;
-	  margin: 1px 4px 1px 4px;
-	  list-style: none;
-  }
-  
-  #sidebar-menu ul{margin-top:11px;}
-  #sidebar-menu li.DASHBOARD{background-position: 7px 14px;}
-  #sidebar-menu li.DASHBOARD:hover{background-position: -324px 14px; color:#fff;cursor:pointer;}
-  #sidebar-menu li.selected.DASHBOARD{background-position: -620px 14px; color:#1888c4;cursor:pointer;}
-  
-  #sidebar-menu li.USERS{background-position: 9px -33px; }
-  #sidebar-menu li.USERS:hover{background-position:  -322px -33px;color:#fff;cursor:pointer;}
-  #sidebar-menu li.selected.USERS{background-position:  -618px -33px;color:#1888c4;cursor:pointer;}
-  
-  #sidebar-menu li.COLLECTIONS{background-position: 8px -127px;}
-  #sidebar-menu li.COLLECTIONS:hover{background-position: -323px -127px;color:#fff;cursor:pointer;}
-  #sidebar-menu li.selected.COLLECTIONS{background-position: -619px -127px;color:#1888c4;cursor:pointer;}
-  
-  #sidebar-menu li.ARCHIVED{background-position: 8px -175px;}
-  #sidebar-menu li.ARCHIVED:hover{background-position: -324px -175px;color:#fff;cursor:pointer;}
-  #sidebar-menu li.selected.ARCHIVED{background-position: -619px -175px;color:#1888c4;cursor:pointer;}
-  
-  #sidebar-menu li.TASKS{background-position: 7px -319px;}
-  #sidebar-menu li.TASKS:hover{background-position: -324px -319px;color:#fff;cursor:pointer;}
-  #sidebar-menu li.selected.TASKS{background-position: -620px -319px;color:#1888c4;cursor:pointer;}
-  
-  #sidebar-menu li.STATS{background-position: 7px -413px;}
-  #sidebar-menu li.STATS:hover{background-position: -324px -413px;color:#fff;cursor:pointer;}
-  #sidebar-menu li.selected.STATS{background-position: -620px -413px;color:#1888c4;cursor:pointer;}
-  
-  #sidebar-menu li{padding-left: 4px ;height: 15px;}
-  #sidebar-menu.animate li{padding-left:54px  ;}
-  #sidebar-menu li span{opacity:0;margin-left:10px;}
-  #sidebar-menu li.selected{background-color:#fff; color:#1888c4; border-radius:4px;}
-  #sidebar-menu li.selected:hover{color:#1888c4}
-  
-  #toggleMenu{
-	background:#1888c4;
-	height:37px;
-	margin: 0px;
-	padding: 0px;
+nav.nav-open {
+    transform: translateX(-10px);
+    border-radius: 0% 0% 0% 0%;
+ background: rgba(255, 255, 255, 0.6);
 }
-#toggleMenu .list{
-	position:absolute;
-	top: 12px;
-	cursor:pointer;
-    right: 8px;;
-	height:30px;
-	width:30px;
-	height:30px;
-	background:url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/toggle-list.png") 0 0 no-repeat	
+
+nav .menu-btn {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    padding: 0;
+    width: 30px;
+    cursor: pointer;
+    z-index: 2;
 }
-#toggleMenu .thumbs{
-	position:absolute;
-	display:none;	
-	top: 9px;
-	cursor:pointer;
-    right: 3px;
-	height:30px;
-	width:30px;
-	background:url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/toggle-thumbs.png") 0 0 no-repeat;
+
+nav .menu-btn .line {
+    padding: 0;
+    width: 30px;
+    background: #fff;
+    height: 2px;
+    margin: 5px 0;
+    transition: all 700ms cubic-bezier(.9, 0, .33, 1);
+}
+
+nav .menu-btn .line.line--1 {
+    width: 30px;
+    transform: rotate(0) translateY(0);
+}
+
+nav .menu-btn .line.line--1.line-cross {
+    width: 30px;
+    transform: rotate(45deg) translateY(10px);
+ background: rgba(0,0,0,0.6);
+}
+
+nav .menu-btn .line.line--2 {
+    width: 28px;
+    transform: translateX(0);
+}
+
+nav .menu-btn .line.line--2.line-fade-out {
+    width: 28px;
+    transform: translate(30px);
+    opacity: 0;
+}
+
+nav .menu-btn .line.line--3 {
+    width: 20px;
+    transform: rotate(0) translateY(0);
+}
+
+nav .menu-btn .line.line--3.line-cross {
+    width: 30px;
+    transform: rotate(-45deg) translateY(-10px);
+ background: rgba(0,0,0,0.6);
+}
+
+nav .nav-links {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-100px);
+    opacity: 0;
+    transition: all 900ms cubic-bezier(.9, 0, .33, 1);
+}
+
+nav .nav-links.fade-in {
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+nav .nav-links .link {
+    margin: 20px 0;
+    text-decoration: none;
+    font-family: sans-serif;
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    transition: all 300ms cubic-bezier(.9, 0, .33, 1);
+}
+
+nav .nav-links .link:hover {
+    color: rgba(0, 0, 0, .5);
 }
