@@ -1,5 +1,5 @@
 from django.db import models
-from RoomApp.models import Room, Guest
+from RoomApp.models import Room
 
 class Pad(models.Model):
     pad_room = models.ForeignKey("RoomApp.Room", on_delete=models.CASCADE)
@@ -33,7 +33,7 @@ class OrderItem(models.Model):
         return self.menu_name
 
 class RoomService(models.Model):
-    user = models.ForeignKey(Guest, on_delete=models.CASCADE)
+    user = models.ForeignKey("UserApp.Guest", on_delete=models.CASCADE)
     items = models.ManyToManyField(OrderItem)
     pad = models.ForeignKey(Pad, on_delete=models.CASCADE)
     is_roomservice = models.BooleanField(default=False)

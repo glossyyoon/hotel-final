@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse_lazy
-from UserApp.models import Guest
 # from PadApp.models import Pad
 
 # Create your models here.
@@ -30,7 +29,7 @@ class Room(models.Model):
 
 class Booking(models.Model):
     booking_roomid = models.ForeignKey(Room, null=True, on_delete=models.CASCADE)
-    booking_userid = models.ForeignKey(Guest, on_delete=models.CASCADE)
+    booking_userid = models.ForeignKey("UserApp.Guest", on_delete=models.CASCADE)
     check_in = models.DateTimeField(auto_now=False)
     check_out = models.DateTimeField(auto_now=False)
     check_in_date = models.DateTimeField(auto_now=True)

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import RoomServiceType, RoomService, Guest
+from .models import RoomServiceType, RoomService
+from UserApp.models import Guest
 
 # Create your views here.
 def pad_item_list(request):
