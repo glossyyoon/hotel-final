@@ -67,30 +67,3 @@ $('.kanban-column-requests')
    .on('dragleave', function(e) {
      $(this).removeClass('drop-zone-active')
    })
-
-//side bar//
-$(document).ready(function(){	
-  
-
-$('#toggleMenu .list').click(function(){
-	$('#sidebar-menu li span').animate({'opacity':1, 'margin-left':'0px'});
-	$('#sidebar-menu').toggleClass('animate');
-	$('#toggleMenu .list').fadeOut();
-	$('#toggleMenu .thumbs').fadeIn();
-
-});
-
-$('#toggleMenu .thumbs').click(function(){
-	$('#sidebar-menu li span').css({'opacity': 0, 'margin-left': "10px"});
-	$('#sidebar-menu').toggleClass('animate');	
-	$('#toggleMenu .thumbs').fadeOut();
-	$('#toggleMenu .list').fadeIn();	
-	
-});
-
-$("#sidebar-menu li").click(function(){
-	$("#sidebar-menu li").not(this).removeClass("selected");
-	$(this).toggleClass("selected");
-});
-
-});

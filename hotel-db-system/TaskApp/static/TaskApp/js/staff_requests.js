@@ -195,29 +195,16 @@ $('.kanban-column-requests')
      $(this).removeClass('drop-zone-active')
    })
 
-   //side bar//
-$(document).ready(function(){	
-  
-
-$('#toggleMenu .list').click(function(){
-	$('#sidebar-menu li span').animate({'opacity':1, 'margin-left':'0px'});
-	$('#sidebar-menu').toggleClass('animate');
-	$('#toggleMenu .list').fadeOut();
-	$('#toggleMenu .thumbs').fadeIn();
-
-});
-
-$('#toggleMenu .thumbs').click(function(){
-	$('#sidebar-menu li span').css({'opacity': 0, 'margin-left': "10px"});
-	$('#sidebar-menu').toggleClass('animate');	
-	$('#toggleMenu .thumbs').fadeOut();
-	$('#toggleMenu .list').fadeIn();	
-	
-});
-
-$("#sidebar-menu li").click(function(){
-	$("#sidebar-menu li").not(this).removeClass("selected");
-	$(this).toggleClass("selected");
-});
-
-});
+   var menuBtn = document.querySelector('.menu-btn');
+   var nav = document.querySelector('nav');
+   var lineOne = document.querySelector('nav .menu-btn .line--1');
+   var lineTwo = document.querySelector('nav .menu-btn .line--2');
+   var lineThree = document.querySelector('nav .menu-btn .line--3');
+   var link = document.querySelector('nav .nav-links');
+   menuBtn.addEventListener('click', () => {
+       nav.classList.toggle('nav-open');
+       lineOne.classList.toggle('line-cross');
+       lineTwo.classList.toggle('line-fade-out');
+       lineThree.classList.toggle('line-cross');
+       link.classList.toggle('fade-in');
+   })
