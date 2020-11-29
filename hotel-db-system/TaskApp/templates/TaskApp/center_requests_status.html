@@ -15,14 +15,14 @@
 
         <div id="menu">
           <ul>
-            <li><a href="#room">Room</a></li>
-            <li><a href="#reservation">Reservation</a></li>
-            <li><a href="#machine">Machine</a></li>
-            <li><a href="#parking">Parking</a></li>
-            <li><a href="#cleaning">Cleaning</a></li>
-            <li><a href="#center">Center</a></li>
-            <li><a href="#purchasing">Purchasing</a></li>
-            <li><a href="#robot">Robot</a></li>
+            <li><a href="#" onclick="dept_apply()">Customer Response Dept</a></li>
+            <li><a href="#">Cleaning Department</a></li>
+            <li><a href="#">Food Beverage Dept</a></li>
+            <li><a href="#">Technical Support Dept</a></li>
+            <li><a href="#">Robot</a></li>
+            <li><a href="#">Parking Dept</a></li>
+            <li><a href="#">Purchasing Dept</a></li>
+            <li><a href="#">Center Dept</a></li>
           </ul>
         </div>
 
@@ -44,51 +44,45 @@
           </div>
           </nav>
 
-        <div class="kanban-container">
-          <ul class="kanban-list">
-            <li class="kanban-column kanban-column-requests">
-            <span class="kanban-column-header header-requests">
-              <h2>requests</h2>
-            </span>
-            <div class="kanban-options"></div>
-            <ul class="drag-inner-list">
-              <li class="drag-item"></li>
-              <li class="drag-item"></li>
-              <li class="drag-item"></li>
-              <li class="drag-item"></li>
-            </ul>
-            </li>
-  
-            <li class="kanban-column kanban-column-progress">
-            <span class="kanban-column-header header-progress">
-              <h2>In Progress</h2>
-            </span>
-            <div class="kanban-options"></div>
-            <ul class="drag-inner-list">
-              <li class="drag-item"></li>
-              <li class="drag-item"></li>
-              <li class="drag-item"></li>
-            </ul>
-            </li>
-  
-            <li class="kanban-column kanban-column-done">
-              <span class="kanban-column-header header-done">
-                <h2>Done</h2>
-              </span>
-              <div class="kanban-options"></div>
-              <ul class="drag-inner-list">
-                <li class="drag-item"></li>
-                <li class="drag-item"></li>
-              </ul>
-            </li>
-  
+      <div class="kanban-container">
+        <ul class="kanban-list">
+          <li class="kanban-column kanban-column-requests">
+          <span class="kanban-column-header header-requests">
+            <h2>requests</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Wait_For_Accept">
           </ul>
-        </div>
+          </li>
+
+          <li class="kanban-column kanban-column-progress">
+          <span class="kanban-column-header header-progress">
+            <h2>In Progress</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Proceeding">
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-done">
+            <span class="kanban-column-header header-done">
+              <h2>Done</h2>
+            </span>
+            <div class="kanban-options"></div>
+            <ul class="drag-inner-list" name="Completed">
+            </ul>
+          </li>
+
+        </ul>
+      </div>
   
   
        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
-        
-       <script src="TaskApp/js/center_requests_status.js"></script>
+       <script type = 'text/javascript'>
+            var data = {{json|safe}}
+            console.log(data[0])
+       </script>
+       <script src="{% static 'TaskApp/js/center_requests_status.js' %}"></script>
     </body>
 </html>

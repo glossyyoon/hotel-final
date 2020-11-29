@@ -1,5 +1,6 @@
 from enum import Enum
 import json
+import datetime
 from django.utils import timezone
 
 from django.core.cache import cache
@@ -21,6 +22,12 @@ REJECTED = 1
 # 요청 아직 선택안함
 NOT_YET = 0
 
+
+def json_default(value):
+    if isinstance(value, datetime.date):
+        return value.strftime('%Y-%m-%d')
+    raise TypeError('not JSON serializable')
+
 class Department(Enum):
     CLEANING = "Cleaning Dept"
     FOOD_BEVERAGE = "Food Beverage Dept"
@@ -36,10 +43,15 @@ class StaffRequestsView(generic.ListView):
     model = Request
     template_name = 'TaskApp/staff_requests.html'
 
-def get_staff_requests(req):
-    json_data = json.loads(req.body)
-    staff = Staff.objects.get(staff_id=json_data["staff_id"])
-    request_list = Request.objects.filter(charged_staff_id=staff.pk).values()
+def requestStatus(req, dept_name):
+    print(dept_name)
+    staff_id_list = Staff.objects.filter(department=dept_name).values_list('id', flat=True)
+    request_list = Request.objects.filter(charged_staff_id__in=staff_id_list).values()
+    request_list = set_requests_attr(request_list)
+    json_context = {"json": json.dumps(list(request_list), default=json_default)}
+    return render(req, 'TaskApp/center_requests_status.html', json_context)    
+
+def set_requests_attr(request_list):
     for request in request_list:
         if request['type'] in [
         Request.RequestType.ROOM_CLEANING,
@@ -47,7 +59,7 @@ def get_staff_requests(req):
         Request.RequestType.ROOM_ERROR,
         Request.RequestType.ROOM_ETC]:
             guest = Guest.objects.get(pk=request['send_guest_id_id'])
-            booking = Booking.objects.get(pk=guest.reserve_num_id)
+            booking = Booking.objects.get(booking_userid=guest.id)
             request['room_id'] = booking.booking_roomid.room_id
         if request['type'] == Request.RequestType.ROOM_SERVICE:
             roomservice_request_list = RoomService.objects.filter(roomservice_num=request['roomservice_num']).values()
@@ -56,6 +68,14 @@ def get_staff_requests(req):
                 roomservice = RoomServiceType.objects.get(pk=roomservice_request['select_roomservice_id'])
                 roomservice_name_count_list.append({'menu': roomservice.menu_name, 'count': roomservice_request['count']})
             request['roomservice_list'] = roomservice_name_count_list
+    return request_list
+
+
+def get_staff_requests(req):
+    json_data = json.loads(req.body)
+    staff = Staff.objects.get(staff_id=json_data["staff_id"])
+    request_list = Request.objects.filter(charged_staff_id=staff.pk).values()
+    request_list = set_requests_attr(request_list)
     return JsonResponse({'requests': list(request_list)}, status=201)
 
 def request_send(req):
@@ -149,7 +169,7 @@ def request_get_coordinate(request):
         Request.RequestType.ROOM_ERROR,
         Request.RequestType.ROOM_ETC,]:
         guest = Guest.objects.get(pk=request.send_guest_id_id)
-        booking = Booking.objects.get(pk=guest.reserve_num_id)
+        booking = Booking.objects.get(booking_userid=guest.id)
         room = Room.objects.get(pk=booking.booking_roomid_id)
         return get_place_coord("R" + str(room.room_id))
     elif request.type in [

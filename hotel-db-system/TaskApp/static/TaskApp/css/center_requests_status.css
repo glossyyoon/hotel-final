@@ -182,14 +182,39 @@ ul {
 
 .drag-item {
 	margin: 10px;
-	height: 100px;
-	background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.4);
+  text-align: left;
 }
-
+.request-info-container {
+	padding: 20px;
+}
 .drag-item:active {
 	color: white;
 }
+.cancel_btn_container{
+	height: 40px;
+	line-height: 40px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	text-align: center;
+	vertical-align: center;
+}
 
+.cancel {
+	height:30px;
+    width:70px;
+    background-color: #c44345;
+    border: none;
+    color:#fff;
+	text-align: center;
+	vertical-align: middle;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px;
+	cursor: pointer;
+}
 
 /* micro-interactions */
 .drop-zone-active {
