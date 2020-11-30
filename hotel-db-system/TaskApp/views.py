@@ -11,7 +11,7 @@ from django.http import JsonResponse, HttpResponse
 from django.views import generic
 
 from UserApp.models import Guest
-from .models import Request, ProductRequest
+from .models import Request
 from .place import Coordinate, get_place_coord, get_distance, convert_to_coordinate
 from RoomApp.models import Room, Booking
 from PadApp.models import RoomService, RoomServiceType, Pad
@@ -62,7 +62,7 @@ def set_requests_attr(request_list):
             booking = Booking.objects.get(booking_userid=guest.id)
             request['room_id'] = booking.booking_roomid.room_id
         if request['type'] == Request.RequestType.ROOM_SERVICE:
-            roomservice_request_list = RoomService.objects.filter(roomservice_num=request['roomservice_num']).values()
+            roomservice_request_list = RoomService.objects.filter(pk=request['roomservice_id']).values()
             roomservice_name_count_list = []
             for roomservice_request in roomservice_request_list:
                 roomservice = RoomServiceType.objects.get(pk=roomservice_request['select_roomservice_id'])
@@ -106,6 +106,7 @@ def request_send(req):
 
 def request_convey(request):
     optimal_charger_list = get_optimal_request_charger_list(request)
+    print(optimal_charger_list)
     if len(optimal_charger_list) == 0:
         return
     optimal_charger = optimal_charger_list[0]
@@ -150,7 +151,7 @@ def request_get_department_in_charge(request):
     elif request.type in [
         Request.RequestType.ROOM_ERROR,
         Request.RequestType.ROOM_ETC,]:
-        return Department.FRONT_OFFICE.value
+        return Department.CUSTOMER_RESPONSE.value
     elif request.type in [
         Request.RequestType.CARRY_IN,
         Request.RequestType.CARRY_OUT,
@@ -171,6 +172,7 @@ def request_get_coordinate(request):
         guest = Guest.objects.get(pk=request.send_guest_id_id)
         booking = Booking.objects.get(booking_userid=guest.id)
         room = Room.objects.get(pk=booking.booking_roomid_id)
+        print(get_place_coord("R" + str(room.room_id)))
         return get_place_coord("R" + str(room.room_id))
     elif request.type in [
         Request.RequestType.ROOM_SERVICE,
@@ -195,6 +197,7 @@ def request_get_coordinate(request):
 def get_optimal_request_charger_list(request):
     department = request_get_department_in_charge(request)
     request_coord = request_get_coordinate(request)
+    print(request_coord)
     if department == Department.ROBOT.value:
         charger_list = Robot.objects.filter(work_check=False)
         return sorted(charger_list,
@@ -203,7 +206,7 @@ def get_optimal_request_charger_list(request):
             get_distance(request_coord, convert_to_coordinate(robot.position))))
     else:
         charger_list = Staff.objects.filter(department=department)
-        # charger_list = list(filter(lambda charger: cache.get((charger.staff_id, request.id), NOT_YET) == REJECTED, charger_list))
+        # charger_list = list(filter(lambda charger: cache.get(charger.staff_id, request.id) == NOT_YET, charger_list))
         return sorted(charger_list,
         key=lambda staff: (
             len(Request.objects.filter(charged_staff_id=staff.staff_id)),
@@ -260,6 +263,7 @@ def request_cancel(req):
     try:
         json_data = json.loads(req.body)
         request = Request.objects.get(pk=json_data["request_id"])
+        print(request)
         # cache.set((request.charged_staff_id, request.id), REJECTED, 60 * 60)
         request.charged_staff_id = None
         request.status = Request.RequestStatus.NOT_ASSIGNED
