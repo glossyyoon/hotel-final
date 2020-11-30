@@ -3,6 +3,7 @@ from .models import Pad,RoomServiceType, RoomService, Dnd, TurnDown, Complain
 # Register your models here.
 admin.site.register(Pad)
 admin.site.register(RoomServiceType)
+# admin.site.register(OrderItem)
 admin.site.register(RoomService)
 admin.site.register(Dnd)
 admin.site.register(TurnDown)
