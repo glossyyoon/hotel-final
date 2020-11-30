@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import ProductRequest, Request
+from .models import Request
 
 # Register your models here.
-admin.site.register(ProductRequest)
 admin.site.register(Request)

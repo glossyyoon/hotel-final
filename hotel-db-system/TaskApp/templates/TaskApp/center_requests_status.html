@@ -15,14 +15,14 @@
 
         <div id="menu">
           <ul>
-            <li><a href="#room">Room</a></li>
-            <li><a href="#reservation">Reservation</a></li>
-            <li><a href="#machine">Machine</a></li>
-            <li><a href="#parking">Parking</a></li>
-            <li><a href="#cleaning">Cleaning</a></li>
-            <li><a href="#center">Center</a></li>
-            <li><a href="#purchasing">Purchasing</a></li>
-            <li><a href="#robot">Robot</a></li>
+            <li><a href="#" onclick="dept_apply()">Customer Response Dept</a></li>
+            <li><a href="#">Cleaning Department</a></li>
+            <li><a href="#">Food Beverage Dept</a></li>
+            <li><a href="#">Technical Support Dept</a></li>
+            <li><a href="#">Robot</a></li>
+            <li><a href="#">Parking Dept</a></li>
+            <li><a href="#">Purchasing Dept</a></li>
+            <li><a href="#">Center Dept</a></li>
           </ul>
         </div>
 
@@ -44,51 +44,138 @@
           </div>
           </nav>
 
-        <div class="kanban-container">
-          <ul class="kanban-list">
-            <li class="kanban-column kanban-column-requests">
-            <span class="kanban-column-header header-requests">
-              <h2>requests</h2>
-            </span>
-            <div class="kanban-options"></div>
-            <ul class="drag-inner-list">
-              <li class="drag-item"></li>
-              <li class="drag-item"></li>
-              <li class="drag-item"></li>
-              <li class="drag-item"></li>
-            </ul>
-            </li>
-  
-            <li class="kanban-column kanban-column-progress">
-            <span class="kanban-column-header header-progress">
-              <h2>In Progress</h2>
-            </span>
-            <div class="kanban-options"></div>
-            <ul class="drag-inner-list">
-              <li class="drag-item"></li>
-              <li class="drag-item"></li>
-              <li class="drag-item"></li>
-            </ul>
-            </li>
-  
-            <li class="kanban-column kanban-column-done">
-              <span class="kanban-column-header header-done">
-                <h2>Done</h2>
-              </span>
-              <div class="kanban-options"></div>
-              <ul class="drag-inner-list">
-                <li class="drag-item"></li>
-                <li class="drag-item"></li>
-              </ul>
-            </li>
-  
+      <div class="kanban-container">
+        <ul class="kanban-list">
+          <li class="kanban-column kanban-column-requests">
+          <span class="kanban-column-header header-requests">
+            <h2>requests</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Wait_For_Accept">
           </ul>
-        </div>
+          </li>
+
+          <li class="kanban-column kanban-column-progress">
+          <span class="kanban-column-header header-progress">
+            <h2>In Progress</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Proceeding">
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-done">
+            <span class="kanban-column-header header-done">
+              <h2>Done</h2>
+            </span>
+            <div class="kanban-options"></div>
+            <ul class="drag-inner-list" name="Completed">
+            </ul>
+          </li>
+
+        </ul>
+      </div>
   
   
        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
-        
-       <script src="TaskApp/js/center_requests_status.js"></script>
+       <script type = 'text/javascript'>
+            var data = {{json|safe}}
+            function getCookie(name) {
+              var cookieValue = null;
+              if (document.cookie && document.cookie !== '') {
+                  var cookies = document.cookie.split(';');
+                  for (var i = 0; i < cookies.length; i++) {
+                      var cookie = cookies[i].trim();
+                      // Does this cookie string begin with the name we want?
+                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                          break;
+                      }
+                  }
+              }
+              return cookieValue;
+            }
+          
+          var csrftoken = getCookie('csrftoken');
+
+          function csrfSafeMethod(method) {
+              // these HTTP methods do not require CSRF protection
+              return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+              }
+              $.ajaxSetup({
+              beforeSend: function(xhr, settings) {
+                  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                  }
+              }
+          });
+
+          function getRequestTypeKor(type){
+              if(type == 'Room_Service')
+                  return "룸 서비스"
+              return "룸 기타 컴플레인"
+          }
+
+          class RequestClass {
+              constructor(request){
+                  this.request = request;
+              }
+              getDateFormat(date){
+                  date = new Date(date)
+                  return date.getMonth() + "월 " + date.getDate() + "일 " + date.getHours() + "시 " + date.getMinutes() + "분 " + date.getSeconds() + "초";
+              }
+              getMenuList(){
+                  var list = ``
+                  this.request.roomservice_list.forEach(roomservice => {
+                  list += `<li>${roomservice.menu}    x ${roomservice.count}</li>`
+                  });
+                  return list;
+              }
+              getItem(){
+                  return `<li class="drag-item" draggable="true" request_id=${this.request.id}>
+                  <div class="request-info-container">
+                  <div>요청 타입: ${getRequestTypeKor(this.request.type)}</div>
+                  <div>요청 시간: ${this.getDateFormat(this.request.date_time)}</div>
+                  <div class="complete_time" style="display:${this.request.status !== "Completed" ? 'none;' : 'block;'}">완료 시간: ${this.getDateFormat(this.request.completed_date_time)}</div>
+                  <div>요청 고객 ID: ${this.request.send_guest_id_id}</div>
+                  <div>요청 룸 ID: ${this.request.room_id}</div>
+                  <div>담당 직원 ID: ${this.request.charged_staff_id_id}</div>
+                  ${this.request.type === "ROOM_SERVICE" ?
+                  `<ul>요청 메뉴 리스트:${this.getMenuList()}</ul>`
+                  : "" }
+                  <div>요청 코멘트: ${this.request.comment}</div>
+                  ${this.request.status !== "Completed" ? 
+                  `<div class="cancel_btn_container">
+                  <button class="cancel" onClick="requestCancel(${this.request.id})">
+                  CANCEL
+                  </button>
+                  </div>` : ""}
+                  </div>
+                  </li>`;
+              }
+          }
+            
+          function createRequestItem(request) {
+              request_item = new RequestClass(request).getItem()
+              $(`ul[name=${request.status}]`).append(request_item)
+          }
+
+          data.forEach(request => {createRequestItem(request)});
+
+          function requestCancel(request_id){
+            $(`li[request_id=${request_id}]`).remove()
+            $.ajax({
+                url : "/TaskApp/cancel/",
+                type: "POST",
+                dataType: "json",
+                data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', request_id: request_id}),
+                success:function(){
+                console.log("request cancel success")
+                }
+            });
+          }
+       </script>
+       <script src="{% static 'TaskApp/js/center_requests_status.js' %}"></script>
     </body>
 </html>

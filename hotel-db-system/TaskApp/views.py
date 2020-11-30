@@ -1,5 +1,6 @@
 from enum import Enum
 import json
+import datetime
 from django.utils import timezone
 
 from django.core.cache import cache
@@ -10,17 +11,24 @@ from django.http import JsonResponse, HttpResponse
 from django.views import generic
 
 from UserApp.models import Guest
-from .models import Request, ProductRequest
+from .models import Request
 from .place import Coordinate, get_place_coord, get_distance, convert_to_coordinate
 
 # from RoomApp.models import Room, Booking
 from PadApp.models import RoomService, RoomServiceType, Pad
 from UserApp.models import Guest, Staff, Robot
+from RoomApp.models import Booking
 
 # 요청 거절
 REJECTED = 1
 # 요청 아직 선택안함
 NOT_YET = 0
+
+
+def json_default(value):
+    if isinstance(value, datetime.date):
+        return value.strftime("%Y-%m-%d")
+    raise TypeError("not JSON serializable")
 
 
 class Department(Enum):
@@ -40,10 +48,18 @@ class StaffRequestsView(generic.ListView):
     template_name = "TaskApp/staff_requests.html"
 
 
-def get_staff_requests(req):
-    json_data = json.loads(req.body)
-    staff = Staff.objects.get(staff_id=json_data["staff_id"])
-    request_list = Request.objects.filter(charged_staff_id=staff.pk).values()
+def requestStatus(req, dept_name):
+    print(dept_name)
+    staff_id_list = Staff.objects.filter(department=dept_name).values_list(
+        "id", flat=True
+    )
+    request_list = Request.objects.filter(charged_staff_id__in=staff_id_list).values()
+    request_list = set_requests_attr(request_list)
+    json_context = {"json": json.dumps(list(request_list), default=json_default)}
+    return render(req, "TaskApp/center_requests_status.html", json_context)
+
+
+def set_requests_attr(request_list):
     for request in request_list:
         if request["type"] in [
             Request.RequestType.ROOM_CLEANING,
@@ -52,11 +68,11 @@ def get_staff_requests(req):
             Request.RequestType.ROOM_ETC,
         ]:
             guest = Guest.objects.get(pk=request["send_guest_id_id"])
-            # booking = Booking.objects.get(pk=guest.reserve_num_id)
-            # request["room_id"] = booking.booking_roomid.room_id
+            booking = Booking.objects.get(booking_userid=guest.id)
+            request["room_id"] = booking.booking_roomid.room_id
         if request["type"] == Request.RequestType.ROOM_SERVICE:
             roomservice_request_list = RoomService.objects.filter(
-                roomservice_num=request["roomservice_num"]
+                pk=request["roomservice_id"]
             ).values()
             roomservice_name_count_list = []
             for roomservice_request in roomservice_request_list:
@@ -70,6 +86,14 @@ def get_staff_requests(req):
                     }
                 )
             request["roomservice_list"] = roomservice_name_count_list
+    return request_list
+
+
+def get_staff_requests(req):
+    json_data = json.loads(req.body)
+    staff = Staff.objects.get(staff_id=json_data["staff_id"])
+    request_list = Request.objects.filter(charged_staff_id=staff.pk).values()
+    request_list = set_requests_attr(request_list)
     return JsonResponse({"requests": list(request_list)}, status=201)
 
 
@@ -108,6 +132,7 @@ def request_send(req):
 
 def request_convey(request):
     optimal_charger_list = get_optimal_request_charger_list(request)
+    print(optimal_charger_list)
     if len(optimal_charger_list) == 0:
         return
     optimal_charger = optimal_charger_list[0]
@@ -156,7 +181,7 @@ def request_get_department_in_charge(request):
         Request.RequestType.ROOM_ERROR,
         Request.RequestType.ROOM_ETC,
     ]:
-        return Department.FRONT_OFFICE.value
+        return Department.CUSTOMER_RESPONSE.value
     elif request.type in [
         Request.RequestType.CARRY_IN,
         Request.RequestType.CARRY_OUT,
@@ -178,9 +203,10 @@ def request_get_coordinate(request):
         Request.RequestType.ROOM_ETC,
     ]:
         guest = Guest.objects.get(pk=request.send_guest_id_id)
-        # booking = Booking.objects.get(pk=guest.reserve_num_id)
-        # room = Room.objects.get(pk=booking.booking_roomid_id)
-        # return get_place_coord("R" + str(room.room_id))
+        booking = Booking.objects.get(booking_userid=guest.id)
+        room = Room.objects.get(pk=booking.booking_roomid_id)
+        print(get_place_coord("R" + str(room.room_id)))
+        return get_place_coord("R" + str(room.room_id))
     elif request.type in [
         Request.RequestType.ROOM_SERVICE,
         Request.RequestType.CARRY_ROOM_SERVICE,
@@ -206,6 +232,7 @@ def request_get_coordinate(request):
 def get_optimal_request_charger_list(request):
     department = request_get_department_in_charge(request)
     request_coord = request_get_coordinate(request)
+    print(request_coord)
     if department == Department.ROBOT.value:
         charger_list = Robot.objects.filter(work_check=False)
         return sorted(
@@ -217,7 +244,7 @@ def get_optimal_request_charger_list(request):
         )
     else:
         charger_list = Staff.objects.filter(department=department)
-        # charger_list = list(filter(lambda charger: cache.get((charger.staff_id, request.id), NOT_YET) == REJECTED, charger_list))
+        # charger_list = list(filter(lambda charger: cache.get(charger.staff_id, request.id) == NOT_YET, charger_list))
         return sorted(
             charger_list,
             key=lambda staff: (
@@ -294,6 +321,7 @@ def request_cancel(req):
     try:
         json_data = json.loads(req.body)
         request = Request.objects.get(pk=json_data["request_id"])
+        print(request)
         # cache.set((request.charged_staff_id, request.id), REJECTED, 60 * 60)
         request.charged_staff_id = None
         request.status = Request.RequestStatus.NOT_ASSIGNED

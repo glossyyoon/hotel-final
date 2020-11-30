@@ -31,7 +31,7 @@ $.ajaxSetup({
 function getRequestTypeKor(type){
   if(type == 'Room_Service')
     return "룸 서비스"
-  return "룸 클리닝"
+  return "룸 기타 컴플레인"
 }
 
 class RequestClass {
@@ -57,13 +57,14 @@ class RequestClass {
     <div class="complete_time" style="display:${this.request.status !== "Completed" ? 'none;' : 'block;'}">완료 시간: ${this.getDateFormat(this.request.completed_date_time)}</div>
     <div>요청 고객 ID: ${this.request.send_guest_id_id}</div>
     <div>요청 룸 ID: ${this.request.room_id}</div>
+    ${this.request.type === "ROOM_SERVICE" ?
+    `<ul>요청 메뉴 리스트:${this.getMenuList()}</ul>`
+    : "" }
     <div>요청 코멘트: ${this.request.comment}</div>
-    <ul>요청 메뉴 리스트:
-      ${this.getMenuList()}
-    </ul>
-    ${this.request.status !== "Completed" ? `<div class="cancel_btn_container">
+    ${this.request.status !== "Completed" ? 
+    `<div class="cancel_btn_container">
       <button class="cancel" onClick="requestCancel(${this.request.id})">
-        CANCEL
+      CANCEL
       </button>
     </div>` : ""}
     </div>
@@ -80,7 +81,7 @@ $.ajax({
   url : "/TaskApp/get_staff_requests/",
   type: "POST",
   dataType: "json",
-  data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', staff_id:'302'}),
+  data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', staff_id:'301'}),
   success:function(data){
     data.requests.forEach(request => {createRequestItem(request)});
     //transfer data//
