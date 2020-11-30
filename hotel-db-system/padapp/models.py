@@ -3,7 +3,7 @@ from RoomApp.models import Room
 
 class Pad(models.Model):
     pad_room = models.ForeignKey("RoomApp.Room", on_delete=models.CASCADE)
-    # roomservice = models.ForeignKey(RoomService, on_delete=SET_NULL, null=True)
+    # roomservice = models.ForeignKey(RoomService, on_delete=models.SET_NULL, null=True)
     # dnd = models.ForeignKey(Dnd, on_delete=SET_NULL, null=True)
     # turndown = models.ForeignKey(TurnDown, on_delete=SET_NULL, null=True)
     # compalin = models.ForeignKey(Complain, on_delete=SET_NULL, null=True)
@@ -26,22 +26,21 @@ class RoomServiceType(models.Model): #Menu
     def __str__(self):
         return '%s - %s' % (self.menu_type, self.menu_name)    
 
-class OrderItem(models.Model):
-    item = models.ForeignKey(RoomServiceType, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.menu_name
+# class OrderItem(models.Model):
+#     item = models.ForeignKey(RoomServiceType, on_delete=models.CASCADE)
+#     quantity = models.IntegerField(default=1)
+#     # def __str__(self):
+#     #     return self.menu_name
 
 class RoomService(models.Model):
-    user = models.ForeignKey("UserApp.Guest", on_delete=models.CASCADE)
-    items = models.ManyToManyField(OrderItem)
-    pad = models.ForeignKey(Pad, on_delete=models.CASCADE)
+    pad = models.ForeignKey(Pad, on_delete=models.CASCADE, default=2)
     is_roomservice = models.BooleanField(default=False)
-    # select_roomservice = models.ForeignKey(RoomServiceType, on_delete=models.SET_NULL, null=True)
+    selected_menu=models.ForeignKey(RoomServiceType, on_delete=models.SET_NULL, null=True, blank=True)
     count = models.IntegerField(default=1)
+    created_date = models.DateTimeField(auto_now=True)
 
-    # def __str__(self):
-    #     return self.id
+    def __str__(self):
+        return '%s - pad%s - %s' % (self.id, self.pad_id, self.selected_menu.menu_name)
 
     def sub_total(self):
         return self.select_roomservice.price * self.count
