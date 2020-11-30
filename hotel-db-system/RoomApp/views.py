@@ -1,9 +1,16 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.views.generic import ListView, FormView, View, DeleteView
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
+from datetime import datetime
+import json
+from django.http import JsonResponse, HttpResponse
+from django.forms.models import model_to_dict
+
 from .models import Room, Booking, Bill
 from .forms import AvailabilityForm
 from RoomApp.booking_functions.available import check_availability
+from UserApp.models import Guest
 
 import os
 # from sendgrid import SendGridAPIClient
@@ -15,6 +22,35 @@ def main(request):
 def reserve_complete(request):
     return render(request, 'reserve_complete.html', {})
 
+def checkIn(request):
+    json_data = json.loads(request.body)
+    room = Room.objects.get(room_id=json_data['room_id'])
+    room.on_use = True
+    room.save()
+    room = model_to_dict(room)
+    return JsonResponse({'room': room}, status=201)
+
+def getBookingInfo(request):
+    json_data = json.loads(request.body)
+    date = json_data['date']
+    room = Room.objects.get(room_id=json_data['room_id'])
+    booking = Booking.objects.get(booking_roomid=room.id, check_in__lte=date, check_out__gte=date)
+    user = Guest.objects.get(pk=booking.booking_userid_id)
+    booking = model_to_dict(booking)
+    user = model_to_dict(user)
+    return JsonResponse({'booking': booking, 'user': user}, status=201)
+
+def liveReservationStatusView(request):
+    rooms = Room.objects.all().values()
+    date = request.POST.get('Date', timezone.now())
+    if isinstance(date, str):
+        date = datetime.strptime(date, "%Y-%m-%d")
+        date = timezone.make_aware(date)
+    for room in rooms:
+        checked_in = Booking.objects.filter(booking_roomid=room['id'], check_in__lte=date, check_out__gte=date)
+        room['checked_in'] = len(checked_in) != 0
+        room['is_using'] = len(checked_in) != 0 and room['on_use']
+    return render(request, 'live_reservation_status.html', {'selected_date': str(date), 'rooms': rooms})
     
 def RoomListView(request):
     rooms = Room.objects.all()[:]
