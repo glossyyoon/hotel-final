@@ -97,12 +97,12 @@
             </tr>
             {% endfor %}
             <tr class="checkoutrow">
-              <td colspan="5" class="checkout"><button id="submitbtn" onclick = "">Shopping Basket</button></td><!--rs_cart.html로 이동-->
+              <td colspan="4" class="checkout"><a href="{% url 'padapp:cart' %}" id="submitbtn">Shopping Basket</a></td><!--rs_cart.html로 이동-->
             </tr>
           </tbody>
         </table>
       </div>
-      <h1> <a href="{% url 'padapp:cart' %}">장바구니</a></h1>
+      <!--<h1> <a href="{% url 'padapp:cart' %}">장바구니</a></h1>-->
     </div>
   </body>
 </html>
