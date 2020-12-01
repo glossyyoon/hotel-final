@@ -46,6 +46,15 @@ def cart(request):
     total_price = 0
     for each_total in cart_items:
         total_price += each_total.selected_menu.price * each_total.count
+    
+    for item in cart_items: #cart_items 에 담긴 roomservice_id 값 중 가장 큰 것으로 모두의 roomservice_num 값 설정하기        
+        items_id=[]
+        items_id.append(item.id)
+    max_id = max(items_id)
+    for each_rs_num in cart_items:
+        each_rs_num.roomservice_num=max_id
+        each_rs_num.save()
+
     if cart_items is not None:
         #template에 보낼 context
         context={
@@ -63,7 +72,21 @@ def finish_order(request):
     data = {
         'send_guest_id' : 2,
         'comment' : "RoomService Order",
-        'roomservice_id': cart_items
+        'roomservice_num': cart_items[0].roomservice_num
     }
-    res = HttpRequest.POST('TaskApp/send', data=json.dump(data))
+    # 승현님 여기 입니다 !! 20201202:12:35
+    # res = HTTpRequest.POST('TaskApp/send', data=json.dump(data))
+    
+    # 주문 request를 보냈기 때문에 cart는 삭제한다.    
+    for each_item in cart_items:
+        each_item.delete()
+
     return redirect('padapp:pad')
+
+def complain_list(request):
+    pad_id = 2
+
+    return render(request,'complain_list.html', {'pad_id':pad_id})
+
+def complain_machine(request):
+    return render(request, 'complain_machine.html')

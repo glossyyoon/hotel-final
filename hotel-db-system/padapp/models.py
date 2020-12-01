@@ -38,6 +38,7 @@ class RoomService(models.Model):
     selected_menu=models.ForeignKey(RoomServiceType, on_delete=models.SET_NULL, null=True, blank=True)
     count = models.IntegerField(default=1)
     created_date = models.DateTimeField(auto_now=True)
+    roomservice_num = models.IntegerField(default=0)
 
     def __str__(self):
         return '%s - pad%s - %s' % (self.id, self.pad_id, self.selected_menu.menu_name)
