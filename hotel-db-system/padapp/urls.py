@@ -11,8 +11,8 @@ urlpatterns = [
     path('roomservice/cart/', views.cart, name="cart"),
     path('roomservice/order/', views.finish_order, name="order"),
     path('complain/', views.complain_list, name="complain"),
-    path('complain/machine/', views.complain_machine, name="complain_machine"),
-
+    path('complain/machine', views.complain_machine, name="complain_machine"),
+    path('complain/create/<str:c_type>', views.complain_machine_create, name="c_machine_create"),
     # path('roomservice/ask/',views.add_cart_ask, name="ask"),
     # path('mycart/',views.my_cart, url_name="rs_ordered_list"),
 

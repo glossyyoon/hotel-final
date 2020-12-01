@@ -93,3 +93,15 @@ def complain_list(request):
 
 def complain_machine(request):
     return render(request, 'complain_machine.html')
+
+def complain_machine_create(request, c_type):
+    #   new_complain = Complain.objects.create(pad_id=pad_id, is_roomservice=True, selected_menu=item, count=1)
+
+    if(request.method=='POST'):
+        post = Complain()
+        post.pad_id = 2
+        post.is_complain=True
+        post.complain_type=c_type
+        post.content = request.POST['content']
+        post.save()
+    return redirect('padapp:pad')

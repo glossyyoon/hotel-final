@@ -40,8 +40,8 @@ class RoomService(models.Model):
     created_date = models.DateTimeField(auto_now=True)
     roomservice_num = models.IntegerField(default=0)
 
-    def __str__(self):
-        return '%s - pad%s - %s' % (self.id, self.pad_id, self.selected_menu.menu_name)
+    # def __str__(self):
+    #     return '%s - pad%s - %s' % (self.id, self.pad_id, self.selected_menu.menu_name)
 
     def sub_total(self):
         return self.select_roomservice.price * self.count
@@ -75,3 +75,4 @@ class Complain(models.Model):
         choices=TYPE_CHOICES,
     )
     content = models.TextField(max_length=800)
+
