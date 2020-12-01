@@ -81,9 +81,9 @@ def finish_order(request):
     request.POST = data
     request_send(request)
     
-    # 주문 request를 보냈기 때문에 cart는 삭제한다.    
-    for each_item in cart_items:
-        each_item.delete()
+    # # 주문 request를 보냈기 때문에 cart는 삭제한다.    --> 삭제하면 안돼 !!
+    # for each_item in cart_items:
+    #     each_item.delete()
 
     return redirect('padapp:pad')
 
