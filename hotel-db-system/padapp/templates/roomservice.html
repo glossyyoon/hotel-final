@@ -93,8 +93,12 @@
               <td><img src="..{{ menu.image.url }}" class="thumb"></td>
               <td>{{menu.menu_name}}</td>
               <td>{{menu.price}}</td>
-              <td><span class="basket"><a href="{% url 'padapp:add_cart' menu.id %}"><img src="https://i.imgur.com/h1ldGRr.png" onclick="showPopup()"/></a></span></td><!--rs_basket_complete.html로 이동(팝업)-->            </tr>
+              <td><span class="basket"><a href="{% url 'padapp:add_cart' menu.id %}"><img src="https://i.imgur.com/h1ldGRr.png" onclick="showPopup()"/></a></span></td><!--rs_basket_complete.html로 이동(팝업)-->            
+            </tr>
             {% endfor %}
+            <tr class="checkoutrow">
+              <td colspan="5" class="checkout"><button id="submitbtn" onclick = "">Shopping Basket</button></td><!--rs_cart.html로 이동-->
+            </tr>
           </tbody>
         </table>
       </div>
