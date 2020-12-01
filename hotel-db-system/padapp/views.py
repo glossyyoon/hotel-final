@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import RoomServiceType, RoomService
+from .models import RoomServiceType, RoomService, Complain
 from TaskApp.views import request_send
 from TaskApp.models import Request
 from UserApp.models import Guest
@@ -104,4 +104,15 @@ def complain_machine_create(request, c_type):
         post.complain_type=c_type
         post.content = request.POST['content']
         post.save()
+
+        data={
+            'type':Request.RequestType.ROOM_ETC,
+            'send_guest_id':2,
+            'comment': post.content
+        }
+        request=HttpRequest()
+        request.method='POST'
+        request.POST=data
+        request_send(request)
+
     return redirect('padapp:pad')
