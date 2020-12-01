@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="{% static 'PadApp/css/roomservice.css' %}">
     <script language="javascript">
       function showPopup(){
-        window.open("rs_order_complete.html","주문완료","width=400,height=300,left=100,top=50");
+        alert("주문이 완료 되었습니다.")
+        // window.open("rs_order_complete.html","주문완료","width=400,height=300,left=100,top=50");
       }
     </script>
   </head>
@@ -32,67 +33,22 @@
               </tr>
             </thead>
             <tbody>
+              {% for cart in cart_items %}
               <tr class="productitm">
-                <td><img src="pasta.png" class="thumb"></td>
-                <td><p type="number" class="qtyinput"></td> <!--주문 수량-->
-                <td>Tomato Spaghetti</td>
-                <td>3.6</td>
+                <td><img src="../..{{ cart.selected_menu.image.url }}" class="thumb"></td>
+                <td><p type="number" class="qtyinput">{{cart.count}}</td> <!--주문 수량-->
+                <td>{{cart.selected_menu.menu_name}}</td>
+                <td>{{cart.selected_menu.price}}</td>
               </tr>
-              <tr class="productitm">
-                <td><img src="sandwich.png" class="thumb"></td>
-                <td><p type="number" class="qtyinput"></td> <!--주문 수량-->
-                <td>SANDWICH</td>
-                <td>3.2</td>
-              </tr>
-              <tr class="productitm">
-                <td><img src="연어구이.jpg" class="thumb"></td>
-                <td><p type="number" class="qtyinput"></td> <!--주문 수량-->
-                <td>Grilled Salmon</td>
-                <td>5.1</td>
-              </tr>
-              <tr class="productitm">
-                <td><img src="steak.jpg" class="thumb"></td>
-                <td><p type="number" class="qtyinput"></td> <!--주문 수량-->
-                <td>Tenderloin Steak</td>
-                <td>6.0</td>
-              </tr>
-              <tr class="productitm">
-                <td><img src="ansim_steak.jpg" class="thumb"></td>
-                <td><p type="number" class="qtyinput"></td> <!--주문 수량-->
-                <td>Sirloin Steak</td>
-                <td>7.7</td>
-              </tr>
-              <tr class="productitm">
-                <td><img src="grill.jpg" class="thumb"></td>
-                <td><p type="number" class="qtyinput"></td> <!--주문 수량-->
-                <td>Assorted Grilled Vegetables</td>
-                <td>3.0</td>
-              </tr>
-              <tr class="productitm">
-                <td><img src="cake.jpg" class="thumb"></td>
-                <td><p type="number" class="qtyinput"></td> <!--주문 수량-->
-                <td>Cream Cheese Cake</td>
-                <td>3.6</td>
-              </tr>
-              <tr class="productitm">
-                <td><img src="fruit.jpg" class="thumb"></td>
-                <td><p type="number" class="qtyinput"></td> <!--주문 수량-->
-                <td>Fresh Fruit</td>
-                <td>3.2</td>
-              </tr>
-              <tr class="productitm">
-                <td><img src="pie.jpg" class="thumb"></td>
-                <td><p type="number" class="qtyinput"></td> <!--주문 수량-->
-                <td>Pecan Pie with Vanilla Ice Cream</td>
-                <td>3.2</td>
-              </tr>
+              {% endfor %}
+
               <tr class="totalprice">
                 <td class="light">Total:</td>
                 <td colspan="2">&nbsp;</td>
-                <td colspan="2"><span class="thick"><!--총 주문 금액--></span></td>
+                <td colspan="2"><span class="thick">{{total_price}}</span></td>
               </tr>
               <tr class="checkoutrow">
-                <td colspan="5" class="checkout"><button id="submitbtn" onclick="showPopup()"/>Order</button></td>
+                <td colspan="5" class="checkout"><a href="{% url 'padapp:order' %}" id="submitbtn" onclick="showPopup()">Order</a></td>
               </tr>
             </tbody>
           </table>
@@ -101,7 +57,7 @@
     </body>
   </body>
 </html>
-------------------------------------------------
+<!-- ------------------------------------------------
 <h1>주문서</h1>
 {% for cart in cart_items %}
 <p>메뉴 : {{cart.selected_menu.menu_name}}</p>
@@ -112,4 +68,4 @@
 {% endfor %}
 -------------------------------------------------
 <p>최종가격 :  {{total_price}}</p>
-<h1><a href="{% url 'padapp:order' %}">주문하기</a></h1>
+<h1><a href="{% url 'padapp:order' %}">주문하기</a></h1> -->
