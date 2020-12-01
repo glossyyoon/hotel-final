@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import RoomServiceType, RoomService
 # Item, OrderItem, Order
 from UserApp.models import Guest
+from django.http import HttpRequest
+import json
 
 # Create your views here.
 def pad_item_list(request):
@@ -45,6 +47,7 @@ def cart(request):
     for each_total in cart_items:
         total_price += each_total.selected_menu.price * each_total.count
     if cart_items is not None:
+        #template에 보낼 context
         context={
             'cart_items':cart_items,
             'total_price':total_price,
@@ -55,4 +58,12 @@ def cart(request):
 
 
 def finish_order(request):
+    cart_items = RoomService.objects.filter(pad_id=2)
+    # task로 data 보내기
+    data = {
+        'send_guest_id' : 2,
+        'comment' : "RoomService Order",
+        'roomservice_id': cart_items
+    }
+    res = HttpRequest.POST('TaskApp/send', data=json.dump(data))
     return redirect('padapp:pad')
