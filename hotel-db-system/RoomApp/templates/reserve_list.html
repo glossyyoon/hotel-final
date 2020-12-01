@@ -1,21 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% load static %}
+<!DOCTYPE html><!--예약 가능한 객실-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>예약 가능 객실 | H6</title>
+    <link rel="stylesheet" href="../static/RoomApp/css/style.css">
+    <link rel="stylesheet" href="../static/RoomApp/css/list.css">
+  </head>
+  <body>
     {% csrf_token %}
-    {% for reserve_rooms, room_url in room_list %}
-        <a href="{{room_url}}">
-        {{reserve_rooms}}
-        <form id="booking-form" action= "{% url 'roomapp:Reserve' category=reserve_rooms %}" method="POST">
-            
-            <div class="input-div">
-                <button type="submit" >예약하기</button>
+    <div id="wrap">
+        <!-- 헤더영역 -->
+        <header>
+            <div class="top_menu">
+                <ul class="top_nav container">
+                    <li><a href="{% static 'UserApp/tempaltes/mypage.html' %}">마이페이지</a></li>
+                    <li><a href="{% static 'UserApp/tempaltes/logout.html' %}">로그아웃</a></li>
+                    <li><a href="#">한국어</a></li>
+                </ul>
             </div>
-        {% endfor %}
-    </form>
-</body>
+            <div class="header_inner container">
+                <h1>H6 HOTEL</h1>
+                <nav>
+                    <ul class="gnb">
+                        <li><a href="reservation_main.html" style="text-decoration:none">홈</a></li><!--reserve_main으로-->
+                        <li><a href="#" style="text-decoration:none">H6호텔 소개</a></li>
+                        <li><a href="#" style="text-decoration:none">객실 안내</a></li>
+                    </ul>
+                </nav>
+                <button class="reBtn" onclick="location.href='#'">예약하기</button>
+            </div>
+        </header>
+        <!--예약 가능한 객실 보여주기-->
+        {% csrf_token %}
+        {% for reserve_rooms, room_url in room_list %}
+        <div class="cards">
+          {% if reserve_rooms == "STANDARD" %}
+          <div class="card">
+            <div class="card__image-holder">
+              <img class="card__image" src="../static/RoomApp/images/room1.jpg" alt="standard" />
+            </div>
+            <div class="card-title">
+              <a href="{{room_url}}"></a>
+              <a href="reservation_bill.html" class="toggle-info btn"><!--결제창으로-->
+                <span class="left"></span>
+                <span class="right"></span>
+              </a>
+              <h2>스텐다드룸
+                  <small>가격 : 80,000원/1박</small>
+              </h2>
+            </div>
+          </div>
+          {% elif reserve_rooms == "SUPERIOR" %}
+          <div class="card">
+            <div class="card__image-holder">
+              <img class="card__image" src="../static/RoomApp/images/room2.jpg" alt="superior" />
+            </div>
+            <div class="card-title">
+              <a href="{{room_url}}"></a>
+              <a href="reservation_bill.html" class="toggle-info btn"><!--결제창으로-->
+                <span class="left"></span>
+                <span class="right"></span>
+              </a>
+              <h2>슈페리어룸
+                  <small>가격 : 130,000원/1박</small>
+              </h2>
+            </div>
+          </div>
+          {% elif reserve_rooms == "DELUXE" %}
+          <div class="card">
+            <div class="card__image-holder">
+              <img class="card__image" src="../static/RoomApp/images/room3.PNG" alt="deluxe" />
+            </div>
+            <div class="card-title">
+              <a href="{{room_url}}"></a>
+              <a href="reservation_bill.html" class="toggle-info btn"><!--결제창으로-->
+                <span class="left"></span>
+                <span class="right"></span>
+              </a>
+              <h2>디럭스룸
+                  <small>가격 : 170,000원/1박</small>
+              </h2>
+            </div>
+          </div>
+          {% elif reserve_rooms == "EXECUTIVE" %}
+          <div class="card">
+            <div class="card__image-holder">
+              <img class="card__image" src="../static/RoomApp/images/room4.PNG" alt="executive" />
+            </div>
+            <div class="card-title">
+              <a href="{{room_url}}"></a>
+              <a href="reservation_bill.html" class="toggle-info btn"><!--결제창으로-->
+                <span class="left"></span>
+                <span class="right"></span>
+              </a>
+              <h2>이그제큐티브룸
+                  <small>가격 : 250,000원/1박</small>
+              </h2>
+            </div>
+          </div>
+          {% elif reserve_rooms == "SUITE" %}
+          <div class="card">
+            <div class="card__image-holder">
+              <img class="card__image" src="../static/RoomApp/images/room5.PNG" alt="suite" />
+            </div>
+            <div class="card-title">
+              <a href="{{room_url}}"></a>
+              <a href="reservation_bill.html" class="toggle-info btn"><!--결제창으로-->
+                <span class="left"></span>
+                <span class="right"></span>
+              </a>
+              <h2>스위트룸
+                  <small>가격 : 400,000원/1박</small>
+              </h2>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+    </div>
+  </body>
 </html>
