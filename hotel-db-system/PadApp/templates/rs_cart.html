@@ -103,13 +103,12 @@
 ------------------------------------------------
 <h1>주문서</h1>
 {% for cart in cart_items %}
-<!-- <p>카트 주인 : {{cart.user}}</p> -->
 <p>메뉴 : {{cart.selected_menu.menu_name}}</p>
 <img src="../..{{ cart.selected_menu.image.url }}" style="width:100px">
 <p>수량 : {{cart.count}}</p>
 <p>가격 : {{cart.selected_menu.price}}</p>
 
-<!-- <a href="{% url 'padapp:order' %}">주문하기</a> -->
 {% endfor %}
 -------------------------------------------------
 <p>최종가격 :  {{total_price}}</p>
+<h1><a href="{% url 'padapp:order' %}">주문하기</a></h1>
