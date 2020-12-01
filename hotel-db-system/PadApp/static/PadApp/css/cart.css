@@ -113,16 +113,19 @@ h2{
 }
 
 #cart thead th.first {
-  width: 180px;
+  width: 175px;
+}
+#cart thead th.second {
+  width: 45px;
 }
 #cart thead th.third {
-  width: 245px;
+  width: 230px;
 }
 #cart thead th.fourth {
-  width: 145px;
+  width: 130px;
 }
 #cart thead th.fifth {
-  width: 30px;
+  width: 20px;
 }
 
 #cart tbody td {
@@ -143,6 +146,15 @@ tr.productitm {
   margin-bottom: 4px;
   width: 125px;
   height: auto;
+}
+
+.qtyinput {
+  width: 33px;
+  height: 22px;
+  border: 1px solid #a3b8d3;
+  background: #dae4eb;
+  color: #616161;
+  text-align: center;
 }
 
 tr.totalprice {
