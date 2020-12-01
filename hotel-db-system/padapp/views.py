@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import RoomServiceType, RoomService
-# Item, OrderItem, Order
+from TaskApp.views import request_send
+from TaskApp.models import Request
 from UserApp.models import Guest
-from django.http import HttpRequest
+from django.http import HttpRequest, QueryDict
 import json
 
 # Create your views here.
@@ -70,12 +71,15 @@ def finish_order(request):
     cart_items = RoomService.objects.filter(pad_id=2)
     # task로 data 보내기
     data = {
+        'type': Request.RequestType.ROOM_SERVICE,
         'send_guest_id' : 2,
         'comment' : "RoomService Order",
         'roomservice_num': cart_items[0].roomservice_num
     }
-    # 승현님 여기 입니다 !! 20201202:12:35
-    # res = HTTpRequest.POST('TaskApp/send', data=json.dump(data))
+    request = HttpRequest()
+    request.method = 'POST'
+    request.POST = data
+    request_send(request)
     
     # 주문 request를 보냈기 때문에 cart는 삭제한다.    
     for each_item in cart_items:
@@ -85,7 +89,6 @@ def finish_order(request):
 
 def complain_list(request):
     pad_id = 2
-
     return render(request,'complain_list.html', {'pad_id':pad_id})
 
 def complain_machine(request):

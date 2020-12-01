@@ -36,7 +36,7 @@ class Request(models.Model):
         'UserApp.Robot', on_delete=models.CASCADE, blank=True, null=True, related_name="charged_robot_id")
     comment = models.CharField(max_length=200, blank=True, null=True)
     status = models.CharField(max_length=50, choices=RequestStatus.choices)
-    roomservice_id = models.ForeignKey('PadApp.RoomService', on_delete=models.CASCADE, blank=True, null=True)
+    roomservice_num = models.IntegerField(default=1, blank=True, null=True)
 
     def __str__(self):
         name = f'Type: {self.type} Status: {self.status}\n'

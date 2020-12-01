@@ -17,7 +17,7 @@ from .place import Coordinate, get_place_coord, get_distance, convert_to_coordin
 # from RoomApp.models import Room, Booking
 from PadApp.models import RoomService, RoomServiceType, Pad
 from UserApp.models import Guest, Staff, Robot
-from RoomApp.models import Booking
+from RoomApp.models import Booking, Room
 
 # 요청 거절
 REJECTED = 1
@@ -72,12 +72,12 @@ def set_requests_attr(request_list):
             request["room_id"] = booking.booking_roomid.room_id
         if request["type"] == Request.RequestType.ROOM_SERVICE:
             roomservice_request_list = RoomService.objects.filter(
-                pk=request["roomservice_id"]
+                roomservice_num=request["roomservice_num"]
             ).values()
             roomservice_name_count_list = []
             for roomservice_request in roomservice_request_list:
                 roomservice = RoomServiceType.objects.get(
-                    pk=roomservice_request["select_roomservice_id"]
+                    selected_menu=roomservice_request["selected_menu"]
                 )
                 roomservice_name_count_list.append(
                     {
@@ -90,6 +90,7 @@ def set_requests_attr(request_list):
 
 
 def get_staff_requests(req):
+    print(req.body)
     json_data = json.loads(req.body)
     staff = Staff.objects.get(staff_id=json_data["staff_id"])
     request_list = Request.objects.filter(charged_staff_id=staff.pk).values()
@@ -98,31 +99,23 @@ def get_staff_requests(req):
 
 
 def request_send(req):
-    send_guest_id = req.POST["send_guest_id"] if (req.POST in "send_guest_id") else None
-    send_staff_id = req.POST["send_staff_id"] if (req.POST in "send_staff_id") else None
-    comment = req.POST["comment"] if (req.POST in "comment") else None
+    send_guest = None
+    if "send_guest_id" in req.POST:
+        send_guest = Guest.objects.get(pk=req.POST["send_guest_id"])
+    send_staff_id = req.POST["send_staff_id"] if ("send_staff_id" in req.POST) else None
+    comment = req.POST["comment"] if ("comment" in req.POST) else None
     product_request_id = (
-        req.POST["product_request_id"] if (req.POST in "product_request_id") else None
+        req.POST["product_request_id"] if ("product_request_id" in req.POST) else None
     )
     roomservice_num = (
-        req.POST["roomservice_num"] if (req.POST in "roomservice_num") else None
+        req.POST["roomservice_num"] if ("roomservice_num" in req.POST) else None
     )
-    if roomservice_num != None:
-        roomservice_pad = req.POST["pad_id"]
-        roomservice_requests = RoomService.objects.filter(
-            roomservice_num=roomservice_num
-        )
-        roomservice_room = Pad.objects.get(pk=roomservice_pad).pad_room
-        # booking = Booking.objects.filter(booking_roomid=roomservice_room, checkIn__gte=timezone.now(), checkOut__lte=timezone.now())
-        # send_guest_id = booking.booking_userid
-
     request = Request.objects.create(
-        type=type,
+        type=req.POST['type'],
         date_time=timezone.now(),
         send_staff_id=send_staff_id,
-        send_guest_id=send_guest_id,
+        send_guest_id=send_guest,
         comment=comment,
-        product_request_id=product_request_id,
         roomservice_num=roomservice_num,
         status=Request.RequestStatus.NOT_ASSIGNED,
     )

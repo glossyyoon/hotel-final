@@ -81,7 +81,7 @@ $.ajax({
   url : "/TaskApp/get_staff_requests/",
   type: "POST",
   dataType: "json",
-  data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', staff_id:'301'}),
+  data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', staff_id:'302'}),
   success:function(data){
     data.requests.forEach(request => {createRequestItem(request)});
     //transfer data//
