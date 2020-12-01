@@ -57,7 +57,7 @@ class RequestClass {
     <div class="complete_time" style="display:${this.request.status !== "Completed" ? 'none;' : 'block;'}">완료 시간: ${this.getDateFormat(this.request.completed_date_time)}</div>
     <div>요청 고객 ID: ${this.request.send_guest_id_id}</div>
     <div>요청 룸 ID: ${this.request.room_id}</div>
-    ${this.request.type === "ROOM_SERVICE" ?
+    ${this.request.type === "Room_Service" ?
     `<ul>요청 메뉴 리스트:${this.getMenuList()}</ul>`
     : "" }
     <div>요청 코멘트: ${this.request.comment}</div>

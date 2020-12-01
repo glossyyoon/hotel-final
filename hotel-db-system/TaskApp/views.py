@@ -76,8 +76,9 @@ def set_requests_attr(request_list):
             ).values()
             roomservice_name_count_list = []
             for roomservice_request in roomservice_request_list:
+                print(roomservice_request)
                 roomservice = RoomServiceType.objects.get(
-                    selected_menu=roomservice_request["selected_menu"]
+                    pk=roomservice_request["selected_menu_id"]
                 )
                 roomservice_name_count_list.append(
                     {

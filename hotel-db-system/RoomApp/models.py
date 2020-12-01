@@ -35,8 +35,8 @@ class Booking(models.Model):
     booking_userid = models.ForeignKey(
         "UserApp.Guest", null=True, on_delete=models.SET_NULL
     )
-    check_in = models.DateField(auto_now=False)
-    check_out = models.DateField(auto_now=False)
+    check_in = models.DateTimeField(auto_now=False)
+    check_out = models.DateTimeField(auto_now=False)
     check_in_time = models.DateTimeField(auto_now=True, null=True)
     check_out_time = models.DateTimeField(auto_now=True, null=True)
 
