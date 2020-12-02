@@ -6,19 +6,29 @@
     <title>login</title>
   </head>
 
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="{% static 'UserApp/css/executive_login.css' %}">
-    <body>
-        <div class="login-page">
-            <div class="form">
-              </form>
-              <form class="login-form">
-                  <h2 class="name">EXECUTIVE ONLY</h2>
-                <input type="text" placeholder="Please enter executive login number."/>
-                <button type ="button" onclick ="location.href='executive_main.html'">login</button>
-              </form>
-            </div>
-          </div>
-    </body>
-    
+  <meta charset="utf-8" />
+  <link
+    rel="stylesheet"
+    href="{% static 'UserApp/css/executive_login.css' %}"
+  />
+  <body>
+    <div class="login-page">
+      <div class="form">
+        <form
+          method="POST"
+          class="login-form"
+          action="/userApp/executive_login_post/"
+        >
+          {% csrf_token %}
+          <h2 class="name">EXECUTIVE ONLY</h2>
+          <input
+            type="text"
+            name="executive_id"
+            placeholder="Please enter executive login number."
+          />
+          <button type="submit">login</button>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

@@ -14,5 +14,11 @@ urlpatterns = [
     path('staff_attendance/', views.staff_attendance, name='staff_attendance'),
     path('staff_login_post/', views.staff_login_post, name='staff_login_post'),
     path('leave_request/', views.leave_request, name='leave_request'),
-    path('attendance_request/', views.attendance_request, name='attendance_request')
+    path('attendance_request/', views.attendance_request,
+         name='attendance_request'),
+    path('executive_login/', views.executive_login, name='executive_login'),
+    path('executive_login_post/', views.executive_login_post,
+         name='executive_login_post'),
+    path('executive_main/', views.executive_main,
+         name='executive_main')
 ]
