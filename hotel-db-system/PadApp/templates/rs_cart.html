@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <title>Room Service | H6</title>
     <link rel="stylesheet" href="{% static 'PadApp/css/cart.css' %}">
+    <style type="text/css"> 
+      a { text-decoration:none } 
+    </style>
     <script language="javascript">
       function showPopup(){
         alert("주문이 완료 되었습니다.")
@@ -15,7 +18,7 @@
   <body>
     <body>
       <div id="back">
-        <button id="goback">Back</button>
+        <button id="goback" onclick="history.back()">Back</button>
       </div>
       <div id="w">
         <header id="title">
@@ -35,8 +38,8 @@
             <tbody>
               {% for cart in cart_items %}
               <tr class="productitm">
-                <td><img src="../..{{ cart.selected_menu.image.url }}" class="thumb"></td>
-                <td><p type="number" class="qtyinput">{{cart.count}}</td> <!--주문 수량-->
+                <td><img src="../..{{ cart.selected_menu.image.url }}" class="thumb" style="width: 130px; height: 80px;"></td>
+                <td><p type="number" class="qty">{{cart.count}}</td> <!--주문 수량-->
                 <td>{{cart.selected_menu.menu_name}}</td>
                 <td>{{cart.selected_menu.price}}</td>
               </tr>
