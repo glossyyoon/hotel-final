@@ -56,7 +56,7 @@
           {% elif check == 1 %}
           <button
             class="reBtn"
-            onclick="location.href='{{RoomApp}}/roomApp/reserve_list'"
+            onclick="location.href='{{RoomApp}}/roomApp/roomList'"
           >
             {% endif %} 예약하기
           </button>
@@ -64,61 +64,63 @@
       </header>
       <div id="showcase">
         <div class="reservation_box">
-          <div class="reservation_inner">
-            <ul>
-              <li class="checkIn">
-                <span>체크인</span>
-                <input type="date" id="datepicker_today" />
-              </li>
-              <li class="stayDay">
-                <span></span>
-                <input type="text" class="stay" disabled />
-              </li>
-              <li class="checkOut">
-                <span>체크아웃</span>
-                <input type="date" id="datepicker_checkOutDay" />
-              </li>
-              <li class="room">
-                <span>객실</span>
-                <select name="" id="">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select>
-              </li>
-              <li class="adult">
-                <span>성인</span>
-                <select name="" id="">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select>
-              </li>
-              <li class="child">
-                <span>어린이</span>
-                <select name="" id="">
-                  <option value="0">0</option>
-                  <option value="0">1</option>
-                  <option value="0">2</option>
-                </select>
-              </li>
-              <li class="baby">
-                <span>유아</span>
-                <select name="" id="">
-                  <option value="0">0</option>
-                  <option value="0">1</option>
-                  <option value="0">2</option>
-                </select>
-              </li>
-              <li class="search">
-                <button
-                  onclick="location.href='/UserApp/templates/UserApp/login/'"
-                >
-                  검색
-                </button>
-              </li>
-            </ul>
-          </div>
+          <form action='{{RoomApp}}/roomApp/roomList' method="POST" class="post-form">
+          {%csrf_token%} 
+            <div class="reservation_inner">
+              <ul>
+                <li class="checkIn">
+                  <span>체크인</span>
+                  <input type="date" name="check_in" id="datepicker_today" />
+                </li>
+                <li class="stayDay">
+                  <span></span>
+                  <input type="text" class="stay" disabled />
+                </li>
+                <li class="checkOut">
+                  <span>체크아웃</span>
+                  <input type="date" name="check_out" id="datepicker_checkOutDay" />
+                </li>
+                <li class="room">
+                  <span>객실</span>
+                  <select name="" id="">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </li>
+                <li class="adult">
+                  <span>성인</span>
+                  <select name="" id="">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </li>
+                <li class="child">
+                  <span>어린이</span>
+                  <select name="" id="">
+                    <option value="0">0</option>
+                    <option value="0">1</option>
+                    <option value="0">2</option>
+                  </select>
+                </li>
+                <li class="baby">
+                  <span>유아</span>
+                  <select name="" id="">
+                    <option value="0">0</option>
+                    <option value="0">1</option>
+                    <option value="0">2</option>
+                  </select>
+                </li>
+                <li class="search">
+                  <button type="submit"
+                  >
+                    검색
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Guest',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('is_guest', models.BooleanField(default=True)),
                 ('site_id', models.CharField(max_length=20)),
                 ('site_pw', models.CharField(max_length=20)),
@@ -44,7 +45,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Robot',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('work_check', models.BooleanField(default=False)),
                 ('is_emergency', models.BooleanField(default=False)),
                 ('position', models.CharField(max_length=50)),
@@ -53,7 +55,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Sales',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('date', models.DateTimeField()),
                 ('fee', models.IntegerField()),
                 ('payment_num', models.IntegerField()),
@@ -65,20 +68,26 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Staff',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('staff_id', models.IntegerField(default=0)),
-                ('first_name', models.CharField(blank=True, max_length=100, null=True)),
-                ('last_name', models.CharField(blank=True, max_length=100, null=True)),
+                ('first_name', models.CharField(
+                    blank=True, max_length=100, null=True)),
+                ('last_name', models.CharField(
+                    blank=True, max_length=100, null=True)),
                 ('nation', models.CharField(blank=True, max_length=40, null=True)),
-                ('gender', models.CharField(choices=[('MALE', 'Male'), ('FEMALE', 'Female')], default='Male', max_length=6)),
+                ('gender', models.CharField(choices=[
+                 ('MALE', 'Male'), ('FEMALE', 'Female')], default='Male', max_length=6)),
                 ('birthday', models.DateField(blank=True, null=True)),
                 ('email', models.CharField(blank=True, max_length=40, null=True)),
-                ('phone_number', models.CharField(blank=True, max_length=50, null=True)),
+                ('phone_number', models.CharField(
+                    blank=True, max_length=50, null=True)),
                 ('hire_date', models.DateField(blank=True, null=True)),
                 ('salary', models.IntegerField(blank=True, null=True)),
                 ('position', models.CharField(blank=True, max_length=100, null=True)),
                 ('had_annual_leave', models.IntegerField(default=0)),
-                ('department', models.CharField(choices=[('Cleaning Dept', 'Cleaning Dept'), ('Food Beverage Dept', 'Food Beverage Dept'), ('Front Office Dept', 'Front Office Dept'), ('Customer Response Dept', 'Customer Response Dept'), ('Technical Support Dept', 'Technical Support Dept'), ('Parking Dept', 'Parking Department'), ('Purchasing Dept', 'Purchasing Department'), ('Center', 'Center Department'), ('Executive', 'Executive')], default='None', max_length=25)),
+                ('department', models.CharField(choices=[('Cleaning Dept', 'Cleaning Dept'), ('Food Beverage Dept', 'Food Beverage Dept'), ('Front Office Dept', 'Front Office Dept'), ('Customer Response Dept', 'Customer Response Dept'), (
+                    'Technical Support Dept', 'Technical Support Dept'), ('Parking Dept', 'Parking Department'), ('Purchasing Dept', 'Purchasing Department'), ('Center', 'Center Department'), ('Executive', 'Executive')], default='None', max_length=25)),
             ],
             options={
                 'db_table': 'staff',
@@ -87,24 +96,28 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='StaffLeave',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('start_time', models.DateField()),
                 ('finish_time', models.DateField()),
                 ('accept', models.BooleanField(default=False)),
-                ('staff_id', models.ForeignKey(db_column='staff_id', on_delete=django.db.models.deletion.CASCADE, to='UserApp.staff')),
+                ('staff_id', models.ForeignKey(db_column='staff_id',
+                                               on_delete=django.db.models.deletion.CASCADE, to='UserApp.staff')),
             ],
         ),
         migrations.CreateModel(
             name='Attendance',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('date', models.DateTimeField(null=True)),
                 ('start_time', models.DateTimeField(null=True)),
                 ('finish_time', models.DateTimeField(null=True)),
                 ('work_type', models.CharField(max_length=50, null=True)),
                 ('description', models.TextField(null=True)),
                 ('accept', models.BooleanField(null=True)),
-                ('staff_id', models.ForeignKey(db_column='staff_id', on_delete=django.db.models.deletion.CASCADE, to='UserApp.staff')),
+                ('staff_id', models.ForeignKey(db_column='staff_id',
+                                               on_delete=django.db.models.deletion.CASCADE, to='UserApp.staff')),
             ],
         ),
     ]
