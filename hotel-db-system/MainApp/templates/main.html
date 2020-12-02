@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="{% static 'MainApp/css/style.css' %}" />
   </head>
   <body>
+    <form id="booking-form" action= "{% url 'roomapp:RoomListView' %}" method="POST">
+
+    {% csrf_token %}
     <div id="wrap">
       <!-- 헤더영역 -->
       <header>
