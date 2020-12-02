@@ -48,11 +48,17 @@
               </li>
             </ul>
           </nav>
+          {% if check == 0 %}
           <button
             class="reBtn"
-            onclick="location.href='/UserApp/templates/UserApp/login/'"
+            onclick="location.href='{{userapp}}/userApp/login'"
           >
-            예약하기
+          {% elif check == 1 %}
+          <button
+            class="reBtn"
+            onclick="location.href='{{RoomApp}}/roomApp/reserve_list'"
+          >
+            {% endif %} 예약하기
           </button>
         </div>
       </header>
