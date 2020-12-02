@@ -50,7 +50,7 @@ strong, b { font-weight: bold; }
 em, i { font-style: italic; }
 
 table { border-collapse: collapse; border-spacing: 0; }
-img { border: 0; max-width: 100%; }
+img { border: 0; width:60px; height: 40px; }
 
 h1 {
   font-family: 'Fredoka One', Helvetica, Tahoma, sans-serif;
@@ -142,7 +142,7 @@ tr.productitm {
   border: 1px solid #ddd;
   margin-bottom: 4px;
   width: 125px;
-  height: auto;
+  height: 80px;
 }
 
 tr.totalprice {
@@ -203,7 +203,7 @@ td.checkout {
 }
 
 #submitbtn {
-  width: 200px;
+  width: 100px;
   height: 40px;
   outline: none;
   border: none;
