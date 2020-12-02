@@ -65,9 +65,9 @@
       <div id="showcase">
         <div class="reservation_box">
           {% if check == 0%}
-            <form action='{{userApp}}/userApp/login/' method="POST" class="post-form">
+            <form action='{{userApp}}/userApp/login' method="POST" class="post-form">
           {% elif check == 1 %}
-            <form action='{{RoomApp}}/roomApp/roomList/' method="POST" class="post-form">
+            <form action='{{RoomApp}}/roomApp/roomList' method="POST" class="post-form">
           {% endif %} 
           {%csrf_token%} 
             <div class="reservation_inner">
