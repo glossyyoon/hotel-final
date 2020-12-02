@@ -31,7 +31,7 @@ $.ajaxSetup({
 function getRequestTypeKor(type){
   if(type == 'Room_Service')
     return "룸 서비스"
-  return "룸 클리닝"
+  return "룸 기타 컴플레인"
 }
 
 class RequestClass {
@@ -57,13 +57,14 @@ class RequestClass {
     <div class="complete_time" style="display:${this.request.status !== "Completed" ? 'none;' : 'block;'}">완료 시간: ${this.getDateFormat(this.request.completed_date_time)}</div>
     <div>요청 고객 ID: ${this.request.send_guest_id_id}</div>
     <div>요청 룸 ID: ${this.request.room_id}</div>
+    ${this.request.type === "Room_Service" ?
+    `<ul>요청 메뉴 리스트:${this.getMenuList()}</ul>`
+    : "" }
     <div>요청 코멘트: ${this.request.comment}</div>
-    <ul>요청 메뉴 리스트:
-      ${this.getMenuList()}
-    </ul>
-    ${this.request.status !== "Completed" ? `<div class="cancel_btn_container">
+    ${this.request.status !== "Completed" ? 
+    `<div class="cancel_btn_container">
       <button class="cancel" onClick="requestCancel(${this.request.id})">
-        CANCEL
+      CANCEL
       </button>
     </div>` : ""}
     </div>
@@ -195,29 +196,16 @@ $('.kanban-column-requests')
      $(this).removeClass('drop-zone-active')
    })
 
-   //side bar//
-$(document).ready(function(){	
-  
-
-$('#toggleMenu .list').click(function(){
-	$('#sidebar-menu li span').animate({'opacity':1, 'margin-left':'0px'});
-	$('#sidebar-menu').toggleClass('animate');
-	$('#toggleMenu .list').fadeOut();
-	$('#toggleMenu .thumbs').fadeIn();
-
-});
-
-$('#toggleMenu .thumbs').click(function(){
-	$('#sidebar-menu li span').css({'opacity': 0, 'margin-left': "10px"});
-	$('#sidebar-menu').toggleClass('animate');	
-	$('#toggleMenu .thumbs').fadeOut();
-	$('#toggleMenu .list').fadeIn();	
-	
-});
-
-$("#sidebar-menu li").click(function(){
-	$("#sidebar-menu li").not(this).removeClass("selected");
-	$(this).toggleClass("selected");
-});
-
-});
+   var menuBtn = document.querySelector('.menu-btn');
+   var nav = document.querySelector('nav');
+   var lineOne = document.querySelector('nav .menu-btn .line--1');
+   var lineTwo = document.querySelector('nav .menu-btn .line--2');
+   var lineThree = document.querySelector('nav .menu-btn .line--3');
+   var link = document.querySelector('nav .nav-links');
+   menuBtn.addEventListener('click', () => {
+       nav.classList.toggle('nav-open');
+       lineOne.classList.toggle('line-cross');
+       lineTwo.classList.toggle('line-fade-out');
+       lineThree.classList.toggle('line-cross');
+       link.classList.toggle('fade-in');
+   })

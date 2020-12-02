@@ -14,7 +14,6 @@ class Guest(models.Model):
     gender = models.CharField(max_length=1, null=True, blank=True)
     email = models.CharField(max_length=40, null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
-    reserve_num = models.ForeignKey('RoomApp.Booking', on_delete=models.SET_NULL, null=True, blank=True)
     car_num = models.IntegerField(null=True, blank=True)
     is_pad = models.BooleanField(default=True, null=True, blank=True)
     card_cvc_num = models.IntegerField(null=True, blank=True)

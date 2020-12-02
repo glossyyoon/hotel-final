@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{% static 'RoomApp/static/RoomApp/bill.css' %}">
   </head>
   <body>
+    {% csrf_token %}
+    <form action="{% url 'roomapp:reserve_complete' %}" method="POST">
     <div id="wrap">
         <!-- 헤더영역 -->
         <header>
@@ -90,11 +92,11 @@
             </div>
             <div class="card_period">
               <h5>유효기간<h5>
-              <input type="text" class="validThru" onKeyup="inputValidThru(this);" placeholder="MM/YY" maxlength="5"/><br><br>
+              <input type="text" class="validThru" name="card_experiment" onKeyup="inputValidThru(this);" placeholder="MM/YY" maxlength="5"/><br><br>
             </div>
             <div class="card_cvc">
               <h5>CVC 코드<h5>
-              <input type="text" name="card-cvc" placeholder="3자리" maxlength="3"/><br><br>
+              <input type="text" name="card_cvc_num" placeholder="3자리" maxlength="3"/><br><br>
             </div>
             <div class="room_fee">
               <p>요금 상세 내역</p>
@@ -115,5 +117,6 @@
           </div>
         </div>
     </div>
+    </form>
   </body>
 </html>

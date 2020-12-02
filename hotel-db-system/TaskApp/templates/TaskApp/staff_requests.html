@@ -3,7 +3,6 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>employee page</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,500" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'TaskApp/css/staff_requests.css' %}">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -14,35 +13,26 @@
       <header>
         <h1>TASK</h1>
         <link href='https://fonts.googleapis.com/css?family=Lato:400,500,900' rel='stylesheet' type='text/css'>
-        <style>
-          a { text-decoration: none; color: white; }
-          a:visited { text-decoration: none; }
-          a:hover { text-decoration: none; }
-          a:focus { text-decoration: none; }
-          a:hover, a:active { text-decoration: none; }
-      </style>
-
-
-        <div id="wrapper">     
-
-        <div id="sidebar-menu">
-            <div id="toggleMenu">
-                <div class="list"></div>
-                <div class="thumbs"></div>    
-            </div> 
-            <ul>
-                <a href="staff_request.html"><li class="DASHBOARD"><span>TASK</span></li></a>  <!--吏곸썝 �뾽臾� 蹂대뱶(硫붿씤�솕硫�)-->
-                <a href="staff_attendance.html"><li class="USERS"><span>ATTENDANCE</span></li></a>  <!--洹쇳깭愿�由�-->
-                <a href="product_request.html"><li class="COLLECTIONS"></a><span>PRODUCT REQUEST</span></li></a>  <!--臾쇳뭹援щℓ�슂泥�-->
-                <a href="serve_request.html"><li class="ARCHIVED"><span>SERVE REQUEST</span></li></a>  <!--濡쒕큸�뿉寃� serve request �븷�떦-->
-                <a href="center_requests_assign.html"><li class="TASKS"><span>REQUEST ASSIGNMENT</span></li></a>  <!--�뾽臾대텇諛�-->
-                <a href="live_reservation_status.html"><li class="STATS"><span>RESERVATION STATUS</span></li></a>  <!--�떎�떆媛� �삁�빟 �쁽�솴-->    
-                
-            </ul>
-        </div>
       </header>
-
-      
+  
+      <!--menu bar-->
+      <nav>
+        <div class="menu-btn">
+        <div class="line line--1"></div>
+        <div class="line line--2"></div>
+        <div class="line line--3"></div>
+        </div>
+        
+        <div class="nav-links">
+        <a href="staff_request.html" class="link">My Task</a>
+        <a href="serve_request.html" class="link">Serve Request</a>
+        <a href="#" class="link">Product Request</a>
+        <a href="center_requests_status.html" class="link">Request Status</a>
+        <a href="live_reservation_status.html" class="link">Reservation Status</a>
+        <a href="#" class="link">Start Work</a>
+        <a href="#" class="link">Off Work</a>
+        </div>
+        </nav>
 
       <div class="kanban-container">
         <ul class="kanban-list">

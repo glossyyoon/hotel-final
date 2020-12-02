@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="booking-form" action= "{% url 'roomapp:RoomListView' %}" method="POST">
+
+        {% csrf_token %}
+
+        <!-- Input Div -->
+        <div class="input-div">
+            <label for="id_check_in">Check In : </label>
+            <input type="date" id="check_in" name="check_in">
+        </div>
+
+        <!-- Input Div -->
+        <div class="input-div">
+            <label for="id_check_out">Check Out : </label>
+            <input type="date" id="check_out" name="check_out">
+        </div>
+
+        <div class="input-div">
+            <button type="submit" ">조회하기</button>
+        </div>
+
+    </form>
+</body>
+</html>

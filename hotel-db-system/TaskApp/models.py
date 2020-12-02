@@ -1,16 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-
-class ProductRequest(models.Model):
-    staff_id = models.ForeignKey(
-        'UserApp.Staff', on_delete=models.CASCADE, null=True)
-    product_item = models.CharField(max_length=100)
-    product_count = models.IntegerField(default=1)
-    product_from = models.DateTimeField(auto_now=True)
-    product_to = models.DateTimeField(auto_now=False)
-
-
 class Request(models.Model):
 
     class RequestType(models.TextChoices):
@@ -46,6 +36,17 @@ class Request(models.Model):
         'UserApp.Robot', on_delete=models.CASCADE, blank=True, null=True, related_name="charged_robot_id")
     comment = models.CharField(max_length=200, blank=True, null=True)
     status = models.CharField(max_length=50, choices=RequestStatus.choices)
-    product_request_id = models.ForeignKey(
-        ProductRequest, on_delete=models.CASCADE, blank=True, null=True)
-    roomservice_num = models.IntegerField(blank=True, null=True)
+    roomservice_num = models.IntegerField(default=1, blank=True, null=True)
+
+    def __str__(self):
+        name = f'Type: {self.type} Status: {self.status}\n'
+        if self.send_guest_id != None:
+            name = name + f' Send Guest: {self.send_guest_id}\n'
+        else:
+            name = name + f' Send Staff: {self.send_staff_id}\n'
+        if self.status != self.RequestStatus.NOT_ASSIGNED:
+            if self.charged_robot_id != None:
+                name = name + f' Charged Robot: {self.charged_robot_id}'
+            else:
+                name = name + f' Charged Staff: {self.charged_staff_id}'
+        return name

@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="{% static 'RoomApp/static/RoomApp/main.css' %}">
     </head>
     <body>
+        <form id="booking-form" action= "{% url 'roomapp:RoomListView' %}" method="POST">
+
+        {% csrf_token %}
         <div id="wrap">
             <!-- 헤더영역 -->
             <header>
@@ -36,7 +39,7 @@
                   <ul>
                       <li class="checkIn">
                           <span>체크인</span>
-                          <input type="date" id="datepicker_today">
+                          <input type="date" id="check_in" name="check_in">
                       </li>
                       <li class="stayDay">
                           <span></span>
@@ -44,7 +47,7 @@
                       </li>
                       <li class="checkOut">
                           <span>체크아웃</span>
-                          <input type="date" id="datepicker_checkOutDay">
+                          <input type="date" id="check_out" name="check_out">
                       </li>
                       <li class="room">
                           <span>객실</span>
@@ -79,12 +82,13 @@
                           </select>
                       </li>
                       <li class="search">
-                          <button onclick="location.href='reservation_list.html'">검색</button>
+                          <button type="submit">검색</button>
                       </li>
                   </ul>
                 </div>
               </div>
             </div>
         </div>
+        </form>
     </body>
 </html>
