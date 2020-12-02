@@ -64,7 +64,11 @@
       </header>
       <div id="showcase">
         <div class="reservation_box">
-          <form action='{{RoomApp}}/roomApp/roomList' method="POST" class="post-form">
+          {% if check == 0%}
+            <form action='{{userApp}}/userApp/login/' method="POST" class="post-form">
+          {% elif check == 1 %}
+            <form action='{{RoomApp}}/roomApp/roomList/' method="POST" class="post-form">
+          {% endif %} 
           {%csrf_token%} 
             <div class="reservation_inner">
               <ul>
@@ -113,9 +117,8 @@
                   </select>
                 </li>
                 <li class="search">
-                  <button type="submit"
-                  >
-                    검색
+                  <button type="submit">
+                  검색
                   </button>
                 </li>
               </ul>

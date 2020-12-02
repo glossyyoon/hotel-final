@@ -139,6 +139,7 @@ def Reserve(request, category):
     # print(check_in_in)
 
     booking_room = list(Room.objects.filter(category=category).values("room_id"))
+    print(booking_room)
     index = 0
     for i in range(len(booking_room)):
         room_num = list(booking_room[i].values())[0]
