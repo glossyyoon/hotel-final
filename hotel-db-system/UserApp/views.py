@@ -34,9 +34,9 @@ def staff_login_post(request):
             response_data['error'] = "ID가 존재하지 않습니다."
         else:
             request.session['staff'] = staff[0]['id']
-            return redirect('/userApp/staff_attendance/')
+            return redirect('/TaskApp/staff_requests')
 
-    return redirect('/userApp/staff_login')
+    return redirect('/TaskApp/staff_requests')
 
 
 def signup_submit(request):
@@ -145,3 +145,12 @@ def attendance_request(request):
                                   finish_time=finish_time, description=description, work_type=work_type, accept=False)
     staff_attendance.save()
     return redirect('/userApp/staff_attendance')
+
+
+def staff_task(request):
+    staff_id = request.session.get('staff')
+    staff = staff = Staff.objects.get(id=staff_id)
+    attendance_list = Attendance.objects.filter(
+        staff_id=staff_id).values()
+
+    return render(request, 'UserApp/staff_attendance.html', {'staff': staff, 'attendance_list': attendance_list})
