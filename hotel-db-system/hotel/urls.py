@@ -21,6 +21,6 @@ urlpatterns = [
     path('userApp/', include('UserApp.urls')),
     path('TaskApp/', include('TaskApp.urls')),
     path('pad/', include('PadApp.urls')),
-    path('', include('MainApp.urls')),
+    path('mainApp/', include('MainApp.urls')),
     path('roomApp/', include('RoomApp.urls'))
 ]
