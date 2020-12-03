@@ -91,7 +91,7 @@ def set_requests_attr(request_list):
             Request.RequestType.ROOM_ETC,
         ]:
             guest = Guest.objects.get(pk=request["send_guest_id_id"])
-            booking = Booking.objects.get(booking_userid=guest.id)
+            booking = Booking.objects.get(booking_userid=guest)
             request["room_id"] = booking.booking_roomid.room_id
         if request["type"] == Request.RequestType.ROOM_SERVICE:
             roomservice_request_list = RoomService.objects.filter(

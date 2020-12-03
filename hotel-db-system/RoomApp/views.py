@@ -24,9 +24,51 @@ def main(request):
     return render(request, "reserve_main.html", {})
 
 
+def get_reserve_context(category, check_in, check_out):
+    period = int(check_out.replace("-", "")) - int(check_in.replace("-", ""))
+    price = 0
+    room_price = 0
+    tax = 0
+    category_name = ""
+    if category == "STD":
+        room_price = 200000
+        category_name = "스탠다드룸"
+    elif category == "SUP":
+        room_price = 280000
+        category_name = "슈페리어룸"
+    elif category == "DEL":
+        category_name = "디럭스룸"
+        room_price = 375000
+    elif category == "EXC":
+        category_name = "이그제큐티브룸"
+        room_price = 450000
+    elif category == "STE":
+        category_name = "스위트룸"
+        room_price = 500000
+    price = room_price * period
+    tax = int(price / 10)
+    context = {'category_name': category_name, 'room_price': room_price, 'price': (price + tax), 'tax': tax, 'period':period}
+    return context
+
+def get_category_by_room_ID(roomID):
+    if roomID[0] == '2':
+        return 'STD'
+    elif roomID[0] == '3':
+        return 'SUP'
+    elif roomID[0] == '4':
+        return 'DEL'
+    elif roomID[0] == '5':
+        return 'EXC'
+    elif roomID[0] == '6':
+        return 'STE'
+
 @csrf_exempt
 def reserve_complete(request):
     booking_room_id = request.session.get("num")[:3]
+    category = get_category_by_room_ID(str(booking_room_id))
+    print(category)
+    check_in = request.session.get("check_in")[0]
+    check_out = request.session.get("check_out")[0]
     find_room_num = Room.objects.filter(room_id=booking_room_id)[0]
     ex = request.POST.get("card_experiment")
     experiment = ex.replace("/", "")
@@ -36,7 +78,18 @@ def reserve_complete(request):
         card_cvc_num=request.POST.get("card_cvc_num", ""),
         card_experiment=experiment,
     )
-    return render(request, "reserve_complete.html", {})
+    booking_user_id = request.session.get("user")
+    booking = Booking.objects.get_or_create(
+        booking_roomid=Room.objects.get(room_id=booking_room_id),
+        booking_userid=Guest.objects.get(site_id=booking_user_id),
+        check_in=check_in,
+        check_out=check_out,
+    )
+    context = get_reserve_context(category, check_in, check_out)
+    context["check_in"] = check_in
+    context["check_out"] = check_out
+    context["reserve_id"] = booking[0].id
+    return render(request, "reserve_complete.html", context)
 
 
 @csrf_exempt
@@ -121,8 +174,7 @@ def RoomListView(request):
 
 @csrf_exempt
 def Reserve(request, category):
-    reserve_room_category = request.POST.get("category")
-
+    print(category)
     check_in = request.session.get("check_in")[0]
     check_out = request.session.get("check_out")[0]
     if (check_in[0] == check_in[-1]) and check_in.startswith(("'", '"')):
@@ -141,32 +193,23 @@ def Reserve(request, category):
     booking_room = list(Room.objects.filter(category=category).values("room_id"))
     print(booking_room)
     index = 0
-    for i in range(len(booking_room)):
-        room_num = list(booking_room[i].values())[0]
-        if Booking.objects.filter(
-            (Q(booking_roomid=room_num) & Q(check_in__range=[check_in, check_out]))
-            | (Q(booking_roomid=room_num) & Q(check_out__range=[check_in, check_out]))
-        ).exists():
-            index += 1
-            print("roooooom", room_num, check_in, check_out)
-        else:
-            print("안됐다^^", "index=", index)
-            break
+    # for i in range(len(booking_room)):
+    #     room_num = list(booking_room[i].values())[0]
+    #     if Booking.objects.filter(
+    #         (Q(booking_roomid=room_num) & Q(check_in__range=[check_in, check_out]))
+    #         | (Q(booking_roomid=room_num) & Q(check_out__range=[check_in, check_out]))
+    #     ).exists():
+    #         index += 1
+    #         print("roooooom", room_num, check_in, check_out)
+    #     else:
+    #         print("안됐다^^", "index=", index)
+    #         break
     booking_room_id = Room.objects.filter(category=category)[index]
     booking_room_num = str(booking_room_id)
     request.session["num"] = booking_room_num
     print("qpqpqpqpqpqpqp", request.session["num"])
     # booking_room_room = booking_room_id.values
-
-    booking_user_id = request.session.get("user")
-    Booking.objects.get_or_create(
-        booking_roomid=booking_room_id,
-        booking_userid=Guest.objects.get(site_id=booking_user_id),
-        check_in=check_in,
-        check_out=check_out,
-    )
-
-    return render(request, "reserve.html")
+    return render(request, "reserve.html", get_reserve_context(category, check_in, check_out))
 
 
 class BookingListView(ListView):

@@ -17,7 +17,7 @@
                 <br>
                 <form method="post" action="{% url 'roomapp:live_reservation_status' %}">
                 {% csrf_token %}
-                    <input type="date" name="Date" class="calender" value={{ selected_date }}>
+                    <input type="date" name="Date" class="calendar" value={{ selected_date }}>
                     <input class="search_button" type="submit" value="Search">
                 </form>
             </div>
@@ -293,6 +293,7 @@
                 }
             }
             function getDateFormat(date){
+                console.log(date)
                 var year = date.getFullYear();
                 var month = (1 + date.getMonth());
                 month = month >= 10 ? month : '0' + month;
@@ -306,7 +307,7 @@
                     url : "/roomApp/get_booking_info",
                     type: "POST",
                     dataType: "json",
-                    data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', room_id: room_id, date: getDateFormat(new Date())}),
+                    data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', room_id: room_id, date: getDateFormat(new Date($(".calendar").attr('value')))}),
                     success:function(data){
                         user_id = data.user.id
                         console.log(data)
