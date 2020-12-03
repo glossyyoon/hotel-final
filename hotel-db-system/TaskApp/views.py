@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from django.views import generic
+from django.core.serializers.json import DjangoJSONEncoder
 
 from .models import Request
 from .place import Coordinate, get_place_coord, get_distance, convert_to_coordinate
@@ -52,6 +53,8 @@ def getStaffID(req):
     print(staff_id)
     return JsonResponse({"staff_id": staff.staff_id}, status=201)
 
+
+
 def requestStatus(req, dept_name):
     request_list = []
     not_working_robots = []
@@ -61,8 +64,8 @@ def requestStatus(req, dept_name):
         request_list = Request.objects.filter(charged_robot_id__in=robot_id_list).values()
         not_working_robots = Robot.objects.filter(work_check=False).values()
         request_list = set_requests_attr(request_list)
-        json_context = {"requests": json.dumps(list(request_list), default=json_default),
-        "not_working_staffs": json.dumps(list(not_working_robots), default=json_default)}
+        json_context = {"requests": json.dumps(list(request_list), cls=DjangoJSONEncoder),
+        "not_working_staffs": json.dumps(list(not_working_robots), cls=DjangoJSONEncoder)}
     else:
         staff_id_list = Staff.objects.filter(department=dept_name).values_list(
             "id", flat=True
@@ -74,8 +77,8 @@ def requestStatus(req, dept_name):
             charged_staff_id_list.append(request['charged_staff_id_id'])
         not_working_staffs = Staff.objects.filter(department=dept_name).exclude(pk__in=charged_staff_id_list).values()
         request_list = set_requests_attr(request_list)
-        json_context = {"requests": json.dumps(list(request_list), default=json_default),
-        "not_working_staffs": json.dumps(list(not_working_staffs), default=json_default)}
+        json_context = {"requests": json.dumps(list(request_list), cls=DjangoJSONEncoder),
+        "not_working_staffs": json.dumps(list(not_working_staffs), cls=DjangoJSONEncoder)}
     return render(req, "TaskApp/center_requests_status.html", json_context)
 
 
