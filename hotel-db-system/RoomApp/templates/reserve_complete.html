@@ -5,11 +5,7 @@
     <meta charset="utf-8">
     <title>예약 완료 | H6</title>
     <link rel="stylesheet" href="{% static 'RoomApp/static/RoomApp/style.css' %}">
-    <style>
-      .reserve_complete{
-        text-align: center;
-      }
-    </style>
+    <link rel="stylesheet" href="{% static 'RoomApp/static/RoomApp/reserve_complete.css' %}">
   </head>
   <body>
     <div id="wrap">
@@ -17,8 +13,8 @@
         <header>
             <div class="top_menu">
                 <ul class="top_nav container">
-                    <li><a href="{% static 'UserApp/tempaltes/mypage.html' %}">마이페이지</a></li>
-                    <li><a href="{% static 'UserApp/tempaltes/logout.html' %}">로그아웃</a></li>
+                    <li><a href="{% static 'UserApp/templates/mypage.html' %}">마이페이지</a></li>
+                    <li><a href="{% static 'UserApp/templates/logout.html' %}">로그아웃</a></li>
                     <li><a href="#">한국어</a></li>
                 </ul>
             </div>
@@ -31,13 +27,46 @@
                         <li><a href="room_info2.html" style="text-decoration:none">객실 안내</a></li>
                     </ul>
                 </nav>
-                <button class="reBtn" onclick="location.href='reservarion_list.html'">예약하기</button>
+                <button class="reBtn" onclick="location.href='reservation_list.html'">예약하기</button>
             </div>
         </header>
-        <div class="reserve_complete">
-          <p>예약이 완료되었습니다.<p>
-          <p>예약내역은 <a href="{% static 'UserApp/tempaltes/mypage.html' %}">마이페이지</a>에서 확인할 수 있습니다.<p>
+      </div>
+      <div class="bill">
+        <div class="box">
+          <div class="product">
+            <h3>예약 내역</h3>
+            <hr>
+            <table class="information">
+              <tr>
+                <img class = "img" src="{% static 'RoomApp/static/RoomApp/images/room1.jpg' %}">
+                </tr>
+                <tr>
+                  <td class="label">룸 타입: </td>
+                  <td>스탠다드룸</td>
+                </tr>
+                <tr>
+                  <td class="label">예약번호: </td>
+                  <td>123456</td>
+                </tr>
+                <tr>
+                  <td class="label">체크인: </td>
+                  <td>2020. 12. 25</td>
+                </tr>
+                <tr>
+                  <td class="label">체크아웃: </td>
+                  <td>2020. 12. 26</td>
+                </tr>
+                <tr>
+                  <td class="label">투숙일 수:</td>
+                  <td>1박</td>
+                </tr>
+              <tr>
+                <td class="label">총 금액 :  </td>
+                <td class="label">176,000원</td>
+              </tr>
+            </table>
+              <button>확인</button><!--홈화면으로-->
         </div>
-    </div>
-  </body>
-</html>
+      </div>
+    </body>
+  </html>
