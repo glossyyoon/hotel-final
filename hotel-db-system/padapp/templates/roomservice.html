@@ -55,8 +55,8 @@
               <td>
                 <span class="basket"
                   ><a href="{% url 'padapp:add_cart' menu.id %}"
-                    ><img
-                      src="https://i.imgur.com/h1ldGRr.png"
+                    ><img class="basket_img"
+                    src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQdEUbm4fPo6hjtPOO3k3dtTCt45fOLElAY1wUF8ZcySu4S-QBw"
                       onclick="showPopup()" /></a
                 ></span>
               </td>
@@ -85,8 +85,8 @@
               <td>
                 <span class="basket"
                   ><a href="{% url 'padapp:add_cart' menu.id %}"
-                    ><img
-                      src="https://i.imgur.com/h1ldGRr.png"
+                    ><img class="basket_img"
+                      src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQdEUbm4fPo6hjtPOO3k3dtTCt45fOLElAY1wUF8ZcySu4S-QBw"
                       onclick="showPopup()" /></a
                 ></span>
               </td>
@@ -114,8 +114,8 @@
               <td>
                 <span class="basket"
                   ><a href="{% url 'padapp:add_cart' menu.id %}"
-                    ><img
-                      src="https://i.imgur.com/h1ldGRr.png"
+                    ><img class="basket_img"
+                    src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQdEUbm4fPo6hjtPOO3k3dtTCt45fOLElAY1wUF8ZcySu4S-QBw"
                       onclick="showPopup()" /></a
                 ></span>
               </td>
@@ -124,7 +124,7 @@
             {% endfor %}
             <tr class="checkoutrow">
               <td colspan="4" class="checkout">
-                <a href="{% url 'padapp:cart' %}" id="submitbtn" 
+                <a href="{% url 'padapp:cart' %}" class="submitbtn" 
                   >Shopping Basket</a
                 >
               </td>

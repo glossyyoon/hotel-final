@@ -145,13 +145,14 @@ tr.productitm {
   width: 125px;
   height: 80px;
 }
-
+/*
 .qty {
   border: 1px solid #a3b8d3;
   background: #dae4eb;
   color: #616161;
   text-align: center;
 }
+*/
 
 tr.totalprice {
   height: 35px;
@@ -160,7 +161,6 @@ tr.totalprice {
 }
 
 .basket {
-  /* http://findicons.com/icon/261449/trash_can?id=397422 */
   cursor: pointer;
   position: relative;
   right: 12px;
@@ -188,10 +188,9 @@ tr.checkoutrow {
   border-bottom: 1px solid #abc0db;
 }
 td.checkout {
-  padding: 12px 0;
-  padding-top: 20px;
-  width: 100%;
-  text-align: right;
+  padding: 10px 230px 10px;
+  width: 300px;
+  text-align: center;
 }
 #goback {
   width: 80px;
@@ -210,13 +209,16 @@ td.checkout {
   background-color: #7184d8;
 }
 
-#submitbtn {
-  width: 200px;
+a.submitbtn{
+  display:block;
+  line-height:35px;
+  text-align:center;
+  width: 100px;
   height: 40px;
   outline: none;
   border: none;
   border-radius: 5px;
-  margin: 0 0 10px 0;
+  margin: 5px;
   font-size: 1.5em;
   letter-spacing: 0.05em;
   font-family: Arial, Tahoma, sans-serif;
