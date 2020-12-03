@@ -69,7 +69,9 @@ h2{
   text-align: center;
   margin-top: 5px;
 }
-
+h4{
+  margin: 10px;
+}
 /* page structure */
 #w {
   display: block;
@@ -152,11 +154,15 @@ tr.totalprice {
 }
 
 .basket {
-  /* http://findicons.com/icon/261449/trash_can?id=397422 */
   cursor: pointer;
   position: relative;
   right: 12px;
   top: 5px;
+}
+
+.basket_img{
+  height: 25px;
+  width: 25px;
 }
 
 
@@ -180,10 +186,9 @@ tr.checkoutrow {
   border-bottom: 1px solid #abc0db;
 }
 td.checkout {
-  padding: 12px 0;
-  padding-top: 20px;
-  width: 100%;
-  text-align: right;
+  padding: 10px 130px 10px;
+  width: 300px;
+  text-align: center;
 }
 #goback {
   width: 80px;
@@ -200,6 +205,30 @@ td.checkout {
   cursor: pointer;
   overflow: hidden;
   background-color: #7184d8;
+}
+
+a.submitbtn{
+  display:block;
+  line-height:35px;
+  text-align:center;
+  width: 300px;
+  height: 40px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  font-size: 1.5em;
+  letter-spacing: 0.05em;
+  font-family: Arial, Tahoma, sans-serif;
+  color: white;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+  cursor: pointer;
+  overflow: hidden;
+  border-bottom: 1px solid #0071ff;
+  background-image: -webkit-linear-gradient(#66aaff, #4d9cff);
+  background-image: -moz-linear-gradient(#66aaff, #4d9cff);
+  background-image: -o-linear-gradient(#66aaff, #4d9cff);
+  background-image: linear-gradient(#66aaff, #4d9cff);
 }
 
 #submitbtn {
