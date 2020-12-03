@@ -57,7 +57,7 @@ class Staff(models.Model):
     phone_number = models.CharField(max_length=50, null=True, blank=True)
     hire_date = models.DateField(null=True, blank=True)
     salary = models.IntegerField(null=True, blank=True)
-    position = models.CharField(max_length=100, null=True, blank=True)
+    position = models.CharField(max_length=100, null=True, blank=True, default="0,0,0")
     had_annual_leave = models.IntegerField(default=0)
     department = models.CharField(
         max_length=25, choices=department_type, default="None")
