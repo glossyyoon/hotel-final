@@ -65,7 +65,7 @@ def signup_submit(request):
         guest.save()
 
         request.session['user'] = site_id
-        return redirect('/mainApp/main/')
+        return redirect('/')
     return render(request, 'UserApp/signup.html')
 
 
