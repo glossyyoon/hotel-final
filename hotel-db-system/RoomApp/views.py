@@ -12,6 +12,7 @@ from .forms import AvailabilityForm
 from RoomApp.booking_functions.available import check_availability
 from django.views.decorators.csrf import csrf_exempt
 from UserApp.models import Guest
+from django.db.models import Q
 
 import os
 
@@ -23,14 +24,17 @@ def main(request):
     return render(request, "reserve_main.html", {})
 
 
+@csrf_exempt
 def reserve_complete(request):
     booking_room_id = request.session.get("num")[:3]
     find_room_num = Room.objects.filter(room_id=booking_room_id)[0]
+    ex = request.POST.get("card_experiment")
+    experiment = ex.replace("/", "")
     Bill.objects.get_or_create(
         bill_room=find_room_num,
-        card_cvc_num=request.POST.get("card_cvc_num", ""),
-        card_experiment=request.POST.get("card_experiment", ""),
         card_password=request.POST.get("card_password", ""),
+        card_cvc_num=request.POST.get("card_cvc_num", ""),
+        card_experiment=experiment,
     )
     return render(request, "reserve_complete.html", {})
 
@@ -126,21 +130,32 @@ def Reserve(request, category):
     if (check_out[0] == check_out[-1]) and check_out.startswith(("'", '"')):
         check_out = check_out[1:-1]
     # print(check_in, check_out)
+    # check_in_date = str(int(check_in.replace("-", "")) - 1)
+    # check_out_date = str(int(check_out.replace("-", "")) + 1)
+    # check_in_in = check_in_date[:4] + "-" + check_in_date[4:6] + "-" + check_in_date[6:]
+    # check_out_out = (
+    #     check_out_date[:4] + "-" + check_out_date[4:6] + "-" + check_out_date[6:]
+    # )
+    # print(check_in_in)
 
-    booking_room = Room.objects.filter(category=category).values("room_id")
+    booking_room = list(Room.objects.filter(category=category).values("room_id"))
+    print(booking_room)
     index = 0
-    for i in range(len(booking_room) - 1):
-        if (
-            Booking.objects.filter(check_in__range=[check_in, check_out]).exists()
-            or Booking.objects.filter(check_out__range=[check_in, check_out]).exists()
-        ):
+    for i in range(len(booking_room)):
+        room_num = list(booking_room[i].values())[0]
+        if Booking.objects.filter(
+            (Q(booking_roomid=room_num) & Q(check_in__range=[check_in, check_out]))
+            | (Q(booking_roomid=room_num) & Q(check_out__range=[check_in, check_out]))
+        ).exists():
             index += 1
+            print("roooooom", room_num, check_in, check_out)
         else:
+            print("안됐다^^", "index=", index)
             break
     booking_room_id = Room.objects.filter(category=category)[index]
     booking_room_num = str(booking_room_id)
     request.session["num"] = booking_room_num
-    # print(booking_room_id)
+    print("qpqpqpqpqpqpqp", request.session["num"])
     # booking_room_room = booking_room_id.values
 
     booking_user_id = request.session.get("user")
@@ -150,7 +165,6 @@ def Reserve(request, category):
         check_in=check_in,
         check_out=check_out,
     )
-    print(booking_room_id)
 
     return render(request, "reserve.html")
 

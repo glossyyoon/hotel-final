@@ -55,9 +55,18 @@
           </ul>
           </li>
 
+          <li class="kanban-column kanban-column-requests">
+          <span class="kanban-column-header header-requests">
+            <h2>Not Working Staffs</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Not Working Staffs">
+          </ul>
+          </li>
+
           <li class="kanban-column kanban-column-progress">
           <span class="kanban-column-header header-progress">
-            <h2>In Progress</h2>
+            <h2>Working</h2>
           </span>
           <div class="kanban-options"></div>
           <ul class="drag-inner-list" name="Proceeding">
@@ -80,7 +89,8 @@
        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
        <script type = 'text/javascript'>
-            var data = {{json|safe}}
+            var data = {{requests|safe}}
+            var not_working_staffs = {{not_working_staffs|safe}}
             function getCookie(name) {
               var cookieValue = null;
               if (document.cookie && document.cookie !== '') {
@@ -113,7 +123,11 @@
 
           function getRequestTypeKor(type){
               if(type == 'Room_Service')
-                  return "룸 서비스"
+                return "룸 서비스"
+              else if(type== "Carry_In")
+                return "짐 나르기 (체크인)"
+              else if(type== "Carry_Room_Service")
+                return "룸 서비스 나르기"
               return "룸 기타 컴플레인"
           }
 
@@ -122,8 +136,10 @@
                   this.request = request;
               }
               getDateFormat(date){
+                console.log(date)
                   date = new Date(date)
-                  return date.getMonth() + "월 " + date.getDate() + "일 " + date.getHours() + "시 " + date.getMinutes() + "분 " + date.getSeconds() + "초";
+                  
+                  return (date.getMonth()+1) + "월 " + date.getDate() + "일 " + date.getHours() + "시 " + date.getMinutes() + "분 " + date.getSeconds() + "초";
               }
               getMenuList(){
                   var list = ``
@@ -139,9 +155,13 @@
                   <div>요청 시간: ${this.getDateFormat(this.request.date_time)}</div>
                   <div class="complete_time" style="display:${this.request.status !== "Completed" ? 'none;' : 'block;'}">완료 시간: ${this.getDateFormat(this.request.completed_date_time)}</div>
                   <div>요청 고객 ID: ${this.request.send_guest_id_id}</div>
-                  <div>요청 룸 ID: ${this.request.room_id}</div>
-                  <div>담당 직원 ID: ${this.request.charged_staff_id_id}</div>
-                  ${this.request.type === "ROOM_SERVICE" ?
+                  ${this.request.type == "Carry_In" ?
+                  `` :
+                  `<div>요청 룸 ID: ${this.request.room_id}</div>`}
+                  ${this.request.type == "Carry_In" || this.request.type == "Carry_Room_Service" ?
+                  `<div>담당 로봇 ID: ${this.request.charged_robot_id_id}</div>` :
+                  `<div>담당 직원 ID: ${this.request.charged_staff_id_id}</div>`}
+                  ${this.request.type === "Room_Service" ?
                   `<ul>요청 메뉴 리스트:${this.getMenuList()}</ul>`
                   : "" }
                   <div>요청 코멘트: ${this.request.comment}</div>
@@ -160,9 +180,28 @@
               request_item = new RequestClass(request).getItem()
               $(`ul[name=${request.status}]`).append(request_item)
           }
-
+          function createStaffItem(staff){
+            console.log(staff)
+            if(!('department' in staff)){
+              item = `<li class="drag-item" draggable="true">
+                    <div class="request-info-container">
+                    <div>로봇 ID: ${staff.id}</div>
+                    <div>로봇 위치: ${staff.position}</div>
+                    </div>
+                    </li>`
+              $(`ul[name='Not Working Staffs']`).append(item)
+            }else{
+              item = `<li class="drag-item" draggable="true">
+                    <div class="request-info-container">
+                    <div>직원 ID: ${staff.staff_id}</div>
+                    <div>직원 위치: ${staff.position}</div>
+                    </div>
+                    </li>`
+              $(`ul[name='Not Working Staffs']`).append(item)
+            }
+          }
           data.forEach(request => {createRequestItem(request)});
-
+          not_working_staffs.forEach(staff => {createStaffItem(staff)})
           function requestCancel(request_id){
             $(`li[request_id=${request_id}]`).remove()
             $.ajax({

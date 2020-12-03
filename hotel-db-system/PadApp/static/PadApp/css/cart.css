@@ -94,8 +94,6 @@ h2{
   display: block;
   background: #fff;
   padding: 15px 0;
-  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.4);
-  -moz-box-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
 /** cart table **/
@@ -145,12 +143,10 @@ tr.productitm {
   border: 1px solid #ddd;
   margin-bottom: 4px;
   width: 125px;
-  height: auto;
+  height: 80px;
 }
 
-.qtyinput {
-  width: 33px;
-  height: 22px;
+.qty {
   border: 1px solid #a3b8d3;
   background: #dae4eb;
   color: #616161;

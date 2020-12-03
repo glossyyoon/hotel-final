@@ -9,12 +9,11 @@ from django.urls import reverse
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from django.views import generic
+from django.core.serializers.json import DjangoJSONEncoder
 
-from UserApp.models import Guest
 from .models import Request
 from .place import Coordinate, get_place_coord, get_distance, convert_to_coordinate
 
-# from RoomApp.models import Room, Booking
 from PadApp.models import RoomService, RoomServiceType, Pad
 from UserApp.models import Guest, Staff, Robot
 from RoomApp.models import Booking, Room
@@ -48,14 +47,38 @@ class StaffRequestsView(generic.ListView):
     template_name = "TaskApp/staff_requests.html"
 
 
+def getStaffID(req):
+    staff_id = req.session.get('staff')
+    staff = Staff.objects.get(id=staff_id)
+    print(staff_id)
+    return JsonResponse({"staff_id": staff.staff_id}, status=201)
+
+
+
 def requestStatus(req, dept_name):
-    print(dept_name)
-    staff_id_list = Staff.objects.filter(department=dept_name).values_list(
-        "id", flat=True
-    )
-    request_list = Request.objects.filter(charged_staff_id__in=staff_id_list).values()
-    request_list = set_requests_attr(request_list)
-    json_context = {"json": json.dumps(list(request_list), default=json_default)}
+    request_list = []
+    not_working_robots = []
+    not_working_staffs = []
+    if dept_name == Department.ROBOT.value:
+        robot_id_list = Robot.objects.all().values_list("id", flat=True)
+        request_list = Request.objects.filter(charged_robot_id__in=robot_id_list).values()
+        not_working_robots = Robot.objects.filter(work_check=False).values()
+        request_list = set_requests_attr(request_list)
+        json_context = {"requests": json.dumps(list(request_list), cls=DjangoJSONEncoder),
+        "not_working_staffs": json.dumps(list(not_working_robots), cls=DjangoJSONEncoder)}
+    else:
+        staff_id_list = Staff.objects.filter(department=dept_name).values_list(
+            "id", flat=True
+        )
+        request_list = Request.objects.filter(charged_staff_id__in=staff_id_list).values()
+        charged_staff_id_list = []
+        for request in request_list:
+            print(request)
+            charged_staff_id_list.append(request['charged_staff_id_id'])
+        not_working_staffs = Staff.objects.filter(department=dept_name).exclude(pk__in=charged_staff_id_list).values()
+        request_list = set_requests_attr(request_list)
+        json_context = {"requests": json.dumps(list(request_list), cls=DjangoJSONEncoder),
+        "not_working_staffs": json.dumps(list(not_working_staffs), cls=DjangoJSONEncoder)}
     return render(req, "TaskApp/center_requests_status.html", json_context)
 
 
@@ -91,7 +114,6 @@ def set_requests_attr(request_list):
 
 
 def get_staff_requests(req):
-    print(req.body)
     json_data = json.loads(req.body)
     staff = Staff.objects.get(staff_id=json_data["staff_id"])
     request_list = Request.objects.filter(charged_staff_id=staff.pk).values()
@@ -100,10 +122,12 @@ def get_staff_requests(req):
 
 
 def request_send(req):
+    if ("type" in req.POST) == False:
+        req.POST = json.loads(req.body)
     send_guest = None
     if "send_guest_id" in req.POST:
         send_guest = Guest.objects.get(pk=req.POST["send_guest_id"])
-    send_staff_id = req.POST["send_staff_id"] if ("send_staff_id" in req.POST) else None
+    send_staff = req.POST["send_staff_id"] if ("send_staff_id" in req.POST) else None
     comment = req.POST["comment"] if ("comment" in req.POST) else None
     product_request_id = (
         req.POST["product_request_id"] if ("product_request_id" in req.POST) else None
@@ -114,7 +138,7 @@ def request_send(req):
     request = Request.objects.create(
         type=req.POST['type'],
         date_time=timezone.now(),
-        send_staff_id=send_staff_id,
+        send_staff_id=send_staff,
         send_guest_id=send_guest,
         comment=comment,
         roomservice_num=roomservice_num,
@@ -126,13 +150,18 @@ def request_send(req):
 
 def request_convey(request):
     optimal_charger_list = get_optimal_request_charger_list(request)
-    print(optimal_charger_list)
     if len(optimal_charger_list) == 0:
         return
     optimal_charger = optimal_charger_list[0]
     if isinstance(optimal_charger, Staff):
         request.charged_staff_id = optimal_charger
-    request.status = Request.RequestStatus.WAIT_FOR_ACCEPT
+        request.status = Request.RequestStatus.WAIT_FOR_ACCEPT
+    else:
+        request.charged_robot_id = optimal_charger
+        robot = Robot.objects.get(pk=optimal_charger.id)
+        robot.work_check = True
+        robot.save()
+        request.status = Request.RequestStatus.PROCEEDING
     request.save()
 
 
@@ -199,7 +228,6 @@ def request_get_coordinate(request):
         guest = Guest.objects.get(pk=request.send_guest_id_id)
         booking = Booking.objects.get(booking_userid=guest.id)
         room = Room.objects.get(pk=booking.booking_roomid_id)
-        print(get_place_coord("R" + str(room.room_id)))
         return get_place_coord("R" + str(room.room_id))
     elif request.type in [
         Request.RequestType.ROOM_SERVICE,
@@ -226,26 +254,26 @@ def request_get_coordinate(request):
 def get_optimal_request_charger_list(request):
     department = request_get_department_in_charge(request)
     request_coord = request_get_coordinate(request)
-    print(request_coord)
     if department == Department.ROBOT.value:
         charger_list = Robot.objects.filter(work_check=False)
-        return sorted(
+        list = sorted(
             charger_list,
             key=lambda robot: (
                 len(Request.objects.filter(charged_robot_id=robot.id)),
                 get_distance(request_coord, convert_to_coordinate(robot.position)),
             ),
         )
+        return list
     else:
         charger_list = Staff.objects.filter(department=department)
         # charger_list = list(filter(lambda charger: cache.get(charger.staff_id, request.id) == NOT_YET, charger_list))
-        return sorted(
+        list = sorted(
             charger_list,
             key=lambda staff: (
-                len(Request.objects.filter(charged_staff_id=staff.staff_id)),
+                len(Request.objects.filter(charged_staff_id=staff.id)),
                 get_distance(request_coord, convert_to_coordinate(staff.position)),
-            ),
-        )
+            ),)
+        return list
 
 
 def request_accept(req):

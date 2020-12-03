@@ -1,13 +1,54 @@
-<script language="javascript">
-    function showPopup(){
-      alert("컴플레인이 접수 되었습니다.");
-    }
-  </script>  
-
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>컴플레인 | 기계 오작동</title>
+    <link rel="stylesheet" href="{% static 'PadApp/css/roomservice.css' %}">
+    <style media="screen">
+      #page{
+        text-align: center;
+      }
+      .text{
+        size: 20px;
+      }
+      #machine{
+        width: 400px;
+        height: 250px;
+      }
+    </style>
+    <script language="javascript">
+        function showPopup(){
+          alert("컴플레인이 접수 되었습니다.");
+        }
+    </script> 
+  </head>
+  <body>
+    <div id="back">
+      <button id="goback" onclick="history.back()">Back</button> <!--complain_list.html로-->
+    </div>
+    <div id="w">
+      <header id="title">
+        <h1>기계 오작동</h1>
+      </header>
+      <div id="page">
+        <form action="{% url 'padapp:c_machine_create' 'BD' %}" method="POST">
+          {% csrf_token %}
+          <div>
+            <h4 class="text">어떤 도움이 필요하신 지 텍스트로 남겨주세요.</h4>
+              <label>
+                <textarea name="machine" id="machine" cols="30" rows="10"></textarea>
+              </label>
+          </div>
+      
+          <button id="submitbtn" onclick="showPopup()">접수하기</button>
+        </form>
+      </div>
+  </body>
+</html>
+     
+<!--
 <form action="{% url 'padapp:c_machine_create' 'BD' %}" method="POST">
     {% csrf_token %}
-    <h2>기계 오작동 컴플레인</h2>
-
     <div>
         <label>
             <input type="text" name="content">
@@ -16,3 +57,4 @@
 
     <input type="submit" value="제출" onclick="showPopup()">
 </form>
+-->

@@ -39,8 +39,9 @@ class RequestClass {
     this.request = request;
   }
   getDateFormat(date){
+    console.log(date)
     date = new Date(date)
-    return date.getMonth() + "월 " + date.getDate() + "일 " + date.getHours() + "시 " + date.getMinutes() + "분 " + date.getSeconds() + "초";
+    return (date.getMonth()+1) + "월 " + date.getDate() + "일 " + date.getHours() + "시 " + date.getMinutes() + "분 " + date.getSeconds() + "초";
   }
   getMenuList(){
     var list = ``
@@ -78,16 +79,25 @@ function createRequestItem(request) {
 }
 
 $.ajax({
-  url : "/TaskApp/get_staff_requests/",
+  url : "/TaskApp/getStaffID/",
   type: "POST",
   dataType: "json",
-  data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', staff_id:'302'}),
+  data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}'}),
   success:function(data){
-    data.requests.forEach(request => {createRequestItem(request)});
-    //transfer data//
-    $('.drag-item').on('dragstart', function(e) {
-      e.originalEvent.dataTransfer.setData('listItem', $(this).attr('request_id'))
-    })
+    console.log(data)
+    $.ajax({
+    url : "/TaskApp/get_staff_requests/",
+    type: "POST",
+    dataType: "json",
+    data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', staff_id: data.staff_id}),
+    success:function(data){
+      data.requests.forEach(request => {createRequestItem(request)});
+      //transfer data//
+      $('.drag-item').on('dragstart', function(e) {
+        e.originalEvent.dataTransfer.setData('listItem', $(this).attr('request_id'))
+      })
+    }
+  })
   }
 });
 

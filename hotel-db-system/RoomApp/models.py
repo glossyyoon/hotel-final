@@ -35,13 +35,13 @@ class Booking(models.Model):
     booking_userid = models.ForeignKey(
         "UserApp.Guest", null=True, on_delete=models.SET_NULL
     )
-    check_in = models.DateTimeField(auto_now=False)
-    check_out = models.DateTimeField(auto_now=False)
+    check_in = models.DateField(auto_now=False)
+    check_out = models.DateField(auto_now=False)
     check_in_time = models.DateTimeField(auto_now=True, null=True)
     check_out_time = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return f"booking_room_id = {self.check_in}"
+        return f"booking_room_id = {self.booking_roomid} check_in = {self.check_in} check_out = {self.check_out}"
         # return f'From = {self.check_in.strftime("%d-%b-%Y %H:%M")} To = {self.check_out.strftime("%d-%b-%Y %H:%M")}'
 
     def get_room_category(self):

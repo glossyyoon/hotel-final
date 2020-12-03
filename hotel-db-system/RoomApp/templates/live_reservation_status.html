@@ -239,6 +239,7 @@
         <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
         <script>
+            user_id = 0
             function getCookie(name) {
                 var cookieValue = null;
                 if (document.cookie && document.cookie !== '') {
@@ -268,7 +269,7 @@
                     }
                 }
             });
-            function checkIn(room_id){
+            async function checkIn(room_id){
                 $.ajax({
                     url : "/roomApp/check_in",
                     type: "POST",
@@ -276,6 +277,28 @@
                     data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', room_id: room_id}),
                     success: location.reload(true)
                 });
+                var requestResult = confirm( '로봇에게 고객 짐 운반을 요청할까요?' );
+                if(requestResult){
+                    $.ajax({
+                    url : "/TaskApp/send/",
+                    type: "POST",
+                    dataType: "json",
+                    data : JSON.stringify({
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        type: "Carry_In",
+                        send_guest_id: user_id,
+                    }),
+                    success: location.reload(true)
+                });
+                }
+            }
+            function getDateFormat(date){
+                var year = date.getFullYear();
+                var month = (1 + date.getMonth());
+                month = month >= 10 ? month : '0' + month;
+                var day = date.getDate();
+                day = day >= 10 ? day : '0' + day;
+                return  year + '-' + month + '-' + day;
             }
             function roomClick(room_id, isUsed, isCheckedIn){
                 if(isCheckedIn){
@@ -283,8 +306,9 @@
                     url : "/roomApp/get_booking_info",
                     type: "POST",
                     dataType: "json",
-                    data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', room_id: room_id, date: new Date()}),
+                    data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', room_id: room_id, date: getDateFormat(new Date())}),
                     success:function(data){
+                        user_id = data.user.id
                         console.log(data)
                         booking_info_item = `
                         <div class="room_id">Room ID: ${room_id}</div>
@@ -302,8 +326,9 @@
                         $('.booking_info').css('display', 'block')
                     }
                     });
-                }else
-                    return
+                }else if(!isUsed){
+                    window.location.href="../../";
+                }
             }
         </script>
     </body>
