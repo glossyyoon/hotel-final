@@ -80,6 +80,13 @@ h4 {
   }
   
   /* menu appearance*/
+
+  .department {
+    position: relative;
+    float: right;
+    margin: auto 90px 20px;
+  }
+
   #menu {
     position: relative;
     color: #999;
