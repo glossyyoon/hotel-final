@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{% static 'RoomApp/css/reserve_complete.css' %}">
   </head>
   <body>
+    <form action="{% url 'mainapp:main' %}" method="post">
+    {% csrf_token %}
     <div id="wrap">
         <!-- 헤더영역 -->
         <header>
@@ -65,8 +67,9 @@
                 <td class="label">{{price}}</td>
               </tr>
             </table>
-              <button>확인</button><!--홈화면으로-->
+            <button type="submit" >확인</button>
         </div>
       </div>
     </body>
+  </form>
   </html>

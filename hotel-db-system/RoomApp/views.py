@@ -47,20 +47,28 @@ def get_reserve_context(category, check_in, check_out):
         room_price = 500000
     price = room_price * period
     tax = int(price / 10)
-    context = {'category_name': category_name, 'room_price': room_price, 'price': (price + tax), 'tax': tax, 'period':period}
+    context = {
+        "category_name": category_name,
+        "room_price": room_price,
+        "price": (price + tax),
+        "tax": tax,
+        "period": period,
+    }
     return context
 
+
 def get_category_by_room_ID(roomID):
-    if roomID[0] == '2':
-        return 'STD'
-    elif roomID[0] == '3':
-        return 'SUP'
-    elif roomID[0] == '4':
-        return 'DEL'
-    elif roomID[0] == '5':
-        return 'EXC'
-    elif roomID[0] == '6':
-        return 'STE'
+    if roomID[0] == "2":
+        return "STD"
+    elif roomID[0] == "3":
+        return "SUP"
+    elif roomID[0] == "4":
+        return "DEL"
+    elif roomID[0] == "5":
+        return "EXC"
+    elif roomID[0] == "6":
+        return "STE"
+
 
 @csrf_exempt
 def reserve_complete(request):
@@ -209,7 +217,9 @@ def Reserve(request, category):
     request.session["num"] = booking_room_num
     print("qpqpqpqpqpqpqp", request.session["num"])
     # booking_room_room = booking_room_id.values
-    return render(request, "reserve.html", get_reserve_context(category, check_in, check_out))
+    return render(
+        request, "reserve.html", get_reserve_context(category, check_in, check_out)
+    )
 
 
 class BookingListView(ListView):
