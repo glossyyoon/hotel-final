@@ -35,7 +35,7 @@ h4 {
     display: block;
     width: 28px;
     height: 30px;
-    margin: 30px auto 10px;
+    margin: 0px auto 10px;
   }
   
   #toggle span:after,
@@ -142,7 +142,6 @@ h4 {
   margin: 20px auto;
   max-width: 1000px;
   position: relative;
-  top:-270px;
   z-index: 0;
 }
 
