@@ -106,7 +106,7 @@ def complain_machine_create(request, c_type):
         post.save()
 
         data={
-            'type':Request.RequestType.ROOM_ETC,
+            'type':Request.RequestType.ROOM_ERROR,
             'send_guest_id':2,
             'comment': post.content
         }

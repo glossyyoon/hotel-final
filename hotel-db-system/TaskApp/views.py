@@ -89,6 +89,15 @@ def set_requests_attr(request_list):
             Request.RequestType.ROOM_SERVICE,
             Request.RequestType.ROOM_ERROR,
             Request.RequestType.ROOM_ETC,
+            Request.RequestType.ETC,
+            Request.RequestType.VALET_PARKING,
+        ]:
+            request["staff_id"] = Staff.objects.get(pk=request["charged_staff_id_id"]).staff_id
+        if request["type"] in [
+            Request.RequestType.ROOM_CLEANING,
+            Request.RequestType.ROOM_SERVICE,
+            Request.RequestType.ROOM_ERROR,
+            Request.RequestType.ROOM_ETC,
         ]:
             guest = Guest.objects.get(pk=request["send_guest_id_id"])
             booking = Booking.objects.get(booking_userid=guest)

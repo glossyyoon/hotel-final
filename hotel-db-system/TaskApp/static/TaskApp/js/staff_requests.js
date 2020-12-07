@@ -31,7 +31,7 @@ $.ajaxSetup({
 function getRequestTypeKor(type){
   if(type == 'Room_Service')
     return "룸 서비스"
-  return "룸 기타 컴플레인"
+  return "룸 기계 오작동"
 }
 
 class RequestClass {

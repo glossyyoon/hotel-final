@@ -132,7 +132,7 @@
                 return "짐 나르기 (체크인)"
               else if(type== "Carry_Room_Service")
                 return "룸 서비스 나르기"
-              return "룸 기타 컴플레인"
+              return "룸 기계 오작동"
           }
 
           class RequestClass {
@@ -153,6 +153,7 @@
                   return list;
               }
               getItem(){
+                console.log(this.request)
                   return `<li class="drag-item" draggable="true" request_id=${this.request.id}>
                   <div class="request-info-container">
                   <div>요청 타입: ${getRequestTypeKor(this.request.type)}</div>
@@ -164,7 +165,7 @@
                   `<div>요청 룸 ID: ${this.request.room_id}</div>`}
                   ${this.request.type == "Carry_In" || this.request.type == "Carry_Room_Service" ?
                   `<div>담당 로봇 ID: ${this.request.charged_robot_id_id}</div>` :
-                  `<div>담당 직원 ID: ${this.request.charged_staff_id_id}</div>`}
+                  `<div>담당 직원 ID: ${this.request.staff_id}</div>`}
                   ${this.request.type === "Room_Service" ?
                   `<ul>요청 메뉴 리스트:${this.getMenuList()}</ul>`
                   : "" }
