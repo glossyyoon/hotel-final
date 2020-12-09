@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script language="javascript">
+      function moveClose(){
+        opener.location.href="roomservice.html"; //확인 시, roomservice.html
+        self.close();
+      }
+
+    </script>
+  </head>
+  <body onload="window.resizeTo(400,200)">
+    <h2>장바구니에 담으시겠습니까?</h2>
+    <input type="button" value="확인" onclick="moveClose();"/>
+    <input type="button" value="취소" onclick="self.close();"/>
+  </body>
+</html>

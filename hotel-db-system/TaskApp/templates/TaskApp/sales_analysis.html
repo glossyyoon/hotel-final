@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,500" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'TaskApp/css/sales_analysis.css' %}">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    </head>
+    <body>
+
+        <div class="sales"> 
+            <h1>SALES ANALYSIS</h1>
+            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+            <div id="bar-chart"></div>
+        </div>
+        
+
+        <nav>
+            <div class="menu-btn">
+            <div class="line line--1"></div>
+            <div class="line line--2"></div>
+            <div class="line line--3"></div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="executive_main.html" class="link">Home</a>
+                <a href="department_organization_chart.html" class="link">Organization Chart</a>
+                <a href="sales_analysis.html" class="link">Sales Analysis</a>
+                <a href="executive_task.html" class="link">My Task</a>
+                <a href="executive_request_status.html" class="link">Request status</a>
+                <a href="#" class="link">Start Work</a>
+                <a href="#" class="link">Off Work</a>
+            </div>
+            </nav>
+
+            
+        <script src="{% static 'TaskApp/js/executive_main.js' %}"></script>
+        <script src="{% static 'TaskApp/js/sales_analysis.js' %}"></script>
+    </body>
+
+</html>

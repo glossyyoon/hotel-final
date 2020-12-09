@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html> <!--장바구니 페이지, 장바구니를 통해 주문 완료-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Room Service | H6</title>
+    <link rel="stylesheet" href="{% static 'PadApp/css/cart.css' %}">
+    <style type="text/css"> 
+      a { text-decoration:none } 
+    </style>
+    <script language="javascript">
+      function showPopup(){
+        alert("주문이 완료 되었습니다.")
+        // window.open("rs_order_complete.html","주문완료","width=400,height=300,left=100,top=50");
+      }
+    </script>
+  </head>
+  <body>
+    <body>
+      <div id="back">
+        <button id="goback" onclick="history.back()">Back</button>
+      </div>
+      <div id="w">
+        <header id="title">
+          <h1>Shopping Cart</h1>
+        </header>
+        <div id="page">
+          <table id="cart">
+            <thead>
+              <tr>
+                <th class="first">Photo</th>
+                <th class="second">Num</th>
+                <th class="third">Product</th>
+                <th class="fourth">Price</th>
+                <th class="fifth">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for cart in cart_items %}
+              <tr class="productitm">
+                <td><img src="../..{{ cart.selected_menu.image.url }}" class="thumb" style="width: 130px; height: 80px;"></td>
+                <td><p type="number" class="qty">{{cart.count}}</td> <!--주문 수량-->
+                <td>{{cart.selected_menu.menu_name}}</td>
+                <td>{{cart.selected_menu.price}}</td>
+              </tr>
+              {% endfor %}
+
+              <tr class="totalprice">
+                <td class="light">Total:</td>
+                <td colspan="2">&nbsp;</td>
+                <td colspan="2"><span class="thick">{{total_price}}</span></td>
+              </tr>
+              <tr class="checkoutrow">
+                <td colspan="5" class="checkout"><a href="{% url 'padapp:order' %}" class="submitbtn" onclick="showPopup()">Order</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </body>
+  </body>
+</html>
+<!-- ------------------------------------------------
+<h1>주문서</h1>
+{% for cart in cart_items %}
+<p>메뉴 : {{cart.selected_menu.menu_name}}</p>
+<img src="../..{{ cart.selected_menu.image.url }}" style="width:100px">
+<p>수량 : {{cart.count}}</p>
+<p>가격 : {{cart.selected_menu.price}}</p>
+
+{% endfor %}
+-------------------------------------------------
+<p>최종가격 :  {{total_price}}</p>
+<h1><a href="{% url 'padapp:order' %}">주문하기</a></h1> -->

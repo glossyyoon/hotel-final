@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script language="javascript">
+      function moveClose(){
+        opener.location.href="pad.html"; //확인 시 pad.html로
+        self.close();
+      }
+
+    </script>
+  </head>
+  <body onload="window.resizeTo(400,200)">
+    <h2>주문이 완료되었습니다</h2>
+    <p>예상 소요시간 : 30분</p>
+    <input type="button" value="확인" onclick="moveClose();"/>
+  </body>
+</html>

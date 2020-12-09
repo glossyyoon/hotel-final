@@ -1,0 +1,39 @@
+{% load static %}
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    {{staff.last_name}}님 반갑습니다. 부서명: {{staff.department}}
+    <h1>잔여 연가 : {{staff.had_annual_leave}}</h1>
+    <table>
+      {% for attendance in attendance_list %}
+      <ul>
+        <li>work type: {{attendance.work_type}}</li>
+        <li>decription: {{attendance.description}}</li>
+        <li>start_time: {{attendance.start_time}}</li>
+        <li>finish_time: {{attendance.finish_time}}</li>
+      </ul>
+      {% endfor %}
+    </table>
+    <form
+      class="login-form"
+      action="/userApp/attendance_request/"
+      method="post"
+    >
+      {% csrf_token %} 근태 신청하기
+      <p>시작 <input type="date" name="attendance_start_time" /></p>
+      <p>종료 <input type="date" name="attendance_finish_time" /></p>
+      <p>근무유형: <input type="text" name="work_type" /></p>
+      <p>비고: <input type="text" name="discription" /></p>
+      <button type="submit">신청하기</button>
+    </form>
+
+    <form class="login-form" action="/userApp/leave_request/" method="post">
+      {% csrf_token %} 휴가 신청하기
+      <p>시작 <input type="date" name="start_time" /></p>
+      <p>종료 <input type="date" name="finish_time" /></p>
+      <button type="submit">신청하기</button>
+    </form>
+  </body>
+</html>

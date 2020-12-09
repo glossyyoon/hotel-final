@@ -1,0 +1,225 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,500" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'TaskApp/css/center_requests_status.css' %}">
+    </head>
+    <body>
+        <header>
+            <h1>REQUESTS STATUS</h1>
+        </header>
+
+        <div class = "department">
+          <h2>Choose Department</h2>
+          <br>
+          <a href="#menu" id="toggle"><span></span></a>
+
+          <div id="menu">
+            <ul>
+              <li><a href="Customer Response Dept">Customer Response Dept</a></li>
+              <li><a href="Cleaning Department">Cleaning Department</a></li>
+              <li><a href="Food Beverage Dept">Food Beverage Dept</a></li>
+              <li><a href="Technical Support Dept">Technical Support Dept</a></li>
+              <li><a href="Robot">Robot</a></li>
+              <li><a href="Parking Dept">Parking Dept</a></li>
+              <li><a href="Purchasing Dept">Purchasing Dept</a></li>
+              <li><a href="Center Dept">Center Dept</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <nav>
+          <div class="menu-btn">
+          <div class="line line--1"></div>
+          <div class="line line--2"></div>
+          <div class="line line--3"></div>
+          </div>
+          
+          <div class="nav-links">
+          <a href="staff_request.html" class="link">My Task</a>
+          <a href="serve_request.html" class="link">Serve Request</a>
+          <a href="#" class="link">Product Request</a>
+          <a href="center_requests_status.html" class="link">Request Status</a>
+          <a href="live_reservation_status.html" class="link">Reservation Status</a>
+          <a href="#" class="link">Start Work</a>
+          <a href="#" class="link">Off Work</a>
+          </div>
+          </nav>
+
+      <div class="kanban-container">
+        <ul class="kanban-list">
+          <li class="kanban-column kanban-column-requests">
+          <span class="kanban-column-header header-requests">
+            <h2>requests</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Wait_For_Accept">
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-requests">
+          <span class="kanban-column-header header-requests">
+            <h2>Not Working Staffs</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Not Working Staffs">
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-progress">
+          <span class="kanban-column-header header-progress">
+            <h2>Working</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Proceeding">
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-done">
+            <span class="kanban-column-header header-done">
+              <h2>Done</h2>
+            </span>
+            <div class="kanban-options"></div>
+            <ul class="drag-inner-list" name="Completed">
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+  
+  
+       <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+       <script type = 'text/javascript'>
+            var data = {{requests|safe}}
+            var not_working_staffs = {{not_working_staffs|safe}}
+            function getCookie(name) {
+              var cookieValue = null;
+              if (document.cookie && document.cookie !== '') {
+                  var cookies = document.cookie.split(';');
+                  for (var i = 0; i < cookies.length; i++) {
+                      var cookie = cookies[i].trim();
+                      // Does this cookie string begin with the name we want?
+                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                          break;
+                      }
+                  }
+              }
+              return cookieValue;
+            }
+          
+          var csrftoken = getCookie('csrftoken');
+
+          function csrfSafeMethod(method) {
+              // these HTTP methods do not require CSRF protection
+              return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+              }
+              $.ajaxSetup({
+              beforeSend: function(xhr, settings) {
+                  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                  }
+              }
+          });
+
+          function getRequestTypeKor(type){
+              if(type == 'Room_Service')
+                return "룸 서비스"
+              else if(type== "Carry_In")
+                return "짐 나르기 (체크인)"
+              else if(type== "Carry_Room_Service")
+                return "룸 서비스 나르기"
+              return "룸 기계 오작동"
+          }
+
+          class RequestClass {
+              constructor(request){
+                  this.request = request;
+              }
+              getDateFormat(date){
+                console.log(date)
+                  date = new Date(date)
+                  
+                  return (date.getMonth()+1) + "월 " + date.getDate() + "일 " + date.getHours() + "시 " + date.getMinutes() + "분 " + date.getSeconds() + "초";
+              }
+              getMenuList(){
+                  var list = ``
+                  this.request.roomservice_list.forEach(roomservice => {
+                  list += `<li>${roomservice.menu}    x ${roomservice.count}</li>`
+                  });
+                  return list;
+              }
+              getItem(){
+                console.log(this.request)
+                  return `<li class="drag-item" draggable="true" request_id=${this.request.id}>
+                  <div class="request-info-container">
+                  <div>요청 타입: ${getRequestTypeKor(this.request.type)}</div>
+                  <div>요청 시간: ${this.getDateFormat(this.request.date_time)}</div>
+                  <div class="complete_time" style="display:${this.request.status !== "Completed" ? 'none;' : 'block;'}">완료 시간: ${this.getDateFormat(this.request.completed_date_time)}</div>
+                  <div>요청 고객 ID: ${this.request.send_guest_id_id}</div>
+                  ${this.request.type == "Carry_In" ?
+                  `` :
+                  `<div>요청 룸 ID: ${this.request.room_id}</div>`}
+                  ${this.request.type == "Carry_In" || this.request.type == "Carry_Room_Service" ?
+                  `<div>담당 로봇 ID: ${this.request.charged_robot_id_id}</div>` :
+                  `<div>담당 직원 ID: ${this.request.staff_id}</div>`}
+                  ${this.request.type === "Room_Service" ?
+                  `<ul>요청 메뉴 리스트:${this.getMenuList()}</ul>`
+                  : "" }
+                  <div>요청 코멘트: ${this.request.comment}</div>
+                  ${this.request.status !== "Completed" ? 
+                  `<div class="cancel_btn_container">
+                  <button class="cancel" onClick="requestCancel(${this.request.id})">
+                  CANCEL
+                  </button>
+                  </div>` : ""}
+                  </div>
+                  </li>`;
+              }
+          }
+            
+          function createRequestItem(request) {
+              request_item = new RequestClass(request).getItem()
+              $(`ul[name=${request.status}]`).append(request_item)
+          }
+          function createStaffItem(staff){
+            console.log(staff)
+            if(!('department' in staff)){
+              item = `<li class="drag-item" draggable="true">
+                    <div class="request-info-container">
+                    <div>로봇 ID: ${staff.id}</div>
+                    <div>로봇 위치: ${staff.position}</div>
+                    </div>
+                    </li>`
+              $(`ul[name='Not Working Staffs']`).append(item)
+            }else{
+              item = `<li class="drag-item" draggable="true">
+                    <div class="request-info-container">
+                    <div>직원 ID: ${staff.staff_id}</div>
+                    <div>직원 위치: ${staff.position}</div>
+                    </div>
+                    </li>`
+              $(`ul[name='Not Working Staffs']`).append(item)
+            }
+          }
+          data.forEach(request => {createRequestItem(request)});
+          not_working_staffs.forEach(staff => {createStaffItem(staff)})
+          function requestCancel(request_id){
+            $(`li[request_id=${request_id}]`).remove()
+            $.ajax({
+                url : "/TaskApp/cancel/",
+                type: "POST",
+                dataType: "json",
+                data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', request_id: request_id}),
+                success:function(){
+                console.log("request cancel success")
+                }
+            });
+          }
+       </script>
+       <script src="{% static 'TaskApp/js/center_requests_status.js' %}"></script>
+    </body>
+</html>

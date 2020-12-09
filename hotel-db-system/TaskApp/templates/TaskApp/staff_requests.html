@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,500" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'TaskApp/css/staff_requests.css' %}">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  </head>
+
+    <body>
+    {% csrf_token %}
+      <header>
+        <h1>TASK</h1>
+      </header>
+  
+      <!--menu bar-->
+      <nav>
+        <div class="menu-btn">
+        <div class="line line--1"></div>
+        <div class="line line--2"></div>
+        <div class="line line--3"></div>
+        </div>
+        
+        <div class="nav-links">
+        <a href="staff_request.html" class="link">My Task</a>
+        <a href="serve_request.html" class="link">Serve Request</a>
+        <a href="#" class="link">Product Request</a>
+        <a href="center_requests_status.html" class="link">Request Status</a>
+        <a href="live_reservation_status.html" class="link">Reservation Status</a>
+        <a href="#" class="link">Start Work</a>
+        <a href="../../userApp/staff_login/" class="link">Off Work</a>
+        </div>
+        </nav>
+
+      <div class="kanban-container">
+        <ul class="kanban-list">
+          <li class="kanban-column kanban-column-requests">
+          <span class="kanban-column-header header-requests">
+            <h2>requests</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Wait_For_Accept">
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-progress">
+          <span class="kanban-column-header header-progress">
+            <h2>In Progress</h2>
+          </span>
+          <div class="kanban-options"></div>
+          <ul class="drag-inner-list" name="Proceeding">
+          </ul>
+          </li>
+
+          <li class="kanban-column kanban-column-done">
+            <span class="kanban-column-header header-done">
+              <h2>Done</h2>
+            </span>
+            <div class="kanban-options"></div>
+            <ul class="drag-inner-list" name="Completed">
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+    <script src="{% static 'TaskApp/js/staff_requests.js' %}"></script>
+  </body>
+
+</html>

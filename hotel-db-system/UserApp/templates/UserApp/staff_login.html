@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>login</title>
+  </head>
+
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="{% static 'UserApp/css/staff_login.css' %}" />
+  <body>
+    <div class="login-page">
+      <div class="form">
+        <form
+          class="login-form"
+          action="/userApp/staff_login_post/"
+          method="post"
+        >
+          {% csrf_token %}
+          <h2 class="name">STAFF ONLY</h2>
+          <input
+            type="text"
+            name="staff_id"
+            placeholder="Please enter employee number"
+          />
+          <button type="submit">login</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

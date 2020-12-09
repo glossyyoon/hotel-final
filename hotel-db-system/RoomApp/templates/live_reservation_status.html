@@ -1,0 +1,336 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,500" rel="stylesheet">
+        <title>live_reservation_status</title>
+        <link rel="stylesheet" href="{% static 'RoomApp/css/live_reservation_status.css' %}">
+    </head>
+    <body>
+        <header>
+            <h1>RESERVATION STATUS</h1>
+        </header>
+        <main>
+            <div class="select">
+                <h2 class="input_date">INPUT DATE</h2>
+                <br>
+                <form method="post" action="{% url 'roomapp:live_reservation_status' %}">
+                {% csrf_token %}
+                    <input type="date" name="Date" class="calendar" value={{ selected_date }}>
+                    <input class="search_button" type="submit" value="Search">
+                </form>
+            </div>
+            <div class="floor">
+                <div class="floor_container">
+                    <ul id="sixth_front" class="floor_rooms" floor="6">
+                    {% for room in rooms %}
+                        {% if 601 <= room.room_id and room.room_id <= 603 %}
+                            <li class="room" room_id={{room.room_id}} isUsed={{room.is_using}}
+                            {% if room.is_using %}
+                                style="color:#FF7F7F"
+                            {% elif room.checked_in %}
+                                style="color:#f8ef69"
+                            {% else %}
+                                style="color:#90EE90"
+                            {% endif %}
+                            isReserved={{room.checked_in}} onClick="roomClick({{room.room_id}}, {{room.is_using|lower}}, {{room.checked_in|lower}})">
+                                {{room.room_id}}
+                            </li>
+                        {% endif %}
+                    {%endfor%}
+                    </ul>
+                    <div class="floor_title">
+                        6F
+                    </div>
+                    <ul id="sixth_back"  class="floor_rooms" floor="6">
+                    {% for room in rooms %}
+                        {% if 604 <= room.room_id and room.room_id <= 606 %}
+                            <li class="room" room_id={{room.room_id}} isUsed={{room.is_using}}
+                            {% if room.is_using %}
+                                style="color:#FF7F7F"
+                            {% elif room.checked_in %}
+                                style="color: #f8ef69"
+                            {% else %}
+                                style="color:#90EE90"
+                            {% endif %}
+                            isReserved={{room.checked_in}} onClick="roomClick({{room.room_id}}, {{room.is_using|lower}}, {{room.checked_in|lower}})">
+                                {{room.room_id}}
+                            </li>
+                        {% endif %}
+                    {%endfor%}
+                    </ul>
+                </div>
+                <div class="floor_container">
+                    <ul id="fifth_front" class="floor_rooms" floor="5">
+                    {% for room in rooms %}
+                        {% if 501 <= room.room_id and room.room_id <= 504 %}
+                            <li class="room" room_id={{room.room_id}} isUsed={{room.is_using}}
+                            {% if room.is_using %}
+                                style="color:#FF7F7F"
+                            {% elif room.checked_in %}
+                                style="color: #f8ef69"
+                            {% else %}
+                                style="color:#90EE90"
+                            {% endif %}
+                            isReserved={{room.checked_in}} onClick="roomClick({{room.room_id}}, {{room.is_using|lower}}, {{room.checked_in|lower}})">
+                                {{room.room_id}}
+                            </li>
+                        {% endif %}
+                    {%endfor%}
+                    </ul>
+                    <div class="floor_title">
+                        5F
+                    </div>
+                    <ul id="fifth_back" class="floor_rooms" floor="5">
+                    {% for room in rooms %}
+                        {% if 505 <= room.room_id and room.room_id <= 508 %}
+                            <li class="room" room_id={{room.room_id}} isUsed={{room.is_using}}
+                            {% if room.is_using %}
+                                style="color:#FF7F7F"
+                            {% elif room.checked_in %}
+                                style="color: #f8ef69"
+                            {% else %}
+                                style="color:#90EE90"
+                            {% endif %}
+                            isReserved={{room.checked_in}} onClick="roomClick({{room.room_id}}, {{room.is_using|lower}}, {{room.checked_in|lower}})">
+                                {{room.room_id}}
+                            </li>
+                        {% endif %}
+                    {%endfor%}
+                    </ul>
+                </div>
+                <div class="floor_container">
+                    <ul id="fourth_front" class="floor_rooms" floor="4">
+                    {% for room in rooms %}
+                        {% if 401 <= room.room_id and room.room_id <= 406 %}
+                            <li class="room" room_id={{room.room_id}} isUsed={{room.is_using}}
+                            {% if room.is_using %}
+                                style="color:#FF7F7F"
+                            {% elif room.checked_in %}
+                                style="color: #f8ef69"
+                            {% else %}
+                                style="color:#90EE90"
+                            {% endif %}
+                            isReserved={{room.checked_in}} onClick="roomClick({{room.room_id}}, {{room.is_using|lower}}, {{room.checked_in|lower}})">
+                                {{room.room_id}}
+                            </li>
+                        {% endif %}
+                    {%endfor%}
+                    </ul>
+                    <div class="floor_title">
+                        4F
+                    </div>
+                    <ul id="fourth_back" class="floor_rooms" floor="4">
+                    {% for room in rooms %}
+                        {% if 407 <= room.room_id and room.room_id <= 412 %}
+                            <li class="room" room_id={{room.room_id}} isUsed={{room.is_using}}
+                            {% if room.is_using %}
+                                style="color:#FF7F7F"
+                            {% elif room.checked_in %}
+                                style="color: #f8ef69"
+                            {% else %}
+                                style="color:#90EE90"
+                            {% endif %}
+                            isReserved={{room.checked_in}} onClick="roomClick({{room.room_id}}, {{room.is_using|lower}}, {{room.checked_in|lower}})">
+                                {{room.room_id}}
+                            </li>
+                        {% endif %}
+                    {%endfor%}
+                    </ul>
+                </div>
+                <div class="floor_container">
+                    <ul id="third_front" class="floor_rooms" floor="3">
+                    {% for room in rooms %}
+                        {% if 301 <= room.room_id and room.room_id <= 306 %}
+                            <li class="room" room_id={{room.room_id}} isUsed={{room.is_using}}
+                            {% if room.is_using %}
+                                style="color:#FF7F7F"
+                            {% elif room.checked_in %}
+                                style="color: #f8ef69"
+                            {% else %}
+                                style="color:#90EE90"
+                            {% endif %}
+                            isReserved={{room.checked_in}} onClick="roomClick({{room.room_id}}, {{room.is_using|lower}}, {{room.checked_in|lower}})">
+                                {{room.room_id}}
+                            </li>
+                        {% endif %}
+                    {%endfor%}
+                    </ul>
+                    <div class="floor_title">
+                        3F
+                    </div>
+                    <ul id="third_back" class="floor_rooms" floor="3">
+                    {% for room in rooms %}
+                        {% if 307 <= room.room_id and room.room_id <= 312 %}
+                            <li class="room" room_id={{room.room_id}} isUsed={{room.is_using}}
+                            {% if room.is_using %}
+                                style="color:#FF7F7F"
+                            {% elif room.checked_in %}
+                                style="color: #f8ef69"
+                            {% else %}
+                                style="color:#90EE90"
+                            {% endif %}
+                            isReserved={{room.checked_in}} onClick="roomClick({{room.room_id}}, {{room.is_using|lower}}, {{room.checked_in|lower}})">
+                                {{room.room_id}}
+                            </li>
+                        {% endif %}
+                    {%endfor%}
+                    </ul>
+                </div>
+                <div class="floor_container">
+                    <ul id="second_front" class="floor_rooms" floor="2">
+                    {% for room in rooms %}
+                        {% if 201 <= room.room_id and room.room_id <= 206 %}
+                            <li class="room" room_id={{room.room_id}} isUsed={{room.is_using}}
+                            {% if room.is_using %}
+                                style="color:#FF7F7F"
+                            {% elif room.checked_in %}
+                                style="color: #f8ef69"
+                            {% else %}
+                                style="color:#90EE90"
+                            {% endif %}
+                            isReserved={{room.checked_in}} onClick="roomClick({{room.room_id}}, {{room.is_using|lower}}, {{room.checked_in|lower}})">
+                                {{room.room_id}}
+                            </li>
+                        {% endif %}
+                    {%endfor%}
+                    </ul>
+                    <div class="floor_title">
+                        2F
+                    </div>
+                    <ul id="second_back" class="floor_rooms" floor="2">
+                    {% for room in rooms %}
+                        {% if 207 <= room.room_id and room.room_id <= 212 %}
+                            <li class="room" room_id={{room.room_id}} isUsed={{room.is_using}}
+                            {% if room.is_using %}
+                                style="color:#FF7F7F"
+                            {% elif room.checked_in %}
+                                style="color: #f8ef69"
+                            {% else %}
+                                style="color:#90EE90"
+                            {% endif %}
+                            isReserved={{room.checked_in}} onClick="roomClick({{room.room_id}}, {{room.is_using|lower}}, {{room.checked_in|lower}})">
+                                {{room.room_id}}
+                            </li>
+                        {% endif %}
+                    {%endfor%}
+                    </ul>
+                </div>
+            </div>
+            <div class="booking_info">
+                <h3>Booking information</h3>
+                <div class="booking_info_container">
+                </div>
+            </div>
+            <div class="color_info_container">
+                <div id="green_box" class="color_box"></div>
+                <div class="color_info">: Available Room</div>
+            </div>
+            <div class="color_info_container">
+                <div id="blue_box" class="color_box"></div>
+                <div class="color_info">: Reserved Room</div>
+            </div>
+            <div class="color_info_container">
+                <div id="red_box" class="color_box"></div>
+                <div class="color_info">: Occupied Room</div>
+            </div>
+        </main>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+        <script>
+            user_id = 0
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+          
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                }
+                $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+            async function checkIn(room_id){
+                $.ajax({
+                    url : "/roomApp/check_in",
+                    type: "POST",
+                    dataType: "json",
+                    data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', room_id: room_id}),
+                    success: location.reload(true)
+                });
+                var requestResult = confirm( '로봇에게 고객 짐 운반을 요청할까요?' );
+                if(requestResult){
+                    $.ajax({
+                    url : "/TaskApp/send/",
+                    type: "POST",
+                    dataType: "json",
+                    data : JSON.stringify({
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        type: "Carry_In",
+                        send_guest_id: user_id,
+                    }),
+                    success: location.reload(true)
+                });
+                }
+            }
+            function getDateFormat(date){
+                console.log(date)
+                var year = date.getFullYear();
+                var month = (1 + date.getMonth());
+                month = month >= 10 ? month : '0' + month;
+                var day = date.getDate();
+                day = day >= 10 ? day : '0' + day;
+                return  year + '-' + month + '-' + day;
+            }
+            function roomClick(room_id, isUsed, isCheckedIn){
+                if(isCheckedIn){
+                    $.ajax({
+                    url : "/roomApp/get_booking_info",
+                    type: "POST",
+                    dataType: "json",
+                    data : JSON.stringify({csrfmiddlewaretoken: '{{ csrf_token }}', room_id: room_id, date: getDateFormat(new Date($(".calendar").attr('value')))}),
+                    success:function(data){
+                        user_id = data.user.id
+                        console.log(data)
+                        booking_info_item = `
+                        <div class="room_id">Room ID: ${room_id}</div>
+                        <div class="booking_user_name">Guest Name: ${data.user.first_name} ${data.user.last_name}</div>
+                        <div class="booking_user_id">Guest ID: ${data.user.id}</div>
+                        <div class="check_in_date">Check In Date: ${data.booking.check_in}</div>
+                        <div class="check_out_date">Check Out Date: ${data.booking.check_out}</div>
+                        <div class="booking_id">Booking ID: ${data.booking.id}</div>
+                        ${isUsed ? "":
+                        `<div class="check_in_button_container">
+                        <div class="check_in_button" onClick="checkIn(${room_id})">
+                            Check In
+                        </div></div>`}`
+                        $('.booking_info_container').html(booking_info_item)
+                        $('.booking_info').css('display', 'block')
+                    }
+                    });
+                }else if(!isUsed){
+                    window.location.href="../../";
+                }
+            }
+        </script>
+    </body>
+</html>

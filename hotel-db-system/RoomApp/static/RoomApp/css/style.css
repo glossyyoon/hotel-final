@@ -1,0 +1,66 @@
+#wrap {background : #f2f2f2;}
+
+* { box-sizing: border-box; font-family: 'Noto Sans KR', sans-serif; }
+
+.container { width: 100%; width: 1192px; margin: 0 auto;  }
+
+/* header */
+.top_menu { height: 35px; border-bottom: 1px solid #eeeeee; }
+.top_nav { text-align: right;}
+.top_nav li { display: inline-block; }
+.top_nav li:nth-child(1)::after { display: inline-block; content: ""; width: 1px; height: 11px; background-color:black; margin: 0 15px;  }
+.top_nav li:nth-child(2)::after { display: inline-block; content: ""; width: 1px; height: 11px; background-color:black; margin: 0 15px;  }
+.top_nav li:nth-child(3)::before {
+    display: inline-block; content: ""; width: 24px; height: 15px;
+    background: url('../images/tae.png') no-repeat; margin: 0 7px 0 0; vertical-align: middle; }
+.top_nav li:nth-child(3)::after {
+    display: inline-block; content: ""; width: 10px; height: 7px;
+    background: url('../images/downArrow.png') no-repeat; background-size: 100% auto;
+    margin-left: 5px; vertical-align: middle; cursor: pointer;}
+.top_nav li a { font-size: 13px; color: #676767; line-height: 37px; }
+
+.header_inner {width:100%; background-color:  #f2e6d9; height: 110px; display: flex; justify-content: space-between; align-items: center; }
+.header_inner h1 { color: #4f0000; margin-left: 50px; font-size: 30px; width: 113px; height: 81px;}
+.gnb li { display: inline-block; margin-right: 46px;}
+.gnb li:nth-child(1) { margin-left: 500px;}
+.gnb li:nth-child(3) { margin-right: 5px; }
+.gnb li a { font-size: 16px; color: #1a1a1a; font-weight: 600; }
+.header_inner button {margin-right: 40px; width: 140px; height: 63px; border: none; background-color: #1a1a1a; color: #f3f2ed; font-size: 18px; font-weight: 500; }
+
+
+.body_image{ width:100%; height: 110px; align-items: center;}
+#showcase {background: url('../images/backg.png') no-repeat center center/cover; height: 600px;}
+/* reservation */
+.reservation_inner {
+  background-color : #fff;
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px solid #d1d1d1;
+  float : left;
+  position: absolute;
+  top: 450px;
+  left: 70px;
+
+}
+.reservation_inner ul li { float: left; text-align: center; list-style: none;}
+.reservation_inner ul li span { display: block; font-size: 15px; font-weight: bold; color: #787878; }
+.reservation_inner ul li input {display: block; font-size: 15px}
+.reservation_inner ul li:nth-child(1) { margin-right: 63px; }
+.reservation_inner ul li:nth-child(2) { margin-right: 63px; }
+.reservation_inner ul li:nth-child(3) { margin-right: 105px; }
+.reservation_inner ul li:nth-child(4) { margin-right: 36px; }
+.reservation_inner ul li:nth-child(5) { margin-right: 36px; }
+.reservation_inner ul li:nth-child(6) { margin-right: 36px; }
+.reservation_inner ul li:nth-child(7) { margin-right: 67px; }
+
+.checkIn span::after { display: inline-block; content: ""; width: 14px; height: 14px; background: url('../images/cal.png') no-repeat; margin-left: 4px;}
+.checkOut span::after { display: inline-block; content: ""; width: 14px; height: 14px; background: url('../images/cal.png') no-repeat; margin-left: 4px;}
+
+.stayDay span { display: block; content: ""; width: 32px; height: 34px; background: url('../images/night.png') no-repeat; }
+.stayDay input { margin-top: 10px; border: none; font-size: 18px; text-align: center; width: 40px; color: #818181; background-color: transparent;  }
+.checkIn input,
+.checkOut input { margin-top: 24px; width: 139px; border: none; color: #2a2a2a; font-size: 18px; text-align: center; }
+
+.reservation_inner ul li select { margin-top: 25px; border: none; color: #2a2a2a; font-size: 18px; }
+
+.search button { width: 175px; height: 73px; border: none; background-color: #1a1a1a; color: #fff; font-size: 18px; }
