@@ -122,7 +122,7 @@ def getBookingInfo(request):
     user = model_to_dict(user)
     return JsonResponse({"booking": booking, "user": user}, status=201)
 
-
+@csrf_exempt
 def liveReservationStatusView(request):
     rooms = Room.objects.all().values()
     date = request.POST.get("Date", timezone.now())
