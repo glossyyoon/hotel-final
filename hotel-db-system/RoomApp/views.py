@@ -80,9 +80,11 @@ def reserve_complete(request):
     find_room_num = Room.objects.filter(room_id=booking_room_id)[0]
     ex = request.POST.get("card_experiment")
     experiment = ex.replace("/", "")
+    num = request.POST.get("card_password")
+    num_save = num.replace("-", "")
     Bill.objects.get_or_create(
         bill_room=find_room_num,
-        card_password=request.POST.get("card_password", ""),
+        card_password=num_save,
         card_cvc_num=request.POST.get("card_cvc_num", ""),
         card_experiment=experiment,
     )
@@ -121,6 +123,7 @@ def getBookingInfo(request):
     booking = model_to_dict(booking)
     user = model_to_dict(user)
     return JsonResponse({"booking": booking, "user": user}, status=201)
+
 
 @csrf_exempt
 def liveReservationStatusView(request):
