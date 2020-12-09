@@ -166,9 +166,9 @@ def executive_login_post(request):
             response_data['error'] = "ID가 존재하지 않습니다."
         else:
             request.session['staff'] = staff[0]['id']
-            return redirect('/userApp/executive_main')
+            return redirect('/TaskApp/center_requests_status/Robot')
 
-    return redirect('/userApp/executive_main')
+    return redirect('/userApp/executive_login')
 
 
 def executive_main(request):
